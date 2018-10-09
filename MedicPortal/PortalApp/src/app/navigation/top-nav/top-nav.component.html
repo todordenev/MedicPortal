@@ -1,0 +1,34 @@
+<mat-toolbar class="fmg-top-toolbar" color="primary">
+    <mat-toolbar-row>
+        <nav class="top-navigation">
+            <div class="left">
+                <span [hidden]="showAllElements">
+                    <button mat-icon-button (click)="toggleSideBarClicked.emit();">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                </span>
+                <span [hidden]="!showAllElements">
+                    <a mat-button routerLink="/">Лекарски портал - Казанлък</a>
+                </span>
+            </div>
+            <div class="right">
+                <div [hidden]="!showAllElements">                    
+                    <a routerLink="/login" [hidden]="!isAuthenticated" mat-button>{{authenticatedUser}}</a>
+                    <a routerLink="/login" [hidden]="!isAuthenticated" mat-button>Изход</a>
+                    <a routerLink="/login" [hidden]="isAuthenticated" mat-button>Вход</a>
+                    <a routerLink="/register" [hidden]="isAuthenticated" mat-button>Регистрация</a>
+                </div>
+                <div [hidden]="showAllElements">
+                    <button mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>perm_identity</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <a routerLink="/login" [hidden]="!isAuthenticated" mat-button>{{authenticatedUser}}</a>
+                        <a routerLink="/login" [hidden]="!isAuthenticated" mat-button>Изход</a>
+                        <a routerLink="/login" [hidden]="isAuthenticated" mat-button>Вход</a>
+                        <a routerLink="/register" [hidden]="isAuthenticated" mat-button>Регистрация</a> </mat-menu>
+                </div>
+            </div>
+        </nav>
+    </mat-toolbar-row>
+</mat-toolbar>

@@ -1,21 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedicPortal.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/doctors")]
     public class SampleDataController : Controller
     {
-        private static string[] Summaries = new[]
+        private static readonly string[] Summaries =
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
+        // GET: api/Doctors
+        [HttpGet]
+        public IEnumerable<WeatherForecast> Test()
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -34,10 +36,7 @@ namespace MedicPortal.Controllers
 
             public int TemperatureF
             {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
+                get { return 32 + (int) (TemperatureC / 0.5556); }
             }
         }
     }

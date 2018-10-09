@@ -1,0 +1,59 @@
+
+.mat-card {
+    max-width: 400px;
+    min-width: 300px;
+    margin: 5px;
+    height: 400px;
+    width: calc(25% - 10px);
+    box-sizing: border-box;
+}
+
+.doctor-header-image {
+    background-image: url('/assets/doctor1.jpg'); 
+    background-size: cover; 
+    width: calc(100px-20px);
+    margin: 10px;
+}
+.mat-card-content{
+    margin-bottom: 0;
+}
+.image-container{
+    height: 150px;
+}
+.mat-card-image {
+    width: auto;
+    height: 100%;
+    display: block;
+    margin: auto !important;
+}
+
+.mat-card-content {
+    padding-top: 10px;
+}
+@media (max-width: 1200px){
+    .doctor-card {
+        max-width: 400px;
+        margin: 5px;
+        height: 400px;
+        width: calc(33% - 10px);
+        box-sizing: border-box;
+    }
+}
+@media (max-width: 800px){
+    .doctor-card {
+        max-width: 400px;
+        margin: 5px;
+        height: 400px;
+        width: calc(50% - 10px);
+        box-sizing: border-box;
+    }
+}
+@media (max-width: 400px){
+    .doctor-card {
+        max-width: 400px;
+        margin: 5px;
+        height: 400px;
+        width: calc(100% - 10px);
+        box-sizing: border-box;
+    }
+}
