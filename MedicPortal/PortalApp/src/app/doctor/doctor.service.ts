@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from "rxjs";
-import { Doctor } from "./Doctor";
+import { Observable, of } from 'rxjs';
+import { Doctor } from './Doctor';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 
 
 const DOCTORS: Doctor[] = [
     {
-        name: "Irina Ivanova", id: 1, worktimes: [
+        name: 'Irina Ivanova', id: 1, worktimes: [
             { id: 1, dayOfWeek: 0, from: 8.00, till: 12.00 },
             { id: 2, dayOfWeek: 1, from: 9.00, till: 12.00 },
             { id: 3, dayOfWeek: 2, from: 9.5, till: 12.00 },
@@ -16,7 +16,7 @@ const DOCTORS: Doctor[] = [
         ]
     },
     {
-        name: "Hristo Hristov", id: 2, worktimes: [
+        name: 'Hristo Hristov', id: 2, worktimes: [
             { id: 1, dayOfWeek: 0, from: 8.00, till: 12.00 },
             { id: 2, dayOfWeek: 1, from: 9.00, till: 12.00 },
             { id: 3, dayOfWeek: 2, from: 9.5, till: 12.00 },
@@ -30,7 +30,7 @@ const DOCTORS: Doctor[] = [
     providedIn: 'root'
 })
 export class DoctorService {
-    authUrl = "https://localhost:44342/api/doctors";
+    authUrl = '/api/doctors';
 
     constructor(private http: HttpClient) { }
 
@@ -39,20 +39,18 @@ export class DoctorService {
     }
 
     getDoctor(id: number): Observable<any> {
-
-        let authToken = localStorage.getItem('auth_token');
-
+        const url = this.authUrl + '/' + id;
+        const authToken = localStorage.getItem('auth_token');
+        const user_token = localStorage.getItem('user_token');
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`
             })
         };
-        return this.http.get(this.authUrl, httpOptions)
+        return this.http.get(url, httpOptions)
             .pipe(
-                map(loggedIn => {
-                    return loggedIn;
-                }),
+                map(doctor => { }),
                 catchError(this.handleError)
             );
     }

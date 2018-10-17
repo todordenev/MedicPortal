@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace MedicPortal.Controllers
 {
@@ -23,7 +22,6 @@ namespace MedicPortal.Controllers
         private readonly IJwtFactory _jwtFactory;
         private readonly JwtIssuerOptions _jwtOptions;
         private readonly IMapper _mapper;
-        private readonly JsonSerializerSettings _serializerSettings;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
 
@@ -41,10 +39,6 @@ namespace MedicPortal.Controllers
             _jwtFactory = jwtFactory;
             _signInManager = signInManager;
             _jwtOptions = jwtOptions.Value;
-            _serializerSettings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented
-            };
         }
 
         // POST api/accounts/register
@@ -52,10 +46,7 @@ namespace MedicPortal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegistrationViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var appUser = _mapper.Map<AppUser>(model);
             var userName = appUser.UserName;
@@ -69,10 +60,7 @@ namespace MedicPortal.Controllers
 
             var signInResult =
                 await _signInManager.PasswordSignInAsync(appUser.UserName, model.Password, true, false);
-            if (!signInResult.Succeeded)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!signInResult.Succeeded) return BadRequest(ModelState);
 
             var token = await GetUserToken(userName);
 
@@ -90,10 +78,16 @@ namespace MedicPortal.Controllers
                 ModelState.AddError("login_failure", "Invalid username or password.");
                 return BadRequest(ModelState);
             }
-            
+
             var token = await GetUserToken(credentials.UserName);
 
             return Ok(token);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok();
         }
 
         private async Task<object> GetUserToken(string userName)
@@ -106,6 +100,7 @@ namespace MedicPortal.Controllers
                 id = claimsIdentity.Claims.Single(c => c.Type == "id").Value,
                 auth_token = await _jwtFactory.GenerateEncodedToken(userName, claimsIdentity),
                 expires_in = (int) _jwtOptions.ValidFor.TotalSeconds,
+                //issued_at = _jwtOptions.IssuedAt.ToString("O"),
                 user = $"{user.FirstName} {user.LastName}"
             };
             return token;

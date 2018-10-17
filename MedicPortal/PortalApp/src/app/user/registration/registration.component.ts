@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
 
 @Component({
     selector: 'app-registration',
@@ -9,7 +9,7 @@ import { AuthService } from '../auth.service';
 })
 export class RegistrationComponent implements OnInit {
     registrationForm: FormGroup;
-    constructor(private authService: AuthService,
+    constructor(private authService: UserService,
         private formBuilder: FormBuilder) {
     }
 
@@ -22,8 +22,8 @@ export class RegistrationComponent implements OnInit {
             firstName: ['Todor', [Validators.required]],
             lastName: ['Denev', [Validators.required]],
             email: ['todor_denev@yahoo.com', [Validators.required]],
-            password: ['', [Validators.required]],
-            password2: ['', [Validators.required]],
+            password: ['123456', [Validators.required]],
+            password2: ['123456', [Validators.required]],
             telefon: ['01234', [Validators.required]]
         });
     }

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="!!doctor">
   <mat-card-header>
     <div mat-card-avatar class="doctor-header-image"></div>
     <mat-card-title><a routerLink="./doctor/{{doctor.id}}">{{doctor.name}}</a></mat-card-title>

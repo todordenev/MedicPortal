@@ -11,11 +11,11 @@ const httpOptions = {
 @Injectable({
     providedIn: 'root'
 })
-export class AuthService {
-    authUrl = "https://localhost:44342/api/accounts";
+export class UserService {
+    authUrl = '/api/accounts';
     isAuthenticated = false;
-    redirectUrl = "/";
-    user:string;
+    redirectUrl = '/';
+    user: string;
 
     @Output()
     authChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -23,27 +23,25 @@ export class AuthService {
     register(registration: Registration): Observable<any> {
         return this.http.post<any>(this.authUrl + '/register', registration)
             .pipe(
-                map(loggedIn => {
-                    this.isAuthenticated = true;
-                    this.user= loggedIn.user;
-                    this.userAuthChanged(true);
-                    return loggedIn;
-                }),
+                map(result => { this.onUserLoggedIn(result); }),
                 catchError(this.handleError)
             );
     }
     login(credentials: UserCredentials): Observable<any> {
         return this.http.post<any>(this.authUrl + '/login', credentials)
             .pipe(
-                map(result => {
-                    this.isAuthenticated = true;
-                    this.user= result.user;
-                    localStorage.setItem('auth_token', result.auth_token);
-                    this.userAuthChanged(true);
-                    return result;
-                }),
+                map(result => { this.onUserLoggedIn(result); }),
                 catchError(this.handleError)
             );
+    }
+    private onUserLoggedIn(userToken) {
+        this.isAuthenticated = true;
+        this.user = userToken.user;
+        localStorage.setItem('auth_token', userToken.auth_token);
+        localStorage.setItem('current_user', userToken.user);
+        localStorage.setItem('user_token', userToken);
+        this.userAuthChanged(true);
+        return userToken;
     }
     private userAuthChanged(status: boolean) {
         this.authChanged.emit(status); // Raise changed event

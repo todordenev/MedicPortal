@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { AuthService } from '../../user/auth.service';
+import { UserService } from '../../user/user.service';
 
 @Component({
     selector: 'app-top-nav',
@@ -7,8 +7,8 @@ import { AuthService } from '../../user/auth.service';
     styleUrls: ['./top-nav.component.css']
 })
 export class TopNavComponent implements OnInit {
-    isAuthenticated:boolean;
-    authenticatedUser:string;
+    isAuthenticated: boolean;
+    authenticatedUser: string;
     @Input()
     showAllElements: boolean;
 
@@ -19,7 +19,7 @@ export class TopNavComponent implements OnInit {
     @Output()
     toggleSideBarClicked = new EventEmitter<boolean>();
 
-    constructor(private authService: AuthService) { }
+    constructor(private authService: UserService) { }
 
     ngOnInit() {
         this.authService.authChanged
@@ -27,6 +27,5 @@ export class TopNavComponent implements OnInit {
                 this.isAuthenticated = this.authService.isAuthenticated;
                 this.authenticatedUser = this.authService.user;
             });
-        let user = this.authService.user;
     }
 }

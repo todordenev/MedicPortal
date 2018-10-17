@@ -41,8 +41,7 @@ namespace MedicPortal
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddFluentValidation();
 
             services.AddAutoMapper();
-            services.AddTransient<IValidator<RegistrationViewModel>, RegistrationViewModelValidator>();
-            services.AddTransient<IValidator<LoginViewModel>, LoginViewModelValidator>();
+            services.AddValidators();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "PortalApp/dist"; });
@@ -90,7 +89,10 @@ namespace MedicPortal
                 ClockSkew = TimeSpan.Zero
             };
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(cfg =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
             {
                 cfg.RequireHttpsMetadata = false;
                 cfg.SaveToken = true;

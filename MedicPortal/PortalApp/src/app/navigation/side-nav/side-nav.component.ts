@@ -6,14 +6,14 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./side-nav.component.css']
 })
 export class SideNavComponent implements OnInit {
-
+  @Output()
+  onLinkClicked = new EventEmitter<boolean>();
+  
   ngOnInit() { }
 
   constructor() {  }
 
-  @Output() 
-  onLinkClicked = new EventEmitter<boolean>();
-  
+
   clicked() {
     this.onLinkClicked.emit();
   }

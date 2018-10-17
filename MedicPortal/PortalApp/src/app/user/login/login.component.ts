@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
-    constructor(private authService: AuthService,
+    constructor(private authService: UserService,
         private formBuilder: FormBuilder,
         private router: Router) { }
 
@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
     }
     createFormGroup() {
         this.loginForm = this.formBuilder.group({
-            userName: ['todor_denev2@yahoo.com', [Validators.required]],
-            password: ['123123', [Validators.required]]
+            userName: ['todor_denev@yahoo.com', [Validators.required]],
+            password: ['123456', [Validators.required]]
         });
     }
     onSubmit({ value, valid }) {
