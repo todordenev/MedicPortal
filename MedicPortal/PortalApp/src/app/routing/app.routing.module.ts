@@ -4,6 +4,7 @@ import { DoctorListComponent, DoctorListitemComponent, DoctorDetailsComponent } 
 import { RegistrationComponent, LoginComponent } from '../user/user.module';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationGuard } from './authentication-guard';
+import { RoleGuard } from './role-guard';
 
 
 const routes: Routes = [
@@ -11,8 +12,12 @@ const routes: Routes = [
   { path: 'doctors', component: DoctorListComponent, canActivate: [AuthenticationGuard] },
   { path: 'doctor/:id', component: DoctorDetailsComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LoginComponent, canActivate: [AuthenticationGuard]  },
-  { path: 'register', component: RegistrationComponent }
+  { path: 'logout', component: LoginComponent, canActivate: [AuthenticationGuard] },
+  { path: 'register', component: RegistrationComponent },
+  {
+    path: 'new-doctors', component: DoctorListComponent, canActivate: [AuthenticationGuard, RoleGuard],
+    data: { role: 'doctor-manager' }
+  }
 ];
 
 @NgModule({

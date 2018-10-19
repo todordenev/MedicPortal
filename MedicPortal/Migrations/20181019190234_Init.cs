@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MedicPortal.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -162,7 +162,8 @@ namespace MedicPortal.Migrations
                     Id = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    AppUserId = table.Column<string>(nullable: true)
+                    AppUserId = table.Column<string>(nullable: true),
+                    Approved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

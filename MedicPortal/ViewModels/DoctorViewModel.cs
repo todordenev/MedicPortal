@@ -9,5 +9,6 @@ namespace MedicPortal.ViewModels
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public IList<WorktimeViewModel> ViewModels { get; set; }
     }
 }

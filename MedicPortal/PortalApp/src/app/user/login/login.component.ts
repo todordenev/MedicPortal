@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     isLoggedIn: boolean;
+    userName:string;
     constructor(private userService: UserService,
         private formBuilder: FormBuilder,
         private router: Router) { }
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.createFormGroup();
         this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
+        this.userName = this.userService.getUserName;
     }
     createFormGroup() {
         this.loginForm = this.formBuilder.group({

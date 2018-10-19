@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule, MatButtonModule } from '@angular/material';
-import { DoctorListComponent } from "./doctor-list/doctor-list.component";
-import { DoctorListitemComponent } from "./doctor-listitem/doctor-listitem.component";
-import { RouterModule } from "@angular/router";
-import { DoctorDetailsComponent } from './doctor-details/doctor-details.component'
+import { DoctorListComponent } from './doctor-list/doctor-list.component';
+import { DoctorListitemComponent } from './doctor-listitem/doctor-listitem.component';
+import { RouterModule } from '@angular/router';
+import { DoctorDetailsComponent } from './doctor-details/doctor-details.component';
+import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
+import { Doctor } from './Doctor';
 
 @NgModule({
   imports: [
@@ -16,16 +18,21 @@ import { DoctorDetailsComponent } from './doctor-details/doctor-details.componen
   declarations: [
     DoctorListitemComponent,
     DoctorListComponent,
-    DoctorDetailsComponent
+    DoctorDetailsComponent,
+    DoctorRegistrationComponent
   ],
   exports: [
     DoctorListitemComponent,
     DoctorListComponent,
-    DoctorDetailsComponent
+    DoctorDetailsComponent,
+    DoctorRegistrationComponent
   ]
 })
-export class DoctorModule { };
-export { Doctor } from './Doctor';
-export { DoctorListComponent } from "./doctor-list/doctor-list.component";
-export { DoctorListitemComponent } from "./doctor-listitem/doctor-listitem.component";
-export { DoctorDetailsComponent };
+export class DoctorModule { }
+export {
+  Doctor,
+  DoctorListComponent,
+  DoctorListitemComponent,
+  DoctorDetailsComponent,
+  DoctorRegistrationComponent
+};

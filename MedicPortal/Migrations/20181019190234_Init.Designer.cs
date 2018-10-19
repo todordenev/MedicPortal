@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180927140008_Initial")]
-    partial class Initial
+    [Migration("20181019190234_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,6 +104,8 @@ namespace MedicPortal.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AppUserId");
+
+                    b.Property<bool>("Approved");
 
                     b.Property<string>("FirstName");
 

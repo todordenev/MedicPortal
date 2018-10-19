@@ -9,6 +9,7 @@ using MedicPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace MedicPortal.Controllers
@@ -78,11 +79,12 @@ namespace MedicPortal.Controllers
                 ModelState.AddError("login_failure", "Invalid username or password.");
                 return BadRequest(ModelState);
             }
-
+            
             var token = await GetUserToken(credentials.UserName);
 
             return Ok(token);
         }
+
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -92,8 +94,10 @@ namespace MedicPortal.Controllers
 
         private async Task<object> GetUserToken(string userName)
         {
-           
-            var claimsIdentity = _jwtFactory.GenerateClaimsIdentity(userName, userName);
+            var user = _appDbContext.Users.First(u => u.UserName == userName);
+            var roles = await _userManager.GetRolesAsync(user);
+            
+            var claimsIdentity = _jwtFactory.GenerateClaimsIdentity(userName, roles);
             var token = new
             {
                 id = claimsIdentity.Claims.Single(c => c.Type == "id").Value,

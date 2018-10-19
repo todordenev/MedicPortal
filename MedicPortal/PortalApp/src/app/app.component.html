@@ -9,8 +9,9 @@
       <div fxShow="true" fxHide.lt-sm="true">
         <!-- The following menu items will be hidden on both SM and XS screen sizes -->
         <a mat-button *ngIf="!isLoggedIn" [routerLink]="[ '/login' ]" routerLinkActive="active">Вход</a>
+        <a mat-button *ngIf="!isLoggedIn" [routerLink]="[ '/register' ]" routerLinkActive="active">Регистрация</a>
+        <a mat-button *ngIf="isLoggedIn" [routerLink]="[ '/manage' ]" routerLinkActive="active">{{userName}}</a>
         <a mat-button *ngIf="isLoggedIn" [routerLink]="[ '/logout' ]" routerLinkActive="active">Изход</a>
-        <a mat-button *ngIf="!isLoggedIn" [routerLink]="[ '/logout' ]" routerLinkActive="active">Регистрация</a>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -20,7 +21,7 @@
       <mat-nav-list (click)="sidenav.toggle()">
         <a mat-button *ngIf="!isLoggedIn" [routerLink]="[ '/doctors' ]" routerLinkActive="active" >
           <mat-icon>face</mat-icon>
-          Доктори
+          Доктори 
         </a>
 
         <a href="#" mat-list-item>

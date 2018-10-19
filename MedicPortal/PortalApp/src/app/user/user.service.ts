@@ -9,9 +9,15 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     providedIn: 'root'
 })
 export class UserService implements OnInit {
+    private authTokenNameConst = 'MedicPortal_auth_token';
     authUrl = '/api/accounts';
     private loggedIn = new BehaviorSubject<boolean>(false);
-    private auth_token: string;
+    private authToken: string;
+    get getUserName(): string {
+        const helper = new JwtHelperService();
+        const decodedToken = helper.decodeToken(this.authToken);
+        return 'Todor';
+    }
     get isLoggedIn() {
         return this.loggedIn.asObservable();
     }
@@ -20,18 +26,29 @@ export class UserService implements OnInit {
     constructor(private http: HttpClient) {
         this.ngOnInit();
     }
+    getAuthToken(): string {
+        return this.authToken;
+    }
     ngOnInit(): void {
-        this.auth_token = localStorage.getItem('auth_token');
+        this.authToken = localStorage.getItem(this.authTokenNameConst);
         if (this.isTokenValid()) {
             this.loggedIn.next(true);
+        }
+    }
+    hasRole(roleName: string) {
+        try {
+            const helper = new JwtHelperService();
+            const decodedToken = helper.decodeToken(this.authToken);
+            return true;
+        } catch (error) {
+            return false;
         }
     }
     private isTokenValid(): boolean {
         try {
             const helper = new JwtHelperService();
-            const decodedToken = helper.decodeToken(this.auth_token);
-            const isExpired = helper.isTokenExpired(this.auth_token);
-            
+            const decodedToken = helper.decodeToken(this.authToken);
+            const isExpired = helper.isTokenExpired(this.authToken);
             return !isExpired;
         } catch (error) {
             return false;
@@ -55,7 +72,7 @@ export class UserService implements OnInit {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.auth_token}`
+                'Authorization': `Bearer ${this.authToken}`
             })
         };
         return this.http.post(this.authUrl + '/logout', null, httpOptions)
@@ -66,7 +83,7 @@ export class UserService implements OnInit {
     }
     private onUserLoggedIn(userToken) {
         this.user = userToken.user;
-        localStorage.setItem('auth_token', userToken.auth_token);
+        localStorage.setItem(this.authTokenNameConst, userToken.auth_token);
         this.loggedIn.next(true);
         return userToken;
     }

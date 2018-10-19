@@ -103,6 +103,8 @@ namespace MedicPortal.Migrations
 
                     b.Property<string>("AppUserId");
 
+                    b.Property<bool>("Approved");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");

@@ -9,9 +9,14 @@ import { UserService } from './user/user.service';
 })
 export class AppComponent implements OnInit {
   isLoggedIn: boolean;
+  userName: string;
 
   ngOnInit(): void {
-    this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
+    this.userService.isLoggedIn.subscribe(value => this.userLoggedInChanged(value));
+  }
+  userLoggedInChanged(loggedIn: boolean): void {
+    this.isLoggedIn = loggedIn;
+    this.userName = this.userService.getUserName;
   }
 
   constructor(private userService: UserService) {

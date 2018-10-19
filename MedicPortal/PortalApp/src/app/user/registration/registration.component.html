@@ -1,23 +1,25 @@
-<form class="registration-form" [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)" novalidate>
-    <mat-form-field>
-        <input formControlName="email" matInput placeholder="Емайл">
-    </mat-form-field>
-    <mat-form-field>
-        <input formControlName="password" matInput placeholder="Парола">
-    </mat-form-field>
-    <mat-form-field>
-        <input formControlName="password2" matInput placeholder="Парола (отново)">
-    </mat-form-field>
-    <mat-form-field>
-        <input formControlName="firstName" matInput placeholder="Име">
-    </mat-form-field>
-    <mat-form-field>
-        <input formControlName="lastName" matInput placeholder="Фамилия">
-    </mat-form-field>
-    <mat-form-field>
-        <input formControlName="telefon" matInput placeholder="Телефон">
-    </mat-form-field>
-    <div>
-        <button mat-button type="submit" [disabled]="!registrationForm.valid">Регистрация</button>
-    </div>
-</form>
+<mat-card>
+    <form class="registration-form" [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)" novalidate>
+        <mat-form-field>
+            <input formControlName="email" matInput placeholder="Емайл">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="password" matInput placeholder="Парола">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="password2" matInput placeholder="Парола (отново)">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="firstName" matInput placeholder="Име">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="lastName" matInput placeholder="Фамилия">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="telefon" matInput placeholder="Телефон">
+        </mat-form-field>
+        <div>
+            <button mat-button type="submit" [disabled]="!registrationForm.valid">Регистрация</button>
+        </div>
+    </form>
+</mat-card>

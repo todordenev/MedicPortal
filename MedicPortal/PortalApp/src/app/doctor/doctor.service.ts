@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Doctor } from './Doctor';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
+import { UserService } from '../user/user.service';
 
 
 const DOCTORS: Doctor[] = [
@@ -32,7 +33,7 @@ const DOCTORS: Doctor[] = [
 export class DoctorService {
     authUrl = '/api/doctors';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private userService: UserService) { }
 
     getDoctors(): Observable<Doctor[]> {
         return of(DOCTORS);
@@ -40,8 +41,7 @@ export class DoctorService {
 
     getDoctor(id: number): Observable<any> {
         const url = this.authUrl + '/' + id;
-        const authToken = localStorage.getItem('auth_token');
-        const user_token = localStorage.getItem('user_token');
+        const authToken = this.userService.getAuthToken();
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

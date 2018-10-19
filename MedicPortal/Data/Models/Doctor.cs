@@ -13,5 +13,6 @@ namespace MedicPortal.Data.Models
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         public IList<Worktime> Worktimes { get; set; } = new List<Worktime>();
+        public bool Approved { get; set; }
     }
 }
