@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'doctors', component: DoctorListComponent, canActivate: [AuthenticationGuard] },
   { path: 'doctor/:id', component: DoctorDetailsComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LoginComponent, canActivate: [AuthenticationGuard]  },
   { path: 'register', component: RegistrationComponent }
 ];
 

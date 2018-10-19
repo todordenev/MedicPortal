@@ -1,11 +1,23 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
-    <mat-form-field>
-      <input formControlName="userName" matInput placeholder="Емайл">
-    </mat-form-field>
-    <mat-form-field>
-      <input formControlName="password" matInput placeholder="Парола" type="password">
-    </mat-form-field>    
+<div>
+  <mat-card>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" *ngIf="!isLoggedIn" novalidate>
+      <mat-form-field>
+        <input formControlName="userName" matInput placeholder="Емайл">
+      </mat-form-field>
+      <mat-form-field>
+        <input formControlName="password" matInput placeholder="Парола" type="password">
+      </mat-form-field>
+      <div>
+        <button mat-button type="submit" [disabled]="!loginForm.valid">Вход</button>
+      </div>
+    </form>
     <div>
-      <button mat-button type="submit" [disabled]="!loginForm.valid">Вход</button>
+      <div>
+
+      </div>
+      <div>
+        <button *ngIf="isLoggedIn" mat-button (click)="logout()">Изход</button>
+      </div>
     </div>
-  </form>
+  </mat-card>
+</div>

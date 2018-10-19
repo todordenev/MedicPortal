@@ -92,15 +92,13 @@ namespace MedicPortal.Controllers
 
         private async Task<object> GetUserToken(string userName)
         {
-            var user = await _userManager.FindByEmailAsync(userName);
-
-            var claimsIdentity = _jwtFactory.GenerateClaimsIdentity(userName, user.Id);
+           
+            var claimsIdentity = _jwtFactory.GenerateClaimsIdentity(userName, userName);
             var token = new
             {
                 id = claimsIdentity.Claims.Single(c => c.Type == "id").Value,
                 auth_token = await _jwtFactory.GenerateEncodedToken(userName, claimsIdentity),
-                expires_in = (int) _jwtOptions.ValidFor.TotalSeconds,
-                user = $"{user.FirstName} {user.LastName}"
+                expires_in = (int) _jwtOptions.ValidFor.TotalSeconds
             };
             return token;
         }

@@ -10,12 +10,14 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
-    constructor(private authService: UserService,
+    isLoggedIn: boolean;
+    constructor(private userService: UserService,
         private formBuilder: FormBuilder,
         private router: Router) { }
 
     ngOnInit() {
         this.createFormGroup();
+        this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
     }
     createFormGroup() {
         this.loginForm = this.formBuilder.group({
@@ -24,8 +26,12 @@ export class LoginComponent implements OnInit {
         });
     }
     onSubmit({ value, valid }) {
-        this.authService.login(value).subscribe((status) => {
+        this.userService.login(value).subscribe((status) => {
             this.router.navigate(['/doctors']);
+        });
+    }
+    logout() {
+        this.userService.logout().subscribe((status) => {
         });
     }
 }

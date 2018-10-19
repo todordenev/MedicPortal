@@ -1,26 +1,42 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Injectable, EventEmitter, Output, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { UserCredentials, Registration } from './registration';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Observer } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json', 'Accept': 'application/json'
-    })
-};
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnInit {
     authUrl = '/api/accounts';
-    isAuthenticated = false;
-    redirectUrl = '/';
-    user: string;
     private loggedIn = new BehaviorSubject<boolean>(false);
+    private auth_token: string;
+    get isLoggedIn() {
+        return this.loggedIn.asObservable();
+    }
+    user: string;
 
-    @Output()
-    authChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+        this.ngOnInit();
+    }
+    ngOnInit(): void {
+        this.auth_token = localStorage.getItem('auth_token');
+        if (this.isTokenValid()) {
+            this.loggedIn.next(true);
+        }
+    }
+    private isTokenValid(): boolean {
+        try {
+            const helper = new JwtHelperService();
+            const decodedToken = helper.decodeToken(this.auth_token);
+            const isExpired = helper.isTokenExpired(this.auth_token);
+            
+            return !isExpired;
+        } catch (error) {
+            return false;
+        }
+    }
     register(registration: Registration): Observable<any> {
         return this.http.post<any>(this.authUrl + '/register', registration)
             .pipe(
@@ -35,15 +51,24 @@ export class UserService {
                 catchError(this.handleError)
             );
     }
+    logout() {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.auth_token}`
+            })
+        };
+        return this.http.post(this.authUrl + '/logout', null, httpOptions)
+            .pipe(
+                map(result => { this.loggedIn.next(false); }),
+                catchError(this.handleError)
+            );
+    }
     private onUserLoggedIn(userToken) {
-        this.isAuthenticated = true;
         this.user = userToken.user;
         localStorage.setItem('auth_token', userToken.auth_token);
         this.loggedIn.next(true);
         return userToken;
-    }
-    get isLoggedIn() {
-        return this.loggedIn.asObservable();
     }
     private handleError(error: HttpErrorResponse) {
         console.error('server error:', error);
