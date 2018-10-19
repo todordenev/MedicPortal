@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { UserCredentials, Registration } from './registration';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 const httpOptions = {
     headers: new HttpHeaders({
@@ -16,6 +16,7 @@ export class UserService {
     isAuthenticated = false;
     redirectUrl = '/';
     user: string;
+    private loggedIn = new BehaviorSubject<boolean>(false);
 
     @Output()
     authChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -38,21 +39,17 @@ export class UserService {
         this.isAuthenticated = true;
         this.user = userToken.user;
         localStorage.setItem('auth_token', userToken.auth_token);
-        localStorage.setItem('current_user', userToken.user);
-        localStorage.setItem('user_token', userToken);
-        this.userAuthChanged(true);
+        this.loggedIn.next(true);
         return userToken;
     }
-    private userAuthChanged(status: boolean) {
-        this.authChanged.emit(status); // Raise changed event
+    get isLoggedIn() {
+        return this.loggedIn.asObservable();
     }
     private handleError(error: HttpErrorResponse) {
         console.error('server error:', error);
         if (error.error instanceof Error) {
             const errMessage = error.error.message;
             return Observable.throw(errMessage);
-            // Use the following instead if using lite-server
-            // return Observable.throw(err.text() || 'backend server error');
         }
         return Observable.throw(error || 'Server error');
     }

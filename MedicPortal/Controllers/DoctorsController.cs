@@ -23,10 +23,6 @@ namespace MedicPortal.Controllers
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        private static readonly string[] Summaries =
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
         // GET api/doctors
         [HttpGet]
         public List<Doctor> Get()

@@ -12,22 +12,16 @@
                 </span>
             </div>
             <div class="right">
-                <div [hidden]="!showAllElements">
-                    <a routerLink="manage" mat-button>{{authenticatedUser}}</a>
-                    <a routerLink="logout" mat-button>Изход</a>
-                    <a routerLink="login" mat-button>Вход</a>
-                    <a routerLink="register" mat-button>Регистрация</a>
-                </div>
-                <div [hidden]="showAllElements">
+                <div>
                     <button mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>perm_identity</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu">
-                        <a routerLink="/account/manage" mat-button>{{authenticatedUser}}</a>
-                        <a routerLink="/account/logout" mat-button>Изход</a>
-                        <a routerLink="/account/login" mat-button>Вход</a>
-                        <a routerLink="/account/register" mat-button>Регистрация</a>
-                    </mat-menu>
+                    <span *ngIf="isLoggedIn$ | async as isLoggedIn">
+                        <a routerLink="manage" routerLinkActive="active" mat-button>{{authenticatedUser}}</a>
+                        <a routerLink="logout" mat-button>Изход</a>
+                    </span>
+                    <a routerLink="login" mat-button *ngIf="isLoggedIn">Вход</a>
+                    <a routerLink="register" mat-button *ngIf="isLoggedIn">Регистрация</a>
                 </div>
             </div>
         </nav>

@@ -100,7 +100,6 @@ namespace MedicPortal.Controllers
                 id = claimsIdentity.Claims.Single(c => c.Type == "id").Value,
                 auth_token = await _jwtFactory.GenerateEncodedToken(userName, claimsIdentity),
                 expires_in = (int) _jwtOptions.ValidFor.TotalSeconds,
-                //issued_at = _jwtOptions.IssuedAt.ToString("O"),
                 user = $"{user.FirstName} {user.LastName}"
             };
             return token;

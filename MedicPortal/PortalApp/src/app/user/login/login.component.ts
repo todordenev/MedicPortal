@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
         });
     }
     onSubmit({ value, valid }) {
-        this.authService.login(value).subscribe((status)=>{
-            this.router.navigate(['/doctor/1']);
-        })
+        this.authService.login(value).subscribe((status) => {
+            this.router.navigate(['/doctors']);
+        });
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../../user/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-top-nav',
@@ -7,25 +8,19 @@ import { UserService } from '../../user/user.service';
     styleUrls: ['./top-nav.component.css']
 })
 export class TopNavComponent implements OnInit {
-    isAuthenticated: boolean;
-    authenticatedUser: string;
+    isLoggedIn$: Observable<boolean>;
     @Input()
     showAllElements: boolean;
-
-    get hideDesktopElements() {
-        return !this.showAllElements;
-    }
 
     @Output()
     toggleSideBarClicked = new EventEmitter<boolean>();
 
-    constructor(private authService: UserService) { }
+    constructor(private userService: UserService) { }
 
     ngOnInit() {
-        this.authService.authChanged
-            .subscribe(() => {
-                this.isAuthenticated = this.authService.isAuthenticated;
-                this.authenticatedUser = this.authService.user;
-            });
+        this.isLoggedIn$ = this.userService.isLoggedIn;
+    }
+    get hideDesktopElements() {
+        return !this.showAllElements;
     }
 }
