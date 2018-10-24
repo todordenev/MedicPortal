@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../user.service';
+import { UserService } from '../../shared/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,11 +11,10 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     isLoggedIn: boolean;
-    userName:string;
+    userName: string;
     constructor(private userService: UserService,
         private formBuilder: FormBuilder,
         private router: Router) { }
-
     ngOnInit() {
         this.createFormGroup();
         this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);

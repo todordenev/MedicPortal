@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Doctor } from './Doctor';
+import { Doctor } from '../doctor/Doctor';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { UserService } from '../user/user.service';
+import { UserService } from './user.service';
 
 
 const DOCTORS: Doctor[] = [
@@ -41,7 +41,7 @@ export class DoctorService {
 
     getDoctor(id: number): Observable<any> {
         const url = this.authUrl + '/' + id;
-        const authToken = this.userService.getAuthToken();
+        const authToken = this.userService.AuthToken;
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

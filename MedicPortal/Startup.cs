@@ -1,12 +1,10 @@
 using System;
 using System.Text;
 using AutoMapper;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using MedicPortal.Auth;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
-using MedicPortal.ViewModels;
 using MedicPortal.ViewModels.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -25,8 +23,7 @@ namespace MedicPortal
     {
         private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
 
-        private readonly SymmetricSecurityKey
-            _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
         public Startup(IConfiguration configuration)
         {
@@ -80,7 +77,7 @@ namespace MedicPortal
                 ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
 
                 ValidateAudience = false,
-                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)], 
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = _signingKey,
 
@@ -112,6 +109,7 @@ namespace MedicPortal
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
 
             app.UseHttpsRedirection();
@@ -132,10 +130,7 @@ namespace MedicPortal
 
                 spa.Options.SourcePath = "PortalApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer("start");
-                }
+                if (env.IsDevelopment()) spa.UseAngularCliServer("start");
             });
         }
     }

@@ -14,6 +14,7 @@ import { AuthenticationGuard } from './routing/authentication-guard';
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './routing/lower-case-url-serializer';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { RoleGuard } from './routing/role-guard';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     {
       provide: UrlSerializer,
       useClass: LowerCaseUrlSerializer
-    }
+    },
+    RoleGuard
   ],
   bootstrap: [AppComponent]
 })

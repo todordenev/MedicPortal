@@ -1,6 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from './user/user.service';
+import { UserService } from './shared/user.service';
 
 @Component({
   selector: 'app-root',

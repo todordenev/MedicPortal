@@ -42,11 +42,7 @@ namespace MedicPortal.Auth
         ///     Set the timespan the token will be valid for (default is 120 min)
         /// </summary>
         public TimeSpan ValidFor { get; set; } = TimeSpan.FromMinutes(600);
-        
-        /// <summary>
-        ///     "jti" (JWT ID) Claim (default ID is a GUID)
-        /// </summary>
-        public Func<Task<string>> JtiGenerator => () => Task.FromResult(Guid.NewGuid().ToString());
+       
 
         /// <summary>
         ///     The signing key to use when generating tokens.

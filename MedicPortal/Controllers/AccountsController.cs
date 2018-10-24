@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MedicPortal.Auth;
@@ -9,8 +10,6 @@ using MedicPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace MedicPortal.Controllers
 {
@@ -21,7 +20,7 @@ namespace MedicPortal.Controllers
     {
         private readonly ApplicationDbContext _appDbContext;
         private readonly IJwtFactory _jwtFactory;
-        private readonly JwtIssuerOptions _jwtOptions;
+
         private readonly IMapper _mapper;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
@@ -31,15 +30,13 @@ namespace MedicPortal.Controllers
             IMapper mapper,
             ApplicationDbContext appDbContext,
             IJwtFactory jwtFactory,
-            SignInManager<AppUser> signInManager,
-            IOptions<JwtIssuerOptions> jwtOptions)
+            SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _appDbContext = appDbContext;
             _jwtFactory = jwtFactory;
             _signInManager = signInManager;
-            _jwtOptions = jwtOptions.Value;
         }
 
         // POST api/accounts/register
@@ -63,7 +60,7 @@ namespace MedicPortal.Controllers
                 await _signInManager.PasswordSignInAsync(appUser.UserName, model.Password, true, false);
             if (!signInResult.Succeeded) return BadRequest(ModelState);
 
-            var token = await GetUserToken(userName);
+            var token = await GetAuthorizationToken(userName);
 
             return Ok(token);
         }
@@ -79,8 +76,8 @@ namespace MedicPortal.Controllers
                 ModelState.AddError("login_failure", "Invalid username or password.");
                 return BadRequest(ModelState);
             }
-            
-            var token = await GetUserToken(credentials.UserName);
+
+            var token = await GetAuthorizationToken(credentials.UserName);
 
             return Ok(token);
         }
@@ -92,17 +89,19 @@ namespace MedicPortal.Controllers
             return Ok();
         }
 
-        private async Task<object> GetUserToken(string userName)
+        private async Task<object> GetAuthorizationToken(string userName)
         {
             var user = _appDbContext.Users.First(u => u.UserName == userName);
+            var userClaims = user.GetUserClaims();
             var roles = await _userManager.GetRolesAsync(user);
-            
-            var claimsIdentity = _jwtFactory.GenerateClaimsIdentity(userName, roles);
+            foreach (var role in roles)
+            {
+                userClaims.Add(new Claim(Constants.JwtClaimIdentifiers.Rol, role));
+            }
+
             var token = new
             {
-                id = claimsIdentity.Claims.Single(c => c.Type == "id").Value,
-                auth_token = await _jwtFactory.GenerateEncodedToken(userName, claimsIdentity),
-                expires_in = (int) _jwtOptions.ValidFor.TotalSeconds
+                auth_token = _jwtFactory.GenerateEncodedToken(userClaims)
             };
             return token;
         }

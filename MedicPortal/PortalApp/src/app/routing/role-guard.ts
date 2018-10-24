@@ -1,5 +1,5 @@
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { UserService } from '../user/user.service';
+import { UserService } from '../shared/user.service';
 import { OnInit, Injectable } from '@angular/core';
 
 @Injectable()
@@ -12,7 +12,10 @@ export class RoleGuard implements CanActivate {
         state: RouterStateSnapshot
     ): boolean {
         const roleName = route.data.role;
-        return this.userService.hasRole(roleName);
+        if (roleName) {
+            return this.userService.hasRole(roleName);
+        }
+        return true;
     }
 
 }

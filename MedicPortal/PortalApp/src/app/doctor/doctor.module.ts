@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DoctorDetailsComponent } from './doctor-details/doctor-details.component';
 import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
 import { Doctor } from './Doctor';
+import { DoctorEditComponent } from './doctor-edit/doctor-edit.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { Doctor } from './Doctor';
     DoctorListitemComponent,
     DoctorListComponent,
     DoctorDetailsComponent,
-    DoctorRegistrationComponent
+    DoctorRegistrationComponent,
+    DoctorEditComponent
   ],
   exports: [
     DoctorListitemComponent,
@@ -34,5 +36,6 @@ export {
   DoctorListComponent,
   DoctorListitemComponent,
   DoctorDetailsComponent,
-  DoctorRegistrationComponent
+  DoctorRegistrationComponent,
+  DoctorEditComponent
 };

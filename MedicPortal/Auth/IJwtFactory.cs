@@ -6,7 +6,6 @@ namespace MedicPortal.Auth
 {
     public interface IJwtFactory
     {
-        Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity);
-        ClaimsIdentity GenerateClaimsIdentity(string userName, IEnumerable<string> id);
+        string GenerateEncodedToken(IEnumerable<Claim> claims);
     }
 }

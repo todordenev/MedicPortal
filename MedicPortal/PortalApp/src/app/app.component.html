@@ -15,8 +15,7 @@
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-
-  <mat-sidenav-container fxFlexFill>
+  <mat-sidenav-container >
     <mat-sidenav #sidenav>
       <mat-nav-list (click)="sidenav.toggle()">
         <a mat-button *ngIf="!isLoggedIn" [routerLink]="[ '/doctors' ]" routerLinkActive="active" >

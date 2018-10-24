@@ -11,12 +11,12 @@
         <button mat-button type="submit" [disabled]="!loginForm.valid">Вход</button>
       </div>
     </form>
-    <div>
+    <div *ngIf="isLoggedIn"> 
       <div>
-        
+        Емайл: {{userName}}
       </div>
       <div>
-        <button *ngIf="isLoggedIn" mat-button (click)="logout()">Изход</button>
+        <button mat-button (click)="logout()">Изход</button>
       </div>
     </div>
   </mat-card>
