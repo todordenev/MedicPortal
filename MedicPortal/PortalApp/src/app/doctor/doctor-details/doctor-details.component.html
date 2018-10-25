@@ -1,7 +1,7 @@
 <mat-card *ngIf="!!doctor">
   <mat-card-header>
     <div mat-card-avatar class="doctor-header-image"></div>
-    <mat-card-title><a routerLink="./doctor/{{doctor.id}}">{{doctor.name}}</a></mat-card-title>
+    <mat-card-title>{{doctor.displayName}}</mat-card-title>
     <mat-card-subtitle>Dog Breed</mat-card-subtitle>
   </mat-card-header>
   <div class="image-container">

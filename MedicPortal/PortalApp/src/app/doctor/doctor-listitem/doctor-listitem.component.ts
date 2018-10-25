@@ -16,7 +16,7 @@ export class DoctorListitemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  imageUrl(doctor: Doctor) {
-    return './assets/doctor' + doctor.id + '.jpg';
+  get imageUrl() {
+    return './assets/doctor_' + this.doctor.id + '.jpg';
   }
 }

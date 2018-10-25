@@ -9,7 +9,7 @@
 }
 
 .doctor-header-image {
-    background-image: url('/assets/doctor1.jpg'); 
+    
     background-size: cover; 
     width: calc(100px-20px);
     margin: 10px;
@@ -26,7 +26,10 @@
     display: block;
     margin: auto !important;
 }
-
+.mat-card-subtitle span
+{
+    margin-right: 5px;
+}
 .mat-card-content {
     padding-top: 10px;
 }

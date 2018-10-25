@@ -5,7 +5,8 @@ import {
   MatInputModule,
   MatFormFieldModule,
   MatButtonModule,
-  MatCardModule
+  MatCardModule,
+  MatExpansionModule
 } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
@@ -18,7 +19,8 @@ import { AccountComponent } from './account/account.component';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatExpansionModule
   ],
   declarations: [
     LoginComponent,

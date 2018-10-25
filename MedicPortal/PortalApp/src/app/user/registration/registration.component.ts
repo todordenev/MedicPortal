@@ -15,18 +15,18 @@ export class RegistrationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.isLoggedIn.subscribe(value => this.createFormGroup(this.userService.user));
+        this.createFormGroup(this.userService.user);
     }
 
     createFormGroup(user: User) {
-        const tuser = user;
+
         this.registrationForm = this.formBuilder.group({
-            firstName: ['Todor', [Validators.required]],
-            lastName: ['Denev', [Validators.required]],
-            email: ['todor_denev@yahoo.com', [Validators.required]],
+            firstName: [user ? user.givenName : 'Todor', [Validators.required]],
+            lastName: [user ? user.familyName : 'Denev', [Validators.required]],
+            email: [user ? user.email : 'todor_denev@yahoo.com', [Validators.required]],
             password: ['123456', [Validators.required]],
             password2: ['123456', [Validators.required]],
-            telefon: ['01234', [Validators.required]]
+            telefon: [user ? user.Phone : '01234', [Validators.required]]
         });
     }
     onSubmit({ value }) {

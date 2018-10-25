@@ -15,7 +15,7 @@ namespace MedicPortal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -107,6 +107,8 @@ namespace MedicPortal.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<string>("LastName");
 
                     b.HasKey("Id");
@@ -114,6 +116,19 @@ namespace MedicPortal.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.DoctorManager", b =>
+                {
+                    b.Property<string>("DoctorId");
+
+                    b.Property<string>("AppUserId");
+
+                    b.HasKey("DoctorId", "AppUserId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("DoctorManager");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.DoctorPatient", b =>
@@ -131,6 +146,19 @@ namespace MedicPortal.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("DoctorPatients");
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.DoctorSpezialisations", b =>
+                {
+                    b.Property<string>("DoctorId");
+
+                    b.Property<string>("SpezialisationId");
+
+                    b.HasKey("DoctorId", "SpezialisationId");
+
+                    b.HasIndex("SpezialisationId");
+
+                    b.ToTable("DoctorSpezialisations");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.Patient", b =>
@@ -157,6 +185,18 @@ namespace MedicPortal.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("MedicPortal.Data.Models.Spezialisation", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Spezialisations");
+                });
+
             modelBuilder.Entity("MedicPortal.Data.Models.Worktime", b =>
                 {
                     b.Property<int>("Id")
@@ -165,9 +205,7 @@ namespace MedicPortal.Migrations
 
                     b.Property<int>("DayOfWeek");
 
-                    b.Property<int>("DoctorId");
-
-                    b.Property<string>("DoctorId1");
+                    b.Property<string>("DoctorId");
 
                     b.Property<double>("From");
 
@@ -175,7 +213,7 @@ namespace MedicPortal.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId1");
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("Worktimes");
                 });
@@ -308,16 +346,42 @@ namespace MedicPortal.Migrations
                         .HasForeignKey("AppUserId");
                 });
 
-            modelBuilder.Entity("MedicPortal.Data.Models.DoctorPatient", b =>
+            modelBuilder.Entity("MedicPortal.Data.Models.DoctorManager", b =>
                 {
+                    b.HasOne("MedicPortal.Data.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("MedicPortal.Data.Models.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.DoctorPatient", b =>
+                {
+                    b.HasOne("MedicPortal.Data.Models.Doctor", "Doctor")
+                        .WithMany("DoctorPatients")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MedicPortal.Data.Models.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("DoctorPatients")
                         .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.DoctorSpezialisations", b =>
+                {
+                    b.HasOne("MedicPortal.Data.Models.Doctor", "Doctor")
+                        .WithMany("DoctorSpezialisations")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MedicPortal.Data.Models.Spezialisation", "Spezialisation")
+                        .WithMany("DoctorSpezialisationses")
+                        .HasForeignKey("SpezialisationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -332,7 +396,7 @@ namespace MedicPortal.Migrations
                 {
                     b.HasOne("MedicPortal.Data.Models.Doctor", "Doctor")
                         .WithMany("Worktimes")
-                        .HasForeignKey("DoctorId1");
+                        .HasForeignKey("DoctorId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -17,7 +17,7 @@ export class UserService implements OnInit {
     private authToken: string;
     private _user: User;
     get getUserName(): string {
-        return 'Todor';
+        return this.user ? this.user.displayName : '';
     }
     get isLoggedIn() {
         return this.loggedIn.asObservable();

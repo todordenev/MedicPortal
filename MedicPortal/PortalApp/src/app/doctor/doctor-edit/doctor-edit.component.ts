@@ -14,12 +14,8 @@ export class DoctorEditComponent implements OnInit {
   constructor(private doctorService: DoctorService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    if (id > 0) {
-      this.doctorService.getDoctor(id).subscribe((doc: Doctor) => this.doctor = doc);
-    } else {
-      this.doctor = new Doctor();
-    }
+    const id = this.route.snapshot.paramMap.get('id');
+    this.doctorService.getDoctor(id).subscribe((doc: Doctor) => this.doctor = doc);
   }
   imageUrl(doctor: Doctor) {
     return './assets/doctor' + doctor.id + '.jpg';

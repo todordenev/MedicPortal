@@ -10,6 +10,14 @@ import { UserService } from './shared/user.service';
 export class AppComponent implements OnInit {
   isLoggedIn: boolean;
   userName: string;
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
+  constructor(private userService: UserService,
+    changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   ngOnInit(): void {
     this.userService.isLoggedIn.subscribe(value => this.userLoggedInChanged(value));
@@ -19,6 +27,5 @@ export class AppComponent implements OnInit {
     this.userName = this.userService.getUserName;
   }
 
-  constructor(private userService: UserService) {
-  }
+
 }

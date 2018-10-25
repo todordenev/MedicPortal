@@ -6,6 +6,7 @@ export class User {
     email: string;
     Phone: string;
     roles: string[];
+    displayName: string;
 
     constructor(jwt?: string) {
         if (jwt) {
@@ -21,5 +22,6 @@ export class User {
         this.email = jwt.email;
         this.Phone = jwt.phone;
         this.roles = jwt.role;
+        this.displayName = this.givenName + ' ' + this.familyName;
     }
 }

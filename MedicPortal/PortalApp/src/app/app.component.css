@@ -1,4 +1,9 @@
-Ä.example-spacer {
+.main-application {
+    min-width: 400px;    
+    height: 100%;
+}
+
+.example-spacer {
     flex: 1 1 auto;
 }
 

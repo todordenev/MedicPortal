@@ -4,55 +4,56 @@ import { Doctor } from '../doctor/Doctor';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { UserService } from './user.service';
-
-
-const DOCTORS: Doctor[] = [
-    {
-        name: 'Irina Ivanova', id: 1, worktimes: [
-            { id: 1, dayOfWeek: 0, from: 8.00, till: 12.00 },
-            { id: 2, dayOfWeek: 1, from: 9.00, till: 12.00 },
-            { id: 3, dayOfWeek: 2, from: 9.5, till: 12.00 },
-            { id: 4, dayOfWeek: 3, from: 10, till: 12.00 },
-            { id: 5, dayOfWeek: 4, from: 11, till: 12.00 }
-        ]
-    },
-    {
-        name: 'Hristo Hristov', id: 2, worktimes: [
-            { id: 1, dayOfWeek: 0, from: 8.00, till: 12.00 },
-            { id: 2, dayOfWeek: 1, from: 9.00, till: 12.00 },
-            { id: 3, dayOfWeek: 2, from: 9.5, till: 12.00 },
-            { id: 4, dayOfWeek: 3, from: 10, till: 12.00 },
-            { id: 5, dayOfWeek: 4, from: 11, till: 12.00 }
-        ]
-    }
-];
+import { AuthHttpClientService } from './auth-http-client.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DoctorService {
-    authUrl = '/api/doctors';
+    endpointUrl = '/api/doctors';
+    doctors: Doctor[] = [];
 
-    constructor(private http: HttpClient, private userService: UserService) { }
+    constructor(private http: AuthHttpClientService, private userService: UserService) { }
 
     getDoctors(): Observable<Doctor[]> {
-        return of(DOCTORS);
-    }
-
-    getDoctor(id: number): Observable<any> {
-        const url = this.authUrl + '/' + id;
-        const authToken = this.userService.AuthToken;
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            })
-        };
-        return this.http.get(url, httpOptions)
+        if (this.doctors.length > 0) {
+            return of(this.doctors);
+        }
+        return this.http.get(this.endpointUrl)
             .pipe(
-                map(doctor => { }),
+                map(serverResult => this.setDoctors(serverResult)),
                 catchError(this.handleError)
             );
+    }
+
+    setDoctors(serverResult) {
+        if (serverResult instanceof Array) {
+            serverResult.forEach(element => {
+                const doc = new Doctor(element);
+                this.doctors.push(doc);
+            });
+        }
+
+        return this.doctors;
+    }
+
+    getDoctor(id: string): Observable<Doctor> {
+        const url = this.endpointUrl + '/' + id;
+        return this.http.get(url)
+            .pipe(
+                map(doctor => this.mapDoctorFromServer(doctor)),
+                catchError(this.handleError)
+            );
+    }
+
+    mapDoctorFromServer(serverResult) {
+        const doc = new Doctor(serverResult);
+        this.doctors.push(doc);
+        return doc;
+    }
+
+    clearCachedDoctors() {
+        this.doctors = [];
     }
     private handleError(error: HttpErrorResponse) {
         console.error('server error:', error);

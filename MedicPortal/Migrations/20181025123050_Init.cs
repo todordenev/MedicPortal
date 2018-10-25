@@ -50,6 +50,18 @@ namespace MedicPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Spezialisations",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Spezialisations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -163,7 +175,8 @@ namespace MedicPortal.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     AppUserId = table.Column<string>(nullable: true),
-                    Approved = table.Column<bool>(nullable: false)
+                    Approved = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,6 +213,54 @@ namespace MedicPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DoctorManager",
+                columns: table => new
+                {
+                    DoctorId = table.Column<string>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorManager", x => new { x.DoctorId, x.AppUserId });
+                    table.ForeignKey(
+                        name: "FK_DoctorManager_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DoctorManager_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DoctorSpezialisations",
+                columns: table => new
+                {
+                    DoctorId = table.Column<string>(nullable: false),
+                    SpezialisationId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorSpezialisations", x => new { x.DoctorId, x.SpezialisationId });
+                    table.ForeignKey(
+                        name: "FK_DoctorSpezialisations_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DoctorSpezialisations_Spezialisations_SpezialisationId",
+                        column: x => x.SpezialisationId,
+                        principalTable: "Spezialisations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Worktimes",
                 columns: table => new
                 {
@@ -208,15 +269,14 @@ namespace MedicPortal.Migrations
                     DayOfWeek = table.Column<int>(nullable: false),
                     From = table.Column<double>(nullable: false),
                     Till = table.Column<double>(nullable: false),
-                    DoctorId = table.Column<int>(nullable: false),
-                    DoctorId1 = table.Column<string>(nullable: true)
+                    DoctorId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Worktimes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Worktimes_Doctors_DoctorId1",
-                        column: x => x.DoctorId1,
+                        name: "FK_Worktimes_Doctors_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -325,6 +385,11 @@ namespace MedicPortal.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DoctorManager_AppUserId",
+                table: "DoctorManager",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DoctorPatients_PatientId",
                 table: "DoctorPatients",
                 column: "PatientId");
@@ -335,14 +400,19 @@ namespace MedicPortal.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DoctorSpezialisations_SpezialisationId",
+                table: "DoctorSpezialisations",
+                column: "SpezialisationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patients_AppUserId",
                 table: "Patients",
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Worktimes_DoctorId1",
+                name: "IX_Worktimes_DoctorId",
                 table: "Worktimes",
-                column: "DoctorId1");
+                column: "DoctorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -366,7 +436,13 @@ namespace MedicPortal.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DoctorManager");
+
+            migrationBuilder.DropTable(
                 name: "DoctorPatients");
+
+            migrationBuilder.DropTable(
+                name: "DoctorSpezialisations");
 
             migrationBuilder.DropTable(
                 name: "Worktimes");
@@ -376,6 +452,9 @@ namespace MedicPortal.Migrations
 
             migrationBuilder.DropTable(
                 name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "Spezialisations");
 
             migrationBuilder.DropTable(
                 name: "Doctors");

@@ -15,7 +15,7 @@
         /// </summary>
         public double Till { get; set; }
 
-        public int DoctorId { get; set; }
+        public string DoctorId { get; set; }
         public Doctor Doctor { get; set; }
     }
 }

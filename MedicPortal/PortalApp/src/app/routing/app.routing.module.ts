@@ -11,11 +11,11 @@ import { AccountComponent } from '../user/account/account.component';
 const routes: Routes = [
   { path: '', component: DoctorListComponent },
   { path: 'doctors', component: DoctorListComponent, canActivate: [AuthenticationGuard] },
-  { path: 'doctor/:id', component: DoctorDetailsComponent, canActivate: [AuthenticationGuard] },
+  { path: 'doctors/:id', component: DoctorDetailsComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LoginComponent, canActivate: [AuthenticationGuard] },
   { path: 'register', component: RegistrationComponent },
-  { path: 'manage', component: RegistrationComponent },
+  { path: 'manage', component: AccountComponent },
   {
     path: 'doctor-edit/:id', component: DoctorEditComponent, canActivate: [AuthenticationGuard, RoleGuard],
     data: { role: 'doctor-manager' }

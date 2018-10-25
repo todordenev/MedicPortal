@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -12,41 +11,26 @@ using Microsoft.AspNetCore.Mvc;
 namespace MedicPortal.Controllers
 {
     [Authorize]
-    [Route("api/doctors")]
-    public class DoctorsController : Controller
+    [Route("api/manager")]
+    [Authorize]
+    public class ManagerController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public DoctorsController(ApplicationDbContext dbContext,IMapper mapper)
+        public ManagerController(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        // GET api/doctors
+
+        // GET api/doctor
         [HttpGet]
         public List<Doctor> Get()
         {
             return _dbContext.Doctors.ToList();
         }
-
-        // GET api/doctors/5
-        [HttpGet("{id}")]
-        public ActionResult<Doctor> Get(string id)
-        {
-            if (id.IsNullOrEmpty())
-            {
-                return BadRequest();
-            }
-            var doctor = _dbContext.Doctors.FirstOrDefault(d => d.Id == id);
-            if (doctor == null)
-            {
-                NotFound();
-            }
-
-            return doctor;
-        }
-
+        
         // POST api/doctors
         [HttpPost]
         public IActionResult Post([FromBody] DoctorViewModel value)
@@ -55,7 +39,7 @@ namespace MedicPortal.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             var doctor = _mapper.Map<Doctor>(value);
             _dbContext.Update(doctor);
             _dbContext.SaveChanges();
