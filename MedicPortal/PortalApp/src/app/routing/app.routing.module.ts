@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DoctorListComponent, DoctorListitemComponent, DoctorDetailsComponent, DoctorEditComponent } from '../doctor/doctor.module';
+import { DoctorListComponent, DoctorDetailsComponent, DoctorEditComponent } from '../doctor/doctor.module';
 import { RegistrationComponent, LoginComponent } from '../user/user.module';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationGuard } from './authentication-guard';
@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LoginComponent, canActivate: [AuthenticationGuard] },
   { path: 'register', component: RegistrationComponent },
-  { path: 'manage', component: AccountComponent },
+  { path: 'manage', component: AccountComponent, canActivate: [AuthenticationGuard] },
   {
     path: 'doctor-edit/:id', component: DoctorEditComponent, canActivate: [AuthenticationGuard, RoleGuard],
     data: { role: 'doctor-manager' }

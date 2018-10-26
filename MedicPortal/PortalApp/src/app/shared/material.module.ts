@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-
+import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {
   MatIconModule,
   MatToolbarModule,
@@ -8,7 +8,12 @@ import {
   MatNavList,
   MatListModule,
   MatMenuModule,
-  MatCardModule
+  MatCardModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatExpansionModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 
 
@@ -20,7 +25,11 @@ import {
     MatButtonModule,
     MatListModule,
     MatMenuModule,
-    MatCardModule
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatDatepickerModule
   ],
   exports: [
     MatIconModule,
@@ -30,7 +39,16 @@ import {
     MatListModule,
     MatMenuModule,
     MatNavList,
-    MatCardModule
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    MatDatepickerModule,
+    {provide: MAT_DATE_LOCALE, useValue: 'bg-BG'},
   ]
 })
 export class MaterialModule { }

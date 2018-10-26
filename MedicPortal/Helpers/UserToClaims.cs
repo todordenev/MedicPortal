@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using MedicPortal.Data.Models;
 
@@ -19,6 +20,12 @@ namespace MedicPortal.Helpers
                 new Claim(Constants.JwtClaimIdentifiers.Phone, user.PhoneNumber ?? "")
             };
             return claims;
+        }
+
+        public static string GetUserId(this ClaimsPrincipal user)
+        {
+            var claim = user.Claims.FirstOrDefault(cl => cl.Type == Constants.JwtClaimIdentifiers.Id);
+            return claim?.Value;
         }
     }
 }

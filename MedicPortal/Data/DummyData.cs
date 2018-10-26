@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MedicPortal.Data.Models;
@@ -16,7 +17,10 @@ namespace MedicPortal.Data
             new AppUser {Email = "user2@test.de", FirstName = "Test2", LastName = "User", PhoneNumber = "01234"},
             new AppUser {Email = "user3@test.de", FirstName = "Test3", LastName = "User", PhoneNumber = "01234"},
             new AppUser {Email = "user4@test.de", FirstName = "Test4", LastName = "User", PhoneNumber = "01234"},
-            new AppUser {Email = "todor_denev@yahoo.com", FirstName = "Todor", LastName = "Denev", PhoneNumber = "01234"}
+            new AppUser
+            {
+                Email = "todor_denev@yahoo.com", FirstName = "Todor", LastName = "Denev", PhoneNumber = "01234"
+            }
         };
 
         private static readonly List<Doctor> Doctors = new List<Doctor>
@@ -57,6 +61,25 @@ namespace MedicPortal.Data
             }
         };
 
+        private static readonly List<Patient> Patients = new List<Patient>
+        {
+            new Patient
+            {
+                FirstName = "Todor", Adress = "Tiulbenska 62", AppUser = AppUsers[4],
+                Birthdate = new DateTime(1982, 12, 11), LastName = "Denev", Telefon = "012345"
+            },
+            new Patient
+            {
+                FirstName = "Thea", Adress = "Mühlenstraße 4", AppUser = AppUsers[4],
+                Birthdate = new DateTime(2016, 2, 20), LastName = "Denev"
+            },
+            new Patient
+            {
+                FirstName = "Daniel", Adress = "Mühlenstraße 4", AppUser = AppUsers[4],
+                Birthdate = new DateTime(2013, 10, 7), LastName = "Denev"
+            }
+        };
+
         private static readonly List<Spezialisation> Spezialisations = new List<Spezialisation>
         {
             new Spezialisation {Name = "Kinderarzt"},
@@ -84,15 +107,13 @@ namespace MedicPortal.Data
             }
 
             Task.Run(async () => await EnsureUsers()).Wait();
-            EnsureSpecializations();
+            
+            _dbContext.AddRange(DoctorSpezialisations);
             _dbContext.AddRange(Doctors);
-        }
-
-        private static void EnsureSpecializations()
-        {
-            _dbContext.DoctorSpezialisations.AddRange(DoctorSpezialisations);
+            _dbContext.AddRange(Patients);
             _dbContext.SaveChanges();
         }
+        
 
 
         public static async Task EnsureUsers()

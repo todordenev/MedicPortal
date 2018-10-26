@@ -11,17 +11,20 @@
     <app-registration>
     </app-registration>
   </mat-expansion-panel>
-  <mat-expansion-panel [expanded]="activation === 'patients'">
+  <mat-expansion-panel [expanded]="activation === 'patients'" (opened)="patientsOpened=true">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Пациенти
+        <span>
+          <span>Пациенти</span> 
+          <button mat-button (click)="patientList.addPatient()">Нов Пациент</button>
+        </span>
       </mat-panel-title>
       <mat-panel-description>
         Данни на регистрирани пациенти
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div>
-      
+      <app-patient-list #patientList></app-patient-list>
     </div>
   </mat-expansion-panel>
   <mat-expansion-panel>

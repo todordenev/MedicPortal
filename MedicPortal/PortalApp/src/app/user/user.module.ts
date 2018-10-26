@@ -1,26 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  MatInputModule,
-  MatFormFieldModule,
-  MatButtonModule,
-  MatCardModule,
-  MatExpansionModule
-} from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AccountComponent } from './account/account.component';
+import { MaterialModule } from '../shared/material.module';
+import { PatientModule } from '../patient/patient.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatCardModule,
-    MatExpansionModule
+    MaterialModule,
+    PatientModule
+
   ],
   declarations: [
     LoginComponent,

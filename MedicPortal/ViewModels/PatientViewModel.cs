@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace MedicPortal.Data.Models
+namespace MedicPortal.ViewModels
 {
-    public class Patient
+    public class PatientViewModel
     {
         public string Id { get; set; }
-        public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime Birthdate { get; set; }
         public string Adress { get; set; }
         public string Telefon { get; set; }
-        public IList<DoctorPatient> DoctorPatients { get; set; } = new List<DoctorPatient>();
     }
 }

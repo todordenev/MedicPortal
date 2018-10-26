@@ -9,22 +9,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedicPortal.Controllers
 {
-    [Route("api")]
+    [Route("api/doctors")]
     [ApiController]
-    public class GlobalController : ControllerBase
+    public class DoctorController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
         private IMapper _mapper;
 
-        public GlobalController(ApplicationDbContext dbContext, IMapper mapper)
+        public DoctorController(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
 
         [HttpGet]
-        [Route("doctors")]
-        public List<Doctor> GetAllDoctors()
+        public List<Doctor> Get()
         {
             var doctors = _dbContext.Doctors.Include(d => d.Worktimes)
                 .Include(d => d.DoctorSpezialisations).ThenInclude(ds=>ds.Spezialisation).ToList();
@@ -33,7 +32,7 @@ namespace MedicPortal.Controllers
         }
 
         // GET api/doctors/5
-        [HttpGet("doctors/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<Doctor> Get(string id)
         {
             if (id.IsNullOrEmpty())

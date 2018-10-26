@@ -36,4 +36,10 @@ export class AuthHttpClientService {
     }
     return this.http.post(url, body, this.httpOptions);
   }
+  patch(url, body?) {
+    if (this.swapUrl) {
+      url = serverApiUrl + url;
+    }
+    return this.http.patch(url, body, this.httpOptions);
+  }
 }

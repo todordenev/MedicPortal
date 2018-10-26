@@ -11,6 +11,7 @@ namespace MedicPortal.ViewModels.Mappers
                 .ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
             CreateMap<DoctorViewModel, Doctor>();
             CreateMap<WorktimeViewModel, Worktime>();
+            CreateMap<PatientViewModel, Patient>();
         }
     }
 }

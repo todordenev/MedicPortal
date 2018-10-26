@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule, MatButtonModule } from '@angular/material';
+import { MaterialModule } from '../shared/material.module';
 import { DoctorListComponent } from './doctor-list/doctor-list.component';
 import { DoctorListitemComponent } from './doctor-listitem/doctor-listitem.component';
 import { RouterModule } from '@angular/router';
@@ -12,9 +12,8 @@ import { DoctorEditComponent } from './doctor-edit/doctor-edit.component';
 @NgModule({
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    RouterModule
+    RouterModule,
+    MaterialModule
   ],
   declarations: [
     DoctorListitemComponent,

@@ -38,7 +38,11 @@ namespace MedicPortal
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddFluentValidation()
                 .AddJsonOptions(
-                    options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    options =>
+                    {
+                        options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
+                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    }
                 );
 
             services.AddAutoMapper();

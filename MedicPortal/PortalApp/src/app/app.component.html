@@ -21,29 +21,39 @@
     <mat-sidenav #sidenav [opened]="mobileQuery.matches?false:true" [mode]="mobileQuery.matches?'over':'side'"
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list (click)="mobileQuery.matches && sidenav.toggle()">
-        <a mat-button [routerLink]="[ '/doctors' ]" routerLinkActive="active">
+        <a mat-button [routerLink]="[ '/doctors' ]">
           <mat-icon>face</mat-icon>
           Доктори
         </a>
-        <a [routerLink]="[ '/appointments']" mat-list-item routerLinkActive="active">
+        <a [routerLink]="[ '/appointments']" mat-list-item>
           <mat-icon>event</mat-icon>
           Прегледи
         </a>
-        <a [routerLink]="[ '/manage',{'activation':'patients'} ]" mat-list-item routerLinkActive="active">
-          <mat-icon>person</mat-icon>
+        <a [routerLink]="[ '/manage',{'activation':'patients'} ]" mat-list-item *ngIf="isLoggedIn">
+          <mat-icon>group</mat-icon>
           Мойте пациенти
         </a>
-        <a [routerLink]="[ '/manage' ]" mat-list-item>
-          <mat-icon>lock</mat-icon>
-          {{userName}}
-        </a>
-        <mat-divider fxShow.lt-sm="true" fxHide="true"></mat-divider>
-        <a mat-list-item fxShow.lt-sm="true" fxHide="true">
-          <mat-icon>close</mat-icon> Изход
-        </a>
+        <div [hidden]="!mobileQuery.matches">
+          <mat-divider></mat-divider>
+          <a mat-list-item *ngIf="isLoggedIn" [routerLink]="[ '/manage' ]">
+            <mat-icon>lock</mat-icon>
+            {{userName}}
+          </a>
+          <a mat-list-item *ngIf="isLoggedIn" [routerLink]="[ '/logout' ]">
+            <mat-icon>close</mat-icon> Изход
+          </a>          
+          <a mat-list-item *ngIf="!isLoggedIn" [routerLink]="[ '/login' ]">
+            <mat-icon>lock_open</mat-icon>
+            Вход
+          </a>
+          <a mat-list-item *ngIf="!isLoggedIn" [routerLink]="[ '/register' ]">
+            <mat-icon>person_add</mat-icon>
+            Регистрация
+          </a>
+        </div>
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content fxFlexFill>
+    <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
