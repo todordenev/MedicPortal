@@ -11,12 +11,13 @@
     <app-registration>
     </app-registration>
   </mat-expansion-panel>
-  <mat-expansion-panel [expanded]="activation === 'patients'" (opened)="patientsOpened=true">
+  <mat-expansion-panel [expanded]="activation === 'patients'" (opened)="patientsOpened = true"
+  (closed)="patientsOpened = false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <span>
           <span>Пациенти</span> 
-          <button mat-button (click)="patientList.addPatient()">Нов Пациент</button>
+          <button mat-button *ngIf="patientsOpened" (click)="patientList.addPatient($event)">Нов Пациент</button>
         </span>
       </mat-panel-title>
       <mat-panel-description>

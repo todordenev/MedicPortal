@@ -16,7 +16,8 @@ export class PatientListComponent implements OnInit {
     this.patientService.getPatients().subscribe(patients => this.patients = patients);
   }
   @Input()
-  addPatient() {
+  addPatient(event) {
+    event.stopPropagation();
     this.patients.push(new Patient());
   }
 }
