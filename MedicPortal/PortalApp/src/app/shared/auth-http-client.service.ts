@@ -42,4 +42,10 @@ export class AuthHttpClientService {
     }
     return this.http.patch(url, body, this.httpOptions);
   }
+  delete(url: string): any {
+    if (this.swapUrl) {
+      url = serverApiUrl + url;
+    }
+    return this.http.delete(url, this.httpOptions);
+  }
 }

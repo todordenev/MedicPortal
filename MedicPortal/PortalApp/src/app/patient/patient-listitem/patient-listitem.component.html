@@ -7,15 +7,20 @@
       <input formControlName="lastName" matInput placeholder="Фамилия">
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="picker3" placeholder="Рожденна дата" formControlName="birthdate">
+      <input matInput [matDatepicker]="picker3" placeholder="Рожденна дата"  formControlName="birthdate">
       <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
       <mat-datepicker #picker3></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
       <input formControlName="telefon" matInput placeholder="Телефон">
     </mat-form-field>
+    <mat-form-field>
+      <input formControlName="adress" matInput placeholder="Адрес">
+    </mat-form-field>
     <div>
       <button mat-button type="submit" [disabled]="!patientForm.valid || patientForm.pristine">Запази</button>
+      <button mat-button type="button" (click)="cratePatientForm()" [disabled]="patientForm.pristine">Откажи</button>
+      <button mat-button type="button" (click)="deletePatient()">Изтрий</button>
     </div>
   </form>
 </mat-card>

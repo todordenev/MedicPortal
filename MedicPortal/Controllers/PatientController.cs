@@ -43,8 +43,10 @@ namespace MedicPortal.Controllers
         {
             var patient = _mapper.Map<Patient>(model);
             patient.AppUserId = User.GetUserId();
-            
+
             _dbContext.Patients.Add(patient);
+            _dbContext.SaveChanges();
+
             return patient;
         }
 
@@ -70,6 +72,26 @@ namespace MedicPortal.Controllers
             }
 
             return Ok(patient);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var patient = await _dbContext.Patients.FindAsync(id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            if (patient.AppUserId != User.GetUserId())
+            {
+                return BadRequest();
+            }
+
+            _dbContext.Patients.Remove(patient);
+            _dbContext.SaveChanges();
+
+            return Ok();
         }
     }
 }

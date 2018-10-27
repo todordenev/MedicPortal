@@ -9,7 +9,6 @@ import { Patient } from '../patient/patient';
     providedIn: 'root'
 })
 export class PatientService {
-
     endpointUrl = '/api/patients';
     patients: Patient[] = [];
     constructor(private http: AuthHttpClientService) { }
@@ -53,7 +52,23 @@ export class PatientService {
                 catchError(this.handleError)
             );
     }
-
+    delete(patient: Patient): any {
+        if (patient.id) {
+            return this.http.delete(this.endpointUrl + '/' + patient.id)
+                .pipe(
+                    map(serverResult => this.removeFromPatients(patient)),
+                    catchError(this.handleError)
+                );
+        } else {
+            this.removeFromPatients(patient);
+        }
+    }
+    private removeFromPatients(patient: Patient) {
+        const index = this.patients.indexOf(patient, 0);
+        if (index > -1) {
+            this.patients.splice(index, 1);
+        }
+    }
     private handleError(error: HttpErrorResponse) {
         console.error('server error:', error);
         if (error.error instanceof Error) {

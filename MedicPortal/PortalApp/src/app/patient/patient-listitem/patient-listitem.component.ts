@@ -14,8 +14,8 @@ export class PatientListitemComponent implements OnInit {
   patient: Patient;
 
   patientForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private patientService: PatientService) { 
-    const test1 ='test';
+  constructor(private formBuilder: FormBuilder, private patientService: PatientService) {
+    const test1 = 'test';
   }
 
   ngOnInit() {
@@ -25,26 +25,31 @@ export class PatientListitemComponent implements OnInit {
   cratePatientForm() {
     this.patientForm = this.formBuilder.group({
       id: [this.patient.id],
-      firstName: [this.patient.firstName],
-      lastName: [this.patient.lastName],
+      firstName: [this.patient.firstName, [Validators.required]],
+      lastName: [this.patient.lastName, [Validators.required]],
       telefon: [this.patient.telefon],
-      birthdate: [this.patient.birthdate],
+      birthdate: [this.patient.birthdate, [Validators.required]],
       adress: [this.patient.adress]
     });
   }
   onSubmit() {
-    if (this.patient.id) {
-      const changedPatient = this.patientForm.value;
-      const changes = createPatch(this.patient, changedPatient);
+    const changedPatient = this.patientForm.value;
 
-       this.patientService.update(this.patient.id, changes).subscribe(serverResult => {
+    if (this.patient.id) {
+      const changes = createPatch(this.patient, changedPatient);
+      this.patientService.update(this.patient.id, changes).subscribe(serverResult => {
         applyPatch(this.patient, changes);
         this.patientForm.markAsPristine();
       });
     } else {
-      this.patientService.create(this.patient).subscribe(serverResult => {
-        	
+      this.patientService.create(changedPatient).subscribe(serverResult => {
+        this.patientForm.markAsPristine();
       });
     }
+  }
+  deletePatient() {
+    this.patientService.delete(this.patient).subscribe(serverResult => {
+
+    });
   }
 }
