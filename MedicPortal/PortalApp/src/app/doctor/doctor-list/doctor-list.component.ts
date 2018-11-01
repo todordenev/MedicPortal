@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DoctorService } from '../../shared/doctor.service';
-import { Doctor } from '../Doctor';
+import { Doctor } from '../../shared/doctor';
+import { DoctorService } from '@app/core/doctor.service';
 
 @Component({
   selector: 'app-doctor-list',
@@ -8,7 +8,7 @@ import { Doctor } from '../Doctor';
   styleUrls: ['./doctor-list.component.css']
 })
 export class DoctorListComponent implements OnInit {
-  doctors: Doctor[];
+  doctors: Doctor[] = [];
   constructor(private doctorService: DoctorService) { }
 
   ngOnInit() {

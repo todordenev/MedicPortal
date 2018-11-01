@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DoctorService } from '../../shared/doctor.service';
-import { Doctor } from '../Doctor';
+import { Doctor } from '@app/shared/doctor';
+
 
 @Component({
   selector: 'app-doctor-listitem',

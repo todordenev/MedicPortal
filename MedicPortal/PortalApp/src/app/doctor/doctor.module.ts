@@ -1,32 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../shared/material.module';
 import { DoctorListComponent } from './doctor-list/doctor-list.component';
 import { DoctorListitemComponent } from './doctor-listitem/doctor-listitem.component';
 import { RouterModule } from '@angular/router';
 import { DoctorDetailsComponent } from './doctor-details/doctor-details.component';
-import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
-import { Doctor } from './Doctor';
-import { DoctorEditComponent } from './doctor-edit/doctor-edit.component';
+import { Doctor } from '../shared/doctor';
+import { DoctorMylistComponent } from './doctor-mylist/doctor-mylist.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    MaterialModule
+    SharedModule
   ],
   declarations: [
     DoctorListitemComponent,
     DoctorListComponent,
     DoctorDetailsComponent,
-    DoctorRegistrationComponent,
-    DoctorEditComponent
+    DoctorMylistComponent,
   ],
   exports: [
     DoctorListitemComponent,
     DoctorListComponent,
+    DoctorMylistComponent,
     DoctorDetailsComponent,
-    DoctorRegistrationComponent
   ]
 })
 export class DoctorModule { }
@@ -34,7 +32,6 @@ export {
   Doctor,
   DoctorListComponent,
   DoctorListitemComponent,
+  DoctorMylistComponent,
   DoctorDetailsComponent,
-  DoctorRegistrationComponent,
-  DoctorEditComponent
 };

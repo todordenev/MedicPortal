@@ -5,18 +5,17 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserModule } from './user/user.module';
+
 import { DoctorModule } from './doctor/doctor.module';
-import { AppRoutingModule } from './routing/app.routing.module';
-import { MaterialModule } from './shared/material.module';
+import { AppRoutingModule } from './app.routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthenticationGuard } from './routing/authentication-guard';
 import { UrlSerializer } from '@angular/router';
-import { LowerCaseUrlSerializer } from './routing/lower-case-url-serializer';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { RoleGuard } from './routing/role-guard';
-import { PatientModule } from './patient/patient.module';
-import { MatDatepickerModule } from '@angular/material';
+import { LowerCaseUrlSerializer } from './shared/lower-case-url-serializer';
+import { FlexLayoutModule, CoreModule } from '@angular/flex-layout';
+import { RoleGuard } from './core/role-guard';
+import { AuthenticationGuard } from './core/authentication-guard';
+import { SharedModule } from './shared/shared.module';
+import { FeaturesModule } from './features/features.module';
 
 @NgModule({
   declarations: [
@@ -28,11 +27,11 @@ import { MatDatepickerModule } from '@angular/material';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     DoctorModule,
-    PatientModule,
-    UserModule,
     HttpClientModule,
-    MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    CoreModule,
+    SharedModule,
+    FeaturesModule
   ],
   providers: [
     AuthenticationGuard,
@@ -40,7 +39,7 @@ import { MatDatepickerModule } from '@angular/material';
       provide: UrlSerializer,
       useClass: LowerCaseUrlSerializer
     },
-    RoleGuard,
+    RoleGuard
   ],
   bootstrap: [AppComponent]
 })
