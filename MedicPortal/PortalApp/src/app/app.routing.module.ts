@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DoctorListComponent, DoctorDetailsComponent, DoctorMylistComponent } from './doctor/doctor.module';
 import { Routes, RouterModule } from '@angular/router';
 import { RoleGuard } from './core/role-guard';
 import { LoginComponent } from './features/login/login.component';
@@ -8,6 +7,8 @@ import { AuthenticationGuard } from './core/authentication-guard';
 import { RegistrationComponent } from './features/registration/registration.component';
 import { AccountComponent } from './features/account/account.component';
 import { FeaturesModule } from './features/features.module';
+import { DoctorListComponent } from './features/doctor-list/doctor-list.component';
+import { DoctorDetailsComponent, DoctorMylistComponent } from './doctor/doctor.module';
 
 
 const routes: Routes = [

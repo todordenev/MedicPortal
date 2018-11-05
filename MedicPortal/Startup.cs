@@ -1,11 +1,14 @@
 using System;
+using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using MedicPortal.Auth;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.ViewModels.Validators;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -104,7 +107,28 @@ namespace MedicPortal
                 cfg.SaveToken = true;
                 cfg.TokenValidationParameters = tokenValidationParameters;
             });
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/logIn");
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/logIn";
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = context =>
+                    {
+                        if (context.Request.Path.StartsWithSegments("/api") &&
+                            context.Response.StatusCode == (int) HttpStatusCode.OK)
+                        {
+                            context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                        }
+                        else
+                        {
+                            context.Response.Redirect(context.RedirectUri);
+                        }
+
+                        return Task.FromResult(0);
+                    }
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -140,9 +164,8 @@ namespace MedicPortal
 
                 spa.Options.SourcePath = "PortalApp";
 
-                  if (env.IsDevelopment()) spa.UseAngularCliServer("start");
+                if (env.IsDevelopment()) spa.UseAngularCliServer("start");
             });
-  
         }
     }
 }

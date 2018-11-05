@@ -33,6 +33,6 @@
         Данни на регистрирани Лекари
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <!-- <app-doctor-mylist></app-doctor-mylist> -->
+     <app-doctor-list [doctors] = "doctorService.getMyDoctors() | async"></app-doctor-list> 
   </mat-expansion-panel>
 </mat-accordion>

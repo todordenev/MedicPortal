@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, ActivatedRoute } from '@angular/router';
+import { DoctorService } from '@app/core/doctor.service';
 
 @Component({
   selector: 'app-account',
@@ -9,7 +10,7 @@ import { Route, ActivatedRoute } from '@angular/router';
 export class AccountComponent implements OnInit {
 
   activation: string;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private doctorService: DoctorService) { }
 
   ngOnInit() {
     this.activation = this.route.snapshot.paramMap.get('activation');

@@ -26,11 +26,16 @@ namespace MedicPortal.Controllers
             _dbContext = dbContext;
             _mapper = mapper;
         }
+
         [HttpGet]
+        //[AllowAnonymous]
         public List<Doctor> Get()
         {
-            var doctors = _dbContext.Doctors.Include(d => d.Worktimes)
-                .Include(d => d.DoctorSpezialisations).ThenInclude(ds => ds.Spezialisation).ToList();
+            var doctors = _dbContext.Doctors.Where(d => d.IsActive && d.Approved)
+                .Include(d => d.Worktimes)
+                .Include(d => d.DoctorSpezialisations)
+                .ThenInclude(ds => ds.Spezialisation)
+                .ToList();
             return doctors;
         }
 
@@ -39,8 +44,8 @@ namespace MedicPortal.Controllers
         [Route("foraccount")]
         public List<Doctor> GetMyDoctors()
         {
-            string userId = User.GetUserId();
-            var doctors = _dbContext.Doctors.Where(d=>d.AppUserId == userId).Include(d => d.Worktimes)
+            var userId = User.GetUserId();
+            var doctors = _dbContext.Doctors.Where(d => d.AppUserId == userId).Include(d => d.Worktimes)
                 .Include(d => d.DoctorSpezialisations).ThenInclude(ds => ds.Spezialisation).ToList();
             return doctors;
         }

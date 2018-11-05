@@ -8,13 +8,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PatientListitemComponent } from './patient-listitem/patient-listitem.component';
 import { PatientMylistComponent } from './patient-mylist/patient-mylist.component';
+import { DoctorListComponent } from './doctor-list/doctor-list.component';
+import { DoctorListitemComponent } from './doctor-listitem/doctor-listitem.component';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   declarations: [
     RegistrationComponent,
@@ -22,7 +27,9 @@ import { PatientMylistComponent } from './patient-mylist/patient-mylist.componen
     AccountComponent,
     PatientListComponent,
     PatientListitemComponent,
-    PatientMylistComponent
+    PatientMylistComponent,
+    DoctorListComponent,
+    DoctorListitemComponent
   ],
   exports: [
     RegistrationComponent,
@@ -30,7 +37,9 @@ import { PatientMylistComponent } from './patient-mylist/patient-mylist.componen
     AccountComponent,
     PatientListComponent,
     PatientListitemComponent,
-    PatientMylistComponent
+    PatientMylistComponent,
+    DoctorListComponent,
+    DoctorListitemComponent
   ]
 })
 export class FeaturesModule { }
