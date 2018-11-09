@@ -1,0 +1,12 @@
+<div>
+    <div class="image-container">
+        <img class="user-img" src="{{imgSrc}}" alt="image" *ngIf="!isCapturing && imgSrc" />
+        <video class="iser-video" #video id="video" width="180" height="180" autoplay *ngIf="isCapturing"></video>
+        <canvas #canvas id="canvas" hidden></canvas>
+    </div>
+
+    <div class="user-image-actions">
+        <a mat-button type="button" (click)="startCapture()">Камера</a>
+        <a mat-button type="button" (click)="captureImage()">Избери</a>
+    </div>
+</div>

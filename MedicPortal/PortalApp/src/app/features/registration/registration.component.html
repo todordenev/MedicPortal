@@ -1,5 +1,16 @@
 <mat-card>
     <form class="registration-form" [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)" novalidate>
+        <div class="registration-top">
+            <app-capture-image [imgSrc]="userImgSrc" (imgChanged)="imgChanged($event)"></app-capture-image>
+            <div>
+                <mat-form-field>
+                    <input formControlName="firstName" matInput placeholder="Име">
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="lastName" matInput placeholder="Фамилия">
+                </mat-form-field>
+            </div>
+        </div>
         <mat-form-field>
             <input formControlName="email" matInput placeholder="Емайл">
         </mat-form-field>
@@ -9,12 +20,7 @@
         <mat-form-field>
             <input formControlName="password2" matInput placeholder="Парола (отново)">
         </mat-form-field>
-        <mat-form-field>
-            <input formControlName="firstName" matInput placeholder="Име">
-        </mat-form-field>
-        <mat-form-field>
-            <input formControlName="lastName" matInput placeholder="Фамилия">
-        </mat-form-field>
+
         <mat-form-field>
             <input formControlName="telefon" matInput placeholder="Телефон">
         </mat-form-field>

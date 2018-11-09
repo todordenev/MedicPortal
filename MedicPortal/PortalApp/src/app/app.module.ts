@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app.routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './shared/lower-case-url-serializer';
-import { FlexLayoutModule, CoreModule } from '@angular/flex-layout';
 import { RoleGuard } from './core/role-guard';
 import { AuthenticationGuard } from './core/authentication-guard';
 import { SharedModule } from './shared/shared.module';
@@ -28,8 +27,6 @@ import { FeaturesModule } from './features/features.module';
     BrowserAnimationsModule,
     DoctorModule,
     HttpClientModule,
-    FlexLayoutModule,
-    CoreModule,
     SharedModule,
     FeaturesModule
   ],

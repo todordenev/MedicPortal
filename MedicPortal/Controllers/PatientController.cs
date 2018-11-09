@@ -32,9 +32,7 @@ namespace MedicPortal.Controllers
         {
             var userId = User.GetUserId();
             var patients = _dbContext.Patients.Include(p => p.AppUser).Where(p => p.AppUserId == userId).ToList();
-            var testUser = patients[1];
-            var birthdate = testUser.Birthdate;
-            var universalTIme = birthdate.ToUniversalTime();
+            
             return patients.ToList();
         }
 

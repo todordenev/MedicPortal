@@ -42,6 +42,8 @@
     <Compile Remove="Migrations\20181019190234_Init.cs" />
     <Compile Remove="Migrations\20181025084152_Init.cs" />
     <Compile Remove="Migrations\20181025114435_Init.cs" />
+    <Compile Remove="Migrations\20181109100146_avatarImage.cs" />
+    <Compile Remove="Migrations\20181109100146_avatarImage.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

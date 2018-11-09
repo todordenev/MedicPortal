@@ -12,8 +12,8 @@ export class AuthHttpClientService {
   get httpOptions() {
     const authToken = localStorage.getItem(authTokenNameConst);
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authToken}`
+      'Content-Type': 'application/json'
+      //,'Authorization': `Bearer ${authToken}`
     });
     return { headers: headers };
   }
