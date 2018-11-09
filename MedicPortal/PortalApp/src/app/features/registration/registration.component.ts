@@ -9,31 +9,31 @@ import { User } from '@app/shared/user';
     styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-    userImgSrc ="api/accounts/avatarimage"; 
+    userImgSrc = "api/accounts/avatarimage";
     registrationForm: FormGroup;
-    constructor(private userService: UserService,
+    constructor(
+        private userService: UserService,
         private formBuilder: FormBuilder) {
     }
-
     ngOnInit() {
-        this.createFormGroup(this.userService.user);
+        this.userService.user.subscribe(user=>this.createFormGroup(user));
     }
     imgChanged(imgSrc) {
         this.registrationForm.patchValue({
             avatarImageSrc: imgSrc
         })
     }
-
     createFormGroup(user: User) {
         this.registrationForm = this.formBuilder.group({
-            firstName: [user ? user.givenName : 'Todor', [Validators.required]],
-            lastName: [user ? user.familyName : 'Denev', [Validators.required]],
+            firstName: [user ? user.firstName : 'Todor', [Validators.required]],
+            lastName: [user ? user.lastName : 'Denev', [Validators.required]],
             email: [user ? user.email : 'todor_denev@yahoo.com', [Validators.required]],
             password: ['123456', [Validators.required]],
             password2: ['123456', [Validators.required]],
-            telefon: [user ? user.Phone : '01234', [Validators.required]],
+            telefon: [user ? user.phoneNumber : '01234', [Validators.required]],
             avatarImageSrc: [""]
         });
+        this.userImgSrc = user.avatarImage;
     }
     onSubmit({ value }) {
         this.userService.register(value).subscribe((status) => {

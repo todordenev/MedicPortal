@@ -1,27 +1,24 @@
 export class User {
-    Id: string;
-    userName: string;
-    familyName: string;
-    givenName: string;
+    id: string;
+    firstName: string;
+    lastName: string;
     email: string;
-    Phone: string;
-    roles: string[];
-    displayName: string;
-
-    constructor(jwt?: string) {
-        if (jwt) {
-            this.fromJwt(jwt);
-        }
+    phoneNumber: string;
+    roles: string[] = [];
+    avatarImage: string;
+    get displayName() {
+        return this.firstName + ' ' + this.lastName;
     }
-
-    fromJwt(jwt: any): any {
-        this.Id = jwt.id;
-        this.userName = jwt.sub;
-        this.familyName = jwt.family_name;
-        this.givenName = jwt.given_name;
-        this.email = jwt.email;
-        this.Phone = jwt.phone;
-        this.roles = jwt.role;
-        this.displayName = this.givenName + ' ' + this.familyName;
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id;
+            this.firstName = obj.firstName;
+            this.lastName = obj.lastName;
+            this.email = obj.email;
+            this.phoneNumber = obj.phoneNumber;
+            for (const role in obj.roles) {
+                this.roles.push(role);
+            }
+        }
     }
 }

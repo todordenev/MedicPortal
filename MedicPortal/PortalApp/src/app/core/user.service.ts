@@ -1,9 +1,8 @@
-import { Injectable, EventEmitter, Output, OnInit } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject, Observer } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthHttpClientService } from './auth-http-client.service';
 import { authTokenNameConst } from '../shared/constants';
 import { User } from '@app/shared/user';
 import { UserCredentials, Registration } from '@app/shared/registration';
@@ -13,66 +12,48 @@ import { UserCredentials, Registration } from '@app/shared/registration';
 })
 export class UserService implements OnInit {
     authUrl = '/api/accounts';
-    private loggedIn = new BehaviorSubject<boolean>(false);
-    private authToken: string;
-    private _user: User;
-    get getUserName(): string {
-        return this.user ? this.user.displayName : '';
-    }
-    get isLoggedIn() {
-        return this.loggedIn.asObservable();
-    }
-    get user() {
-        return this._user;
-    }
-    get AuthToken(): string {
-        return this.authToken;
-    }
-    private setAuthToken(value: string) {
-        this.authToken = value;
-        if (value) {
-            const helper = new JwtHelperService();
-            const decodedToken = helper.decodeToken(value);
-            this._user = new User(decodedToken);
-            localStorage.setItem(authTokenNameConst, value);
-        } else {
-            this._user = null;
-            localStorage.removeItem(authTokenNameConst);
-        }
-    }
-
-    constructor(private http: AuthHttpClientService) {
+    _user: BehaviorSubject<User>;
+    _loggedIn = new BehaviorSubject<boolean>(false);
+    _loadingUserInfo = new BehaviorSubject<boolean>(true);
+    constructor(private http: HttpClient) {
         this.ngOnInit();
     }
     ngOnInit(): void {
-        const authToken = localStorage.getItem(authTokenNameConst);
-        if (this.isTokenValid(authToken)) {
-            this.loggedIn.next(true);
-            this.setAuthToken(authToken);
+        this._loadingUserInfo.next(true);
+        const userJson = localStorage.getItem(authTokenNameConst);
+        if (userJson) {
+            const cachedUser = JSON.parse(userJson);
+            this._user = new BehaviorSubject<User>(new User(cachedUser));
+            this.getUserInfo().subscribe(
+                () => { },
+                () => { this._user = new BehaviorSubject<User>(new User()); },
+                () => { this._loadingUserInfo.next(false); }
+            );
         } else {
-            if (authToken) {
-                this.setAuthToken(null);
-            }
+            this._user = new BehaviorSubject<User>(new User());
+            this._loadingUserInfo.next(false);
         }
     }
-    private isTokenValid(jwt): boolean {
-        if (jwt) {
-            const helper = new JwtHelperService();
-            const isExpired = helper.isTokenExpired(jwt);
-            return !isExpired;
-        }
-        return false;
+
+    get isLoggedIn() {
+        return this._loggedIn.asObservable();
     }
+    get user() {
+        return this._user.asObservable();
+    }
+    get isLoading() {
+        return this._loggedIn.asObservable();
+    }
+
     hasRole(roleName: string) {
         try {
             const helper = new JwtHelperService();
-            const decodedToken = helper.decodeToken(this.authToken);
+
             return true;
         } catch (error) {
             return false;
         }
     }
-
     register(registration: Registration): Observable<any> {
         return this.http.post(this.authUrl + '/register', registration)
             .pipe(
@@ -87,22 +68,32 @@ export class UserService implements OnInit {
                 catchError(this.handleError)
             );
     }
-    logout() {
-        return this.http.post(this.authUrl + '/logout')
+    getUserInfo(): Observable<any> {
+        return this.http.get(this.authUrl + '/getuserinfo')
             .pipe(
-                map(result => { this.onUserLoggedOut(); }),
+                map(result => { this.onUserLoggedIn(result); }),
                 catchError(this.handleError)
             );
     }
-    private onUserLoggedOut() {
-        this.setAuthToken(null);
-        this.loggedIn.next(false);
 
+    private onUserLoggedIn(user) {
+        var userString = JSON.stringify(user);
+        localStorage.setItem(authTokenNameConst, userString);
+        this._user.next(new User(user));
+        this._loggedIn.next(true);
+        this._loadingUserInfo.next(false);
     }
-    private onUserLoggedIn(userToken) {
-        this.setAuthToken(userToken.auth_token);
-        this.loggedIn.next(true);
+
+    logout() {
+        localStorage.removeItem(authTokenNameConst);
+        this._loggedIn.next(false);
+        return this.http.post(this.authUrl + '/logout', {})
+            .pipe(
+                map(() => { }),
+                catchError(this.handleError)
+            );
     }
+
     private handleError(error: HttpErrorResponse) {
         console.error('server error:', error);
         if (error.error instanceof Error) {

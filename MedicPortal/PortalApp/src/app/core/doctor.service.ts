@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Doctor } from '../shared/doctor';
-import {  HttpErrorResponse } from '@angular/common/http';
+import {  HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { AuthHttpClientService } from './auth-http-client.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +12,7 @@ export class DoctorService {
     doctors: Doctor[] = [];
     myDoctors: Doctor[] = [];
 
-    constructor(private http: AuthHttpClientService) { }
+    constructor(private http: HttpClient) { }
 
     getDoctors(): Observable<Doctor[]> {
         if (this.doctors.length > 0) {

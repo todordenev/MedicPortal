@@ -21,11 +21,11 @@
     <mat-sidenav #sidenav [opened]="mobileQuery.matches?false:true" [mode]="mobileQuery.matches?'over':'side'"
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list (click)="mobileQuery.matches && sidenav.toggle()">
-        <a mat-button [routerLink]="[ '/doctors' ]">
+        <a [routerLink]="[ '/doctors' ]" mat-list-item>
           <mat-icon>face</mat-icon>
           Доктори
         </a>
-        <a [routerLink]="[ '/appointments']" mat-list-item>
+        <a [routerLink]="[ '/appointments']" mat-list-item *ngIf="isLoggedIn">
           <mat-icon>event</mat-icon>
           Прегледи
         </a>

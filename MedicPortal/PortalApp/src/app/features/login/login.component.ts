@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.createFormGroup();
         this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
-        this.userName = this.userService.getUserName;
+        this.userService.user.subscribe(user=>this.userName = user.displayName);
     }
     createFormGroup() {
         this.loginForm = this.formBuilder.group({

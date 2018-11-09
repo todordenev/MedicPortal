@@ -1,2 +1,2 @@
-export const authTokenNameConst = 'MedicPortal_auth_token';
+export const authTokenNameConst = 'MedicPortal_user_storage';
 export const serverApiUrl = 'https://localhost:44342';

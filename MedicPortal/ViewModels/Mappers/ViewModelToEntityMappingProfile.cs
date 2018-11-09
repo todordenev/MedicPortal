@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using AutoMapper;
 using MedicPortal.Data.Models;
 
@@ -14,11 +15,19 @@ namespace MedicPortal.ViewModels.Mappers
             CreateMap<DoctorViewModel, Doctor>();
             CreateMap<WorktimeViewModel, Worktime>();
             CreateMap<PatientViewModel, Patient>();
+            CreateMap<AppUser, UserViewModel>()
+                .ForMember(vm => vm.AvatarImage, map => map.MapFrom(u => GetString(u.AvatarImage)));
         }
 
         private byte[] GetBytes(string value)
         {
             return Encoding.ASCII.GetBytes(value);
         }
+
+        private string GetString(byte[] value)
+        {
+            return Encoding.ASCII.GetString(value);
+        }
+        
     }
 }

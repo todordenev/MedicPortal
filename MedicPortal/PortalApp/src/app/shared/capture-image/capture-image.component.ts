@@ -14,7 +14,7 @@ export class CaptureImageComponent implements OnInit {
     public canvas: ElementRef;
     isCapturing = false;
     @Input()
-    imgSrc ="";
+    imgSrc = "";
     @Output()
     imgChanged = new EventEmitter<string>();
 
@@ -25,6 +25,9 @@ export class CaptureImageComponent implements OnInit {
     startCapture() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                const videoElement = this.video.nativeElement;
+                this.canvas.nativeElement.width = videoElement.videoWidth;
+                this.canvas.nativeElement.height = videoElement.videoHeight;
                 this.video.nativeElement.srcObject = stream;
                 this.video.nativeElement.play();
             });

@@ -1,28 +1,22 @@
 ﻿using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using MedicPortal.Auth;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
 using MedicPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedicPortal.Controllers
 {
     [Authorize]
-    [Produces("application/json")]
     [Route("api/accounts")]
+    [Produces("application/json")]
     public class AccountsController : Controller
     {
         private readonly ApplicationDbContext _appDbContext;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IJwtFactory _jwtFactory;
 
         private readonly IMapper _mapper;
         private readonly SignInManager<AppUser> _signInManager;
@@ -32,16 +26,12 @@ namespace MedicPortal.Controllers
             UserManager<AppUser> userManager,
             IMapper mapper,
             ApplicationDbContext appDbContext,
-            IJwtFactory jwtFactory,
-            SignInManager<AppUser> signInManager,
-            IHttpContextAccessor httpContextAccessor)
+            SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _appDbContext = appDbContext;
-            _jwtFactory = jwtFactory;
             _signInManager = signInManager;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         // POST api/accounts/register
@@ -64,19 +54,18 @@ namespace MedicPortal.Controllers
                 ModelState.AddErrors(createdResult.Errors);
                 return BadRequest(ModelState);
             }
-
-            return await Login(userName, model.Password);
+            return await OnLogin(userName, model.Password);
         }
 
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel credentials)
+        public async Task<IActionResult> OnLogin([FromBody] LoginViewModel credentials)
         {
-            return await Login(credentials.UserName, credentials.Password);
+            return await OnLogin(credentials.UserName, credentials.Password);
         }
 
-        private async Task<IActionResult> Login(string userName, string password)
+        private async Task<IActionResult> OnLogin(string userName, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(userName, password, true, false);
             if (!result.Succeeded)
@@ -84,20 +73,29 @@ namespace MedicPortal.Controllers
                 ModelState.AddError("login_failure", "Invalid username or password.");
                 return BadRequest(ModelState);
             }
-
-            return await OnLogin(userName);
+            var user = _appDbContext.Users.First(u => u.UserName == userName);
+            var userVm = GetUserInfo(user);
+            return Ok(userVm);
         }
 
-        private async Task<IActionResult> OnLogin(string userName)
+        [HttpGet]
+        [Route("getuserinfo")]
+        public async Task<IActionResult> GetUser()
         {
-            var jwt = await GetAuthorizationToken(userName);
-            //_httpContextAccessor.HttpContext.Response.Cookies.Append("Authorization", "Bearer " + jwt);
-            _httpContextAccessor.HttpContext.Response.Headers.Add("Authorization", "Bearer " + jwt);
-            var token = new
+            var userId = User.GetUserId();
+            var user = await _appDbContext.Users.FindAsync(userId);
+            var userVm = GetUserInfo(user);
+            return Ok(userVm);
+        }
+
+        private UserViewModel GetUserInfo(AppUser user)
+        {
+            var userVm = _mapper.Map<UserViewModel>(user);
+            foreach (var roleId in _appDbContext.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId))
             {
-                auth_token = jwt
-            };
-            return Ok(token);
+                userVm.Roles.Add(_appDbContext.Roles.Find(roleId).Name);
+            }
+            return userVm;
         }
 
         [HttpPost]
@@ -106,30 +104,6 @@ namespace MedicPortal.Controllers
         {
             await _signInManager.SignOutAsync();
             return Ok();
-        }
-
-        //api/accounts/avatarimage
-        [HttpGet]
-        [Route("avatarimage")]
-        public async Task<IActionResult> GetAvatarImage()
-        {
-            var userId = User.GetUserId();
-            var user = await _appDbContext.Users.FindAsync(userId);
-            var someString = Encoding.ASCII.GetString(user.AvatarImage);
-            return Ok(someString);
-        }
-
-        private async Task<object> GetAuthorizationToken(string userName)
-        {
-            var user = _appDbContext.Users.First(u => u.UserName == userName);
-            var userClaims = user.GetUserClaims();
-            var roles = await _userManager.GetRolesAsync(user);
-            foreach (var role in roles)
-            {
-                userClaims.Add(new Claim(Constants.JwtClaimIdentifiers.Rol, role));
-            }
-
-            return _jwtFactory.GenerateEncodedToken(userClaims);
         }
     }
 }
