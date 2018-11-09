@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MedicPortal.Data
 {
-    public static class DummyData
+    public static class InitDb
     {
         private static ApplicationDbContext _dbContext;
 
@@ -22,6 +22,13 @@ namespace MedicPortal.Data
                 Email = "todor_denev@yahoo.com", FirstName = "Todor", LastName = "Denev", PhoneNumber = "01234"
             }
         };
+
+        private static readonly List<IdentityRole> Roles = new List<IdentityRole>
+        {
+            new IdentityRole("Admin"),
+            new IdentityRole("Doctor")
+        };
+        
 
         private static readonly List<Doctor> Doctors = new List<Doctor>
         {
@@ -97,7 +104,7 @@ namespace MedicPortal.Data
 
         private static UserManager<AppUser> _userManager;
 
-        public static void CeedDb(ApplicationDbContext dbContext, UserManager<AppUser> userManager)
+        public static void CeedDummyData(ApplicationDbContext dbContext, UserManager<AppUser> userManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;
@@ -107,13 +114,16 @@ namespace MedicPortal.Data
             }
 
             Task.Run(async () => await EnsureUsers()).Wait();
-            
+
+            _dbContext.Roles.AddRange(Roles);
             _dbContext.AddRange(DoctorSpezialisations);
             _dbContext.AddRange(Doctors);
             _dbContext.AddRange(Patients);
             _dbContext.SaveChanges();
+            _dbContext.UserRoles.Add(new IdentityUserRole<string> {RoleId = Roles[0].Id, UserId = AppUsers[4].Id});
+            _dbContext.UserRoles.Add(new IdentityUserRole<string> {RoleId = Roles[1].Id, UserId = AppUsers[4].Id});
+            _dbContext.SaveChanges();
         }
-        
 
 
         public static async Task EnsureUsers()

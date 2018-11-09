@@ -21,7 +21,7 @@ namespace MedicPortal
                 UserManager<AppUser> userManager = services.GetRequiredService<UserManager<AppUser>>();
                 try
                 {
-                    DummyData.CeedDb(dbContext,userManager);
+                    InitDb.CeedDummyData(dbContext,userManager);
                 }
                 catch (Exception ex)
                 {

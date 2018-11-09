@@ -65,7 +65,7 @@ namespace MedicPortal.Controllers
                 return BadRequest(ModelState);
             }
 
-            return await OnLogin(userName);
+            return await Login(userName, model.Password);
         }
 
         [HttpPost]
@@ -92,7 +92,7 @@ namespace MedicPortal.Controllers
         {
             var jwt = await GetAuthorizationToken(userName);
             //_httpContextAccessor.HttpContext.Response.Cookies.Append("Authorization", "Bearer " + jwt);
-            _httpContextAccessor.HttpContext.Response.Headers.Add("Authorization","Bearer " + jwt);
+            _httpContextAccessor.HttpContext.Response.Headers.Add("Authorization", "Bearer " + jwt);
             var token = new
             {
                 auth_token = jwt

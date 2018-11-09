@@ -19,7 +19,7 @@ export class AuthHttpClientService {
   }
   constructor(private http: HttpClient) {
     if (location.origin !== serverApiUrl) {
-      this.swapUrl = true;
+    //  this.swapUrl = true;
     }
   }
 
