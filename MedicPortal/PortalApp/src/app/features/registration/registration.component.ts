@@ -9,7 +9,7 @@ import { User } from '@app/shared/user';
     styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-    userImgSrc = "api/accounts/avatarimage";
+    userImgSrc = 'api/accounts/avatarimage';
     registrationForm: FormGroup;
     isLoggedIn: boolean;
     constructor(
@@ -23,7 +23,7 @@ export class RegistrationComponent implements OnInit {
     imgChanged(imgSrc) {
         this.registrationForm.patchValue({
             avatarImageSrc: imgSrc
-        })
+        });
     }
     createFormGroup(user: User) {
         this.registrationForm = this.formBuilder.group({
@@ -33,7 +33,7 @@ export class RegistrationComponent implements OnInit {
             password: ['123456', [Validators.required]],
             password2: ['123456', [Validators.required]],
             telefon: [user ? user.phoneNumber : '01234', [Validators.required]],
-            avatarImageSrc: [""]
+            avatarImageSrc: ['']
         });
         this.userImgSrc = user.avatarImage;
     }

@@ -10,15 +10,17 @@
         <img mat-card-image [src]="imageUrl" alt="{{doctor.name}}">
     </div>
     <mat-card-content>
-        <div (click)="test()">
+        <div class="workday-header main">
             Работно време
         </div>
         <div *ngFor="let workday of doctor.workdays" class="workday-container">
-            <div>
-                {{workday.dayOfWeek}}
+            <div class="worktime-header">
+                {{workday.dayLabel}}
             </div>
-            <div>
-
+            <div class="worktime-container">
+                <div *ngFor="let worktime of workday.worktimes" class="worktime-hours">
+                    {{worktime.fromLabel}} - {{worktime.tillLabel}}
+                </div>
             </div>
         </div>
     </mat-card-content>

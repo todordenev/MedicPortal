@@ -10,7 +10,6 @@ import {
     MatCardModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
@@ -42,16 +41,17 @@ import {
 import { CommonModule } from '@angular/common';
 import { PatientListitemComponent } from '@app/shared/patient-listitem/patient-listitem.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfiguredDatepickerModule } from './MatDatePicker';
 
 @NgModule({
     imports: [
-        CommonModule, 
+        CommonModule,
         MatInputModule,
         MatButtonModule,
         MatCardModule,
         MatFormFieldModule,
         FormsModule,
-        MatDatepickerModule,
+        ConfiguredDatepickerModule,
         ReactiveFormsModule,
     ],
     exports: [
@@ -63,7 +63,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MatCardModule,
         MatCheckboxModule,
         MatChipsModule,
-        MatDatepickerModule,
+        ConfiguredDatepickerModule,
         MatDialogModule,
         MatDividerModule,
         MatExpansionModule,
@@ -100,4 +100,4 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class SharedModule { }
 
-export { CaptureImageComponent }
+export { CaptureImageComponent };

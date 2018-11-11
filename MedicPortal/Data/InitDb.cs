@@ -34,9 +34,13 @@ namespace MedicPortal.Data
         {
             new Doctor
             {
+                Id = "1",
                 Approved = true, AppUser = AppUsers[4], FirstName = "Irina", IsActive = true, LastName = "Ivanova",
                 Worktimes = new List<Worktime>
                 {
+                    
+                    new Worktime {DayOfWeek = 0, From = 8, Till = 10.5},
+                    new Worktime {DayOfWeek = 0, From = 10.75, Till = 13},
                     new Worktime {DayOfWeek = 1, From = 8, Till = 10.5},
                     new Worktime {DayOfWeek = 1, From = 10.75, Till = 13},
                     new Worktime {DayOfWeek = 2, From = 9, Till = 10.5},
@@ -44,16 +48,18 @@ namespace MedicPortal.Data
                     new Worktime {DayOfWeek = 3, From = 8.5, Till = 10.75},
                     new Worktime {DayOfWeek = 3, From = 11, Till = 12.5},
                     new Worktime {DayOfWeek = 4, From = 12.5, Till = 14.5},
-                    new Worktime {DayOfWeek = 4, From = 14.75, Till = 18},
-                    new Worktime {DayOfWeek = 5, From = 8, Till = 10.5},
-                    new Worktime {DayOfWeek = 5, From = 10.75, Till = 13}
+                    new Worktime {DayOfWeek = 4, From = 14.75, Till = 18}
                 }
             },
             new Doctor
             {
+                Id="2",
                 Approved = true, AppUser = AppUsers[4], FirstName = "Kunka", IsActive = true, LastName = "Kuncheva",
                 Worktimes = new List<Worktime>
                 {
+                    
+                    new Worktime {DayOfWeek = 0, From = 8, Till = 12},
+                    new Worktime {DayOfWeek = 0, From = 13, Till = 16},
                     new Worktime {DayOfWeek = 1, From = 9, Till = 12},
                     new Worktime {DayOfWeek = 1, From = 13, Till = 16},
                     new Worktime {DayOfWeek = 2, From = 8, Till = 12},
@@ -62,8 +68,6 @@ namespace MedicPortal.Data
                     new Worktime {DayOfWeek = 3, From = 13, Till = 16},
                     new Worktime {DayOfWeek = 4, From = 8, Till = 12},
                     new Worktime {DayOfWeek = 4, From = 13, Till = 16},
-                    new Worktime {DayOfWeek = 5, From = 8, Till = 12},
-                    new Worktime {DayOfWeek = 5, From = 13, Till = 16}
                 }
             }
         };

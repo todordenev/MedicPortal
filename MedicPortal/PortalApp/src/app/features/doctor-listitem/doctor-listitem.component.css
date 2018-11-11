@@ -33,6 +33,20 @@
 .mat-card-content {
     padding-top: 10px;
 }
+.worktime-header{
+    font-weight: 500;
+    width: 25px;
+}
+.workday-header.main{
+    font-weight: 500;
+    margin-left: 5px;
+}
 .workday-container{
     display: flex;
+}
+.worktime-container{
+    display: flex;
+}
+.worktime-hours{
+    margin-left: 5px;
 }

@@ -70,17 +70,20 @@ export class UserService implements OnInit {
         this.http.get(this.authUrl + '/getuserinfo')
             .subscribe(
                 result => {
-                    this.onUserLoggedIn(result);                    
+                    this.onUserLoggedIn(result);
                 },
                 error => {
-
+                    if (error.status === 401) {
+                        this._loggedIn.next(false);
+                        this._user.next(new User());
+                    }
                 },
                 () => { this._loadingUserInfo.next(false); }
             );
     }
 
     private onUserLoggedIn(user) {
-        var userString = JSON.stringify(user);
+        const userString = JSON.stringify(user);
         localStorage.setItem(authTokenNameConst, userString);
         this._user.next(new User(user));
         this._loggedIn.next(true);
