@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Doctor } from '@app/shared/doctor';
+import { Doctor } from '@app/core/entities';
 
 
 @Component({
@@ -16,6 +16,9 @@ export class DoctorListitemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  test(){
+      alert(this.doctor.workdays);
+  }
   get imageUrl() {
     return './assets/doctor_' + this.doctor.id + '.jpg';
   }

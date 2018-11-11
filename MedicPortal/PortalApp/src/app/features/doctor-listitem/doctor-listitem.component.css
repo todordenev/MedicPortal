@@ -33,30 +33,6 @@
 .mat-card-content {
     padding-top: 10px;
 }
-@media (max-width: 1200px){
-    .doctor-card {
-        max-width: 400px;
-        margin: 5px;
-        height: 400px;
-        width: calc(33% - 10px);
-        box-sizing: border-box;
-    }
-}
-@media (max-width: 800px){
-    .doctor-card {
-        max-width: 400px;
-        margin: 5px;
-        height: 400px;
-        width: calc(50% - 10px);
-        box-sizing: border-box;
-    }
-}
-@media (max-width: 400px){
-    .doctor-card {
-        max-width: 400px;
-        margin: 5px;
-        height: 400px;
-        width: calc(100% - 10px);
-        box-sizing: border-box;
-    }
+.workday-container{
+    display: flex;
 }

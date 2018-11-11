@@ -8,7 +8,9 @@
     <img mat-card-image [src]="imageUrl(doctor)" alt="{{doctor.name}}">
   </div>
   <mat-card-content>
-    <!-- <app-worktime [times]="doctor.worktimes"></app-worktime> -->
+      <div *ngFor="let workday of workdays" class="workday-container">
+
+      </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button>Преглед</button>

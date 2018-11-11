@@ -1,19 +1,29 @@
 <mat-card>
-  <mat-card-header>
-    <div mat-card-avatar class="doctor-header-image" [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
-    <mat-card-title><a routerLink="/doctors/{{doctor.id}}">{{doctor.displayName}}</a></mat-card-title>
-    <mat-card-subtitle>
-      <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
-    </mat-card-subtitle>
-  </mat-card-header>
-  <div class="image-container">
-    <img mat-card-image [src]="imageUrl" alt="{{doctor.name}}">
-  </div>
-  <mat-card-content>
-    <!-- <app-worktime [times]="doctor.worktimes"></app-worktime> -->
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>Преглед</button>
-    <button mat-button>Контакт</button>
-  </mat-card-actions>
+    <mat-card-header>
+        <div mat-card-avatar class="doctor-header-image" [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
+        <mat-card-title><a routerLink="/doctors/{{doctor.id}}">{{doctor.displayName}}</a></mat-card-title>
+        <mat-card-subtitle>
+            <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <div class="image-container">
+        <img mat-card-image [src]="imageUrl" alt="{{doctor.name}}">
+    </div>
+    <mat-card-content>
+        <div (click)="test()">
+            Работно време
+        </div>
+        <div *ngFor="let workday of doctor.workdays" class="workday-container">
+            <div>
+                {{workday.dayOfWeek}}
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button>Преглед</button>
+        <button mat-button>Контакт</button>
+    </mat-card-actions>
 </mat-card>

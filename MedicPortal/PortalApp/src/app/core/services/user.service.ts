@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { authTokenNameConst } from '../shared/constants';
+import { authTokenNameConst } from '@app/shared/constants';
 import { User } from '@app/shared/user';
 import { UserCredentials, Registration } from '@app/shared/registration';
 
@@ -21,18 +21,16 @@ export class UserService implements OnInit {
     ngOnInit(): void {
         this._loadingUserInfo.next(true);
         const userJson = localStorage.getItem(authTokenNameConst);
-        if (userJson) {
+        if (userJson && userJson !== 'undefined') {
             const cachedUser = JSON.parse(userJson);
             this._user = new BehaviorSubject<User>(new User(cachedUser));
-            this.getUserInfo().subscribe(
-                () => { },
-                () => { this._user = new BehaviorSubject<User>(new User()); },
-                () => { this._loadingUserInfo.next(false); }
-            );
+            this._loggedIn.next(true);
+
         } else {
             this._user = new BehaviorSubject<User>(new User());
             this._loadingUserInfo.next(false);
         }
+        this.getUserInfo();
     }
 
     get isLoggedIn() {
@@ -68,11 +66,16 @@ export class UserService implements OnInit {
                 catchError(this.handleError)
             );
     }
-    getUserInfo(): Observable<any> {
-        return this.http.get(this.authUrl + '/getuserinfo')
-            .pipe(
-                map(result => { this.onUserLoggedIn(result); }),
-                catchError(this.handleError)
+    private getUserInfo() {
+        this.http.get(this.authUrl + '/getuserinfo')
+            .subscribe(
+                result => {
+                    this.onUserLoggedIn(result);                    
+                },
+                error => {
+
+                },
+                () => { this._loadingUserInfo.next(false); }
             );
     }
 

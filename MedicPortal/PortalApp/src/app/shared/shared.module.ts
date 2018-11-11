@@ -36,14 +36,23 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    MatFormFieldModule
 } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { PatientListitemComponent } from '@app/shared/patient-listitem/patient-listitem.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule, 
-        MatButtonModule
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
     ],
     exports: [
         MatAutocompleteModule,
@@ -81,10 +90,12 @@ import { CommonModule } from '@angular/common';
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
-        CaptureImageComponent
+        CaptureImageComponent,
+        PatientListitemComponent
     ],
     declarations: [
-        CaptureImageComponent
+        CaptureImageComponent,
+        PatientListitemComponent
     ]
 })
 export class SharedModule { }

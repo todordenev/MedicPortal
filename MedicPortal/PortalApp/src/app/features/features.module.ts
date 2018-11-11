@@ -2,16 +2,14 @@ import { NgModule, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { AccountComponent } from './account/account.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientListComponent } from './patient-list/patient-list.component';
-import { PatientListitemComponent } from './patient-listitem/patient-listitem.component';
-import { PatientMylistComponent } from './patient-mylist/patient-mylist.component';
 import { DoctorListComponent } from './doctor-list/doctor-list.component';
 import { DoctorListitemComponent } from './doctor-listitem/doctor-listitem.component';
 import { RouterModule } from '@angular/router';
-
+import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
+import { AccountPatientsComponent } from '@app/features/account/account-patients/account-patients.component';
 
 @NgModule({
   imports: [
@@ -24,20 +22,17 @@ import { RouterModule } from '@angular/router';
   declarations: [
     RegistrationComponent,
     LoginComponent,
-    AccountComponent,
+    AccountViewComponent,
     PatientListComponent,
-    PatientListitemComponent,
-    PatientMylistComponent,
     DoctorListComponent,
-    DoctorListitemComponent
+    DoctorListitemComponent,
+    AccountPatientsComponent
   ],
   exports: [
     RegistrationComponent,
     LoginComponent,
-    AccountComponent,
+    AccountViewComponent,
     PatientListComponent,
-    PatientListitemComponent,
-    PatientMylistComponent,
     DoctorListComponent,
     DoctorListitemComponent
   ]

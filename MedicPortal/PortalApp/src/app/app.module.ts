@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { DoctorModule } from './doctor/doctor.module';
 import { AppRoutingModule } from './app.routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UrlSerializer } from '@angular/router';
@@ -25,7 +24,6 @@ import { FeaturesModule } from './features/features.module';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    DoctorModule,
     HttpClientModule,
     SharedModule,
     FeaturesModule

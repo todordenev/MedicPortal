@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PatientService } from '@app/core/patient.service';
+import { PatientService } from '@app/core/services';
 import { Patient } from '@app/shared/patient';
 
 @Component({
-  selector: 'app-patient-mylist',
-  templateUrl: './patient-mylist.component.html',
-  styleUrls: ['./patient-mylist.component.css']
+  selector: 'app-account-patients',
+  templateUrl: './account-patients.component.html',
+  styleUrls: ['./account-patients.component.css']
 })
-export class PatientMylistComponent implements OnInit {
+export class AccountPatientsComponent implements OnInit {
   patients: Patient[] = [];
   constructor(private patientService: PatientService) { }
 

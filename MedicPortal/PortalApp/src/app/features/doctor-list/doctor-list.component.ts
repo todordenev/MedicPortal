@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DoctorService } from '@app/core/doctor.service';
-import { Doctor } from '@app/shared/doctor';
+import { DoctorService } from '@app/core/services';
+import { Doctor } from '@app/core/entities';
 
 @Component({
   selector: 'app-doctor-list',

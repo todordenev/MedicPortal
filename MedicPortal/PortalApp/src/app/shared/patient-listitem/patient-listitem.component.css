@@ -9,15 +9,9 @@
     font-size: 16px;
 }
 
-form {
-    max-width: 400px;
-}
-
 .mat-card {
-    margin: auto;
     width: 270px;
-    margin-top: 5px;
-    margin-right: 5px;
+    margin: 5px;
 }
 
 .mat-form-field {

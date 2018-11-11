@@ -1,6 +1,6 @@
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { OnInit, Injectable } from '@angular/core';
-import { UserService } from './user.service';
+import { UserService } from '@app/core/services';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

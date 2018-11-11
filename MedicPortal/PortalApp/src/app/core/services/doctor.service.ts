@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Doctor } from '../shared/doctor';
-import {  HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { Doctor } from '@app/core/entities';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable({

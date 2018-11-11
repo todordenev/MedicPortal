@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Doctor } from '../../shared/doctor';
-import { DoctorService } from '@app/core/doctor.service';
+import { Doctor } from '@app/core/entities';
+import { DoctorService } from '@app/core/services';
 
 @Component({
   selector: 'app-doctor-mylist',
@@ -12,7 +12,7 @@ export class DoctorMylistComponent implements OnInit {
   constructor(private doctorService: DoctorService) { }
 
   ngOnInit() {
-    this.doctorService.getMyDoctors().subscribe((doctors: Doctor[]) => this.doctors = doctors);
+    this.doctorService.getMyDoctors().subscribe((doctors) => this.doctors = doctors);
   }
 
 }
