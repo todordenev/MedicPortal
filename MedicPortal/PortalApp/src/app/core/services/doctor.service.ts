@@ -37,7 +37,6 @@ export class DoctorService {
     }
 
     setDoctors(doctorsArray, serverResult) {
-
         if (serverResult) {
             serverResult.forEach(element => {
                 const doc = new Doctor(element);
@@ -48,6 +47,10 @@ export class DoctorService {
     }
 
     getDoctor(id: string): Observable<Doctor> {
+        if (this.doctors.length > 0) {
+            return of(this.doctors.find(x => x.id === id));
+        }
+
         const url = this.docotrEndpointUrl + '/' + id;
         return this.http.get(url)
             .pipe(

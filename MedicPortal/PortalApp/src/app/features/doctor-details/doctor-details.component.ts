@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Doctor } from '@app/core/entities';
 import { DoctorService } from '@app/core/services';
+import { CalendarView } from 'angular-calendar';
 
 @Component({
   selector: 'app-doctor-details',
@@ -13,11 +14,15 @@ export class DoctorDetailsComponent implements OnInit {
   doctor: Doctor;
   constructor(private doctorService: DoctorService, private route: ActivatedRoute) { }
 
+  viewDate = new Date();
+  view: CalendarView = CalendarView.Month;
+
+  CalendarView = CalendarView;
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.doctorService.getDoctor(id).subscribe((doc: Doctor) => this.doctor = doc);
   }
-  imageUrl(doctor: Doctor) {
-    return './assets/doctor_' + doctor.id + '.jpg';
+  get imageUrl() {
+    return './assets/doctor_' + this.doctor.id + '.jpg';
   }
 }

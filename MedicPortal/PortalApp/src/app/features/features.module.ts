@@ -10,6 +10,12 @@ import { DoctorListitemComponent } from './doctor-listitem/doctor-listitem.compo
 import { RouterModule } from '@angular/router';
 import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
 import { AccountPatientsComponent } from '@app/features/account/account-patients/account-patients.component';
+import { DoctorDetailsComponent } from './doctor-details/doctor-details.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { registerLocaleData } from '@angular/common';
+import localeBg from '@angular/common/locales/bg';
+registerLocaleData(localeBg);
 
 @NgModule({
   imports: [
@@ -17,7 +23,11 @@ import { AccountPatientsComponent } from '@app/features/account/account-patients
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
   ],
   declarations: [
     RegistrationComponent,
@@ -26,6 +36,7 @@ import { AccountPatientsComponent } from '@app/features/account/account-patients
     PatientListComponent,
     DoctorListComponent,
     DoctorListitemComponent,
+    DoctorDetailsComponent,
     AccountPatientsComponent
   ],
   exports: [
@@ -34,7 +45,8 @@ import { AccountPatientsComponent } from '@app/features/account/account-patients
     AccountViewComponent,
     PatientListComponent,
     DoctorListComponent,
-    DoctorListitemComponent
+    DoctorListitemComponent,
+    DoctorDetailsComponent
   ]
 })
 export class FeaturesModule { }

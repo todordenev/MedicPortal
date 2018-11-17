@@ -6,11 +6,11 @@ import { RegistrationComponent } from './features/registration/registration.comp
 import { FeaturesModule } from './features/features.module';
 import { DoctorListComponent } from './features/doctor-list/doctor-list.component';
 import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
+import { DoctorDetailsComponent } from './features/doctor-details/doctor-details.component';
 
 const routes: Routes = [
   { path: '', component: DoctorListComponent },
-  { path: 'doctors', component: DoctorListComponent, canActivate: [AuthenticationGuard] },
- // { path: 'doctors/:id', component: DoctorDetailsComponent, canActivate: [AuthenticationGuard] },
+  { path: 'doctors/:id', component: DoctorDetailsComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LoginComponent, canActivate: [AuthenticationGuard] },
   { path: 'register', component: RegistrationComponent },

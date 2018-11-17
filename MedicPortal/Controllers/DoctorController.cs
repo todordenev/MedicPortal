@@ -28,7 +28,7 @@ namespace MedicPortal.Controllers
         }
 
         [HttpGet]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public List<Doctor> Get()
         {
             var doctors = _dbContext.Doctors.Where(d => d.IsActive && d.Approved)
@@ -59,7 +59,11 @@ namespace MedicPortal.Controllers
                 return BadRequest();
             }
 
-            var doctor = _dbContext.Doctors.FirstOrDefault(d => d.Id == id);
+            var doctor = _dbContext.Doctors
+                .Include(d => d.Worktimes)
+                .Include(d => d.DoctorSpezialisations)
+                .ThenInclude(ds => ds.Spezialisation)
+                .FirstOrDefault(d => d.Id == id);
             if (doctor == null)
             {
                 NotFound();
