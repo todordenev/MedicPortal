@@ -1,0 +1,15 @@
+<div>
+  <div>
+    Dayview
+  </div>
+  <div class="calendar-slot" *ngFor="let slot of slots">
+    <span *ngIf="slot.hourLabel" class="hour-label">
+      {{slot.hourLabel}}
+    </span>
+    <div class="event-tools">
+      <button mat-button>
+        <mat-icon class="add-event-icon">add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

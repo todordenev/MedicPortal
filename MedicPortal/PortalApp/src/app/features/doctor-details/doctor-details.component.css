@@ -1,52 +1,69 @@
+.doctor-details {
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .mat-card {
-    max-width: 400px;
-    min-width: 300px;
+    width: 300px;
+    /*min-width: 300px;
     margin: 5px;
     height: 400px;
-    width: calc(25% - 10px);
-    box-sizing: border-box;
+    box-sizing: border-box; */
 }
 
 .doctor-header-image {
-    
-    background-size: cover; 
+    background-size: cover;
     width: calc(100px-20px);
     margin: 10px;
 }
-.mat-card-content{
+
+.mat-card-content {
     margin-bottom: 0;
 }
-.image-container{
+
+.image-container {
     height: 150px;
 }
+
 .mat-card-image {
     width: auto;
     height: 100%;
     display: block;
     margin: auto !important;
 }
-.mat-card-subtitle span
-{
+
+.mat-card-subtitle span {
     margin-right: 5px;
 }
+
 .mat-card-content {
     padding-top: 10px;
 }
-.worktime-header{
+
+.worktime-header {
     font-weight: 500;
     width: 25px;
 }
-.workday-header.main{
+
+.workday-header.main {
     font-weight: 500;
     margin-left: 5px;
 }
-.workday-container{
+
+.workday-container {
     display: flex;
 }
-.worktime-container{
+
+.worktime-container {
     display: flex;
 }
-.worktime-hours{
+
+.worktime-hours {
     margin-left: 5px;
+}
+.appointments{
+    width: calc(100% - 358px);
+    padding: 5px;
+    min-width: 300px;
+    max-width: 600px;
 }

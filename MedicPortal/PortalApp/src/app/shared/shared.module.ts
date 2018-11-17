@@ -42,11 +42,13 @@ import { CommonModule } from '@angular/common';
 import { PatientListitemComponent } from '@app/shared/patient-listitem/patient-listitem.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfiguredDatepickerModule } from './MatDatePicker';
+import { DayViewComponent } from './calendar/day-view/day-view.component';
 
 @NgModule({
     imports: [
         CommonModule,
         MatInputModule,
+        MatIconModule,
         MatButtonModule,
         MatCardModule,
         MatFormFieldModule,
@@ -91,11 +93,13 @@ import { ConfiguredDatepickerModule } from './MatDatePicker';
         MatTooltipModule,
         MatTreeModule,
         CaptureImageComponent,
-        PatientListitemComponent
+        PatientListitemComponent,
+        DayViewComponent
     ],
     declarations: [
         CaptureImageComponent,
-        PatientListitemComponent
+        PatientListitemComponent,
+        DayViewComponent
     ]
 })
 export class SharedModule { }

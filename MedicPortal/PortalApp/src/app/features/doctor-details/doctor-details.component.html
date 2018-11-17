@@ -1,4 +1,4 @@
-<div>
+<div class="doctor-details">
   <mat-card *ngIf="doctor">
     <mat-card-header>
       <div mat-card-avatar class="doctor-header-image" [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
@@ -11,29 +11,21 @@
       <img mat-card-image [src]="imageUrl" alt="{{doctor.name}}">
     </div>
   </mat-card>
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div class="btn btn-primary" (click)="view = CalendarView.Month" [class.active]="view === CalendarView.Month">
-        Month
-      </div>
-      <div class="btn btn-primary" (click)="view = CalendarView.Week" [class.active]="view === CalendarView.Week">
-        Week
-      </div>
-      <div class="btn btn-primary" (click)="view = CalendarView.Day" [class.active]="view === CalendarView.Day">
-        Day
+  <div class="appointments">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="btn btn-primary" (click)="view ='week'">
+          Week
+        </div>
+        <div class="btn btn-primary" (click)="view = 'Day'">
+          Day
+        </div>
       </div>
     </div>
+    <div [ngSwitch]="view">
+      <app-day-view start="8" end="16">
+      </app-day-view>
+    </div>
   </div>
-  <div [ngSwitch]="view">
-    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-      [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)" [locale]="'bg'">
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-      (eventClicked)="handleEvent('Clicked', $event.event)" [locale]="'bg'" (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-      (eventClicked)="handleEvent('Clicked', $event.event)" [locale]="'bg'" (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-day-view>
-  </div>
+
 </div>

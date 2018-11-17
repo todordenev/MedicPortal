@@ -57,7 +57,7 @@ namespace MedicPortal.Controllers
             if (id.IsNullOrEmpty())
             {
                 return BadRequest();
-            }
+            } 
 
             var doctor = _dbContext.Doctors
                 .Include(d => d.Worktimes)

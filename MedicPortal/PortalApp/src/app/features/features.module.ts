@@ -11,8 +11,6 @@ import { RouterModule } from '@angular/router';
 import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
 import { AccountPatientsComponent } from '@app/features/account/account-patients/account-patients.component';
 import { DoctorDetailsComponent } from './doctor-details/doctor-details.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { registerLocaleData } from '@angular/common';
 import localeBg from '@angular/common/locales/bg';
 registerLocaleData(localeBg);
@@ -23,11 +21,7 @@ registerLocaleData(localeBg);
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    })
+    RouterModule
   ],
   declarations: [
     RegistrationComponent,

@@ -1,0 +1,32 @@
+.calendar-slot {
+    border-bottom: 1px gray dotted;
+    background-color: #fefefe;
+    min-width: 200px;
+    min-height: 24px;
+    position: relative;
+}
+
+.calendar-slot:nth-child(4n+1) {
+    border-bottom: 1px gray solid;
+}
+
+.hour-label {
+    position: absolute;
+}
+
+.event-tools {
+    position: absolute;
+    right: 0;
+}
+.event-tools mat-icon{
+    font-size: 16px;
+    width: 16px;
+    height: 16px;;
+}
+.event-tools button.mat-button{
+    width:16px;
+    min-width: 16px;
+    height: 16px;
+    line-height: 16px;
+    padding: 0;
+}
