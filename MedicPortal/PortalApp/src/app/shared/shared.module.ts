@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CaptureImageComponent } from './capture-image/capture-image.component';
+import * as bgLocale from 'date-fns/locale/bg/index.js';
+
+const dnsConfigService = new DateFnsConfigurationService();
+dnsConfigService.setLocale(bgLocale);
 
 import {
     MatAutocompleteModule,
@@ -43,6 +47,7 @@ import { PatientListitemComponent } from '@app/shared/patient-listitem/patient-l
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfiguredDatepickerModule } from './MatDatePicker';
 import { DayViewComponent } from './calendar/day-view/day-view.component';
+import { DateFnsModule, DateFnsConfigurationService } from 'ngx-date-fns';
 
 @NgModule({
     imports: [
@@ -55,6 +60,7 @@ import { DayViewComponent } from './calendar/day-view/day-view.component';
         FormsModule,
         ConfiguredDatepickerModule,
         ReactiveFormsModule,
+        DateFnsModule.forRoot()
     ],
     exports: [
         MatAutocompleteModule,
@@ -100,6 +106,10 @@ import { DayViewComponent } from './calendar/day-view/day-view.component';
         CaptureImageComponent,
         PatientListitemComponent,
         DayViewComponent
+    ],
+    providers: [
+
+        { provide: DateFnsConfigurationService, useValue: dnsConfigService } // <-- All pipies in bg by default
     ]
 })
 export class SharedModule { }

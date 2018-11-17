@@ -1,6 +1,17 @@
 <div>
-  <div>
-    Dayview
+  <div class="dayview-tools">
+    <button mat-button (click)="previousDay()">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+
+    <div class="viewdate-label">
+      <div>{{ viewDate | dfnsFormat : 'DD.MM.YYYY' }}</div>
+      <div>{{ viewDate | dfnsFormat : '(dddd)' }}</div>
+    </div>
+
+    <button mat-button (click)="nextDay()">
+      <mat-icon>navigate_next</mat-icon>
+    </button>
   </div>
   <div class="calendar-slot" *ngFor="let slot of slots">
     <span *ngIf="slot.hourLabel" class="hour-label">

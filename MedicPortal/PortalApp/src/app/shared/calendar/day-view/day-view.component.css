@@ -17,16 +17,44 @@
 .event-tools {
     position: absolute;
     right: 0;
+    display: none;
 }
-.event-tools mat-icon{
+
+.event-tools mat-icon {
     font-size: 16px;
     width: 16px;
-    height: 16px;;
+    height: 16px;
+    ;
 }
-.event-tools button.mat-button{
-    width:16px;
+
+.calendar-slot:hover .event-tools {
+    display: block;
+}
+
+.event-tools button.mat-button {
+    width: 16px;
     min-width: 16px;
     height: 16px;
     line-height: 16px;
     padding: 0;
+}
+
+.dayview-tools {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 15px;
+}
+
+.dayview-tools>button.mat-button {
+    min-width: 36px;
+    width: 36px;
+    padding: 0;
+}
+
+.viewdate-label {
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 105px;
 }

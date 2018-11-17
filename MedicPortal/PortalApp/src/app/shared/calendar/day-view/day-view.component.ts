@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CalendarSlot } from '../CalendarSlot';
-import { format, startOfDay, addHours } from 'date-fns';
+import { format, startOfDay, addHours, addDays } from 'date-fns';
+import { CalendarEvent } from '../CalendarEvent';
 
 @Component({
   selector: 'app-day-view',
@@ -17,8 +18,12 @@ export class DayViewComponent implements OnInit {
   duration = 0.25;
   errorMessage: string;
   slots: any[] = [];
+  viewDate: Date;
+  @Input()
+  events: CalendarEvent[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.start = 8;
@@ -26,6 +31,13 @@ export class DayViewComponent implements OnInit {
     if (this.end <= this.start) {
       this.errorMessage = 'Wrong Parameters. End cannot be smaller than start.';
     }
+    this.createSlots();
+    this.arrangeEvents();
+
+    this.viewDate = new Date();
+  }
+
+  createSlots() {
     let counter = this.start;
     do {
       const slot = new CalendarSlot();
@@ -37,5 +49,16 @@ export class DayViewComponent implements OnInit {
       slot.end = counter;
       this.slots.push(slot);
     } while (counter < this.end);
+  }
+  arrangeEvents(): any {
+    for (const event in this.events) {
+      
+    }
+  }
+  previousDay() {
+    this.viewDate = addDays(this.viewDate, -1);
+  }
+  nextDay() {
+    this.viewDate = addDays(this.viewDate, 1);
   }
 }

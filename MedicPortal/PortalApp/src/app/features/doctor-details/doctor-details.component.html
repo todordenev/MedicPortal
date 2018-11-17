@@ -10,20 +10,25 @@
     <div class="image-container">
       <img mat-card-image [src]="imageUrl" alt="{{doctor.name}}">
     </div>
-  </mat-card>
-  <div class="appointments">
-    <div class="col-md-4">
-      <div class="btn-group">
-        <div class="btn btn-primary" (click)="view ='week'">
-          Week
+    <mat-card-content>
+      <div class="workday-header main">
+        Работно време
+      </div>
+      <div *ngFor="let workday of doctor.workdays" class="workday-container">
+        <div class="worktime-header">
+          {{workday.dayLabel}}
         </div>
-        <div class="btn btn-primary" (click)="view = 'Day'">
-          Day
+        <div class="worktime-container">
+          <div *ngFor="let worktime of workday.worktimes" class="worktime-hours">
+            {{worktime.fromLabel}} - {{worktime.tillLabel}}
+          </div>
         </div>
       </div>
-    </div>
-    <div [ngSwitch]="view">
-      <app-day-view start="8" end="16">
+    </mat-card-content>
+  </mat-card>
+  <div class="appointments">
+    <div>
+      <app-day-view start="8" end="16" [events]="appointments" >
       </app-day-view>
     </div>
   </div>
