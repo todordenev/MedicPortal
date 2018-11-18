@@ -1,17 +1,18 @@
 .calendar-slot {
-    border-bottom: 1px gray dotted;
+    border-top: 1px gray dotted;
     background-color: #fefefe;
     min-width: 200px;
-    min-height: 24px;
+    height: 24px;
     position: relative;
 }
 
 .calendar-slot:nth-child(4n+1) {
-    border-bottom: 1px gray solid;
+    border-top: 1px gray solid;
 }
 
 .hour-label {
     position: absolute;
+    z-index: 100;
 }
 
 .event-tools {
@@ -57,4 +58,19 @@
     margin-left: 5px;
     margin-right: 5px;
     width: 105px;
+}
+
+.dayview-events {
+    position: relative;
+}
+
+.calendar-event {
+    position: absolute;
+    width: 180px;
+    min-height: 3px;
+    background-color: gray;
+    border: 1px darkgray solid;
+    border-radius: 7px;
+    box-sizing: border-box;
+    left: 50px;
 }

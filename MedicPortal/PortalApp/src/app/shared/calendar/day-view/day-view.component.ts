@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CalendarSlot } from '../CalendarSlot';
 import { format, startOfDay, addHours, addDays } from 'date-fns';
 import { CalendarEvent } from '../CalendarEvent';
@@ -15,13 +15,23 @@ export class DayViewComponent implements OnInit {
   @Input()
   end: number;
   @Input()
-  duration = 0.25;
+  duration = 0.25; // calndar-slot = 25px => 1 Hour = 100px;
   errorMessage: string;
   slots: any[] = [];
   viewDate: Date;
-  @Input()
-  events: CalendarEvent[] = [];
 
+  _events: CalendarEvent[] = [];
+  @Output()
+  viewDateChanged: EventEmitter<Date> = new EventEmitter<Date>();
+
+  @Input()
+  set events(value) {
+    this._events = value;
+    this.arrangeEvents();
+  }
+  get events() {
+    return this._events;
+  }
   constructor() {
   }
 
@@ -32,11 +42,9 @@ export class DayViewComponent implements OnInit {
       this.errorMessage = 'Wrong Parameters. End cannot be smaller than start.';
     }
     this.createSlots();
-    this.arrangeEvents();
-
+    //   this.arrangeEvents();
     this.viewDate = new Date();
   }
-
   createSlots() {
     let counter = this.start;
     do {
@@ -51,14 +59,33 @@ export class DayViewComponent implements OnInit {
     } while (counter < this.end);
   }
   arrangeEvents(): any {
-    for (const event in this.events) {
-      
+    if (typeof (this._events) === typeof ([]) && this._events.length > 0) {
+      this._events = this._events.sort((a, b) => a.start - b.start);
+      const verticalLines: number[] = [];
+      verticalLines.push(this.start);
+      this._events.forEach(event => {
+        let indexLine = 0;
+        let lineFound = false;
+        do {
+          let currentLineEnd = verticalLines[indexLine];
+          if (currentLineEnd <= event.start) {
+            currentLineEnd = event.end;
+            event.overlapingCounter = indexLine;
+            verticalLines[indexLine] = currentLineEnd;
+            lineFound = true;
+            break;
+          }
+          indexLine++;
+        } while (verticalLines.length !== indexLine);
+        if (!lineFound) {
+          event.overlapingCounter = verticalLines.length;
+          verticalLines.push(event.end);
+        }
+      });
     }
   }
-  previousDay() {
-    this.viewDate = addDays(this.viewDate, -1);
-  }
-  nextDay() {
-    this.viewDate = addDays(this.viewDate, 1);
+  moveViewDate(days: number) {
+    this.viewDate = addDays(this.viewDate, days);
+    this.viewDateChanged.emit(this.viewDate);
   }
 }

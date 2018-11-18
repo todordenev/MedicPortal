@@ -19,12 +19,20 @@ export class DoctorDetailsComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.doctorService.getDoctor(id).subscribe((doc: Doctor) => this.doctor = doc);
-    this.appointments.push(new CalendarEvent(8, 8.25, 'Test1', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(8, 8.50, 'Test2', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(9, 9.50, 'Test3', 'Das ist ein Termin'));
     this.appointments.push(new CalendarEvent(10, 10.5, 'Test4', 'Das ist ein Termin'));
+    this.appointments.push(new CalendarEvent(8, 8.50, 'Test2', 'Das ist ein Termin'));
+    this.appointments.push(new CalendarEvent(8.5, 8.750, 'Test2', 'Das ist ein Termin'));
+    this.appointments.push(new CalendarEvent(8.5, 9, 'Test2', 'Das ist ein Termin'));
+    this.appointments.push(new CalendarEvent(8, 8.25, 'Test1', 'Das ist ein Termin'));
+    this.appointments.push(new CalendarEvent(8.25, 8.75, 'Test1', 'Das ist ein Termin'));
+    this.appointments.push(new CalendarEvent(9, 9.25, 'Test3', 'Das ist ein Termin'));
   }
   get imageUrl() {
     return './assets/doctor_' + this.doctor.id + '.jpg';
+  }
+  viewDateChanged(viewDate) {
+    this.appointments = [];
+    this.appointments.push(new CalendarEvent(8.25, 8.75, 'Test1', 'Das ist ein Termin'));
+    this.appointments.push(new CalendarEvent(9, 9.25, 'Test3', 'Das ist ein Termin'));
   }
 }

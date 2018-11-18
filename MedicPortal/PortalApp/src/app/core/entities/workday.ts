@@ -13,7 +13,6 @@ export class Workday {
     }
 
     worktimes: Worktime[] = [];
-
     constructor(dayNumber) {
         this._dayNumber = dayNumber;
         this._daylabel = moment().weekday(this._dayNumber).format('ddd');

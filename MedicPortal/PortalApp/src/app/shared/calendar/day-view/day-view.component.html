@@ -1,26 +1,30 @@
 <div>
   <div class="dayview-tools">
-    <button mat-button (click)="previousDay()">
+    <button mat-button (click)="moveViewDate(-1)">
       <mat-icon>navigate_before</mat-icon>
     </button>
-
     <div class="viewdate-label">
       <div>{{ viewDate | dfnsFormat : 'DD.MM.YYYY' }}</div>
       <div>{{ viewDate | dfnsFormat : '(dddd)' }}</div>
     </div>
-
-    <button mat-button (click)="nextDay()">
+    <button mat-button (click)="moveViewDate(1)">
       <mat-icon>navigate_next</mat-icon>
     </button>
   </div>
-  <div class="calendar-slot" *ngFor="let slot of slots">
-    <span *ngIf="slot.hourLabel" class="hour-label">
-      {{slot.hourLabel}}
-    </span>
-    <div class="event-tools">
-      <button mat-button>
-        <mat-icon class="add-event-icon">add</mat-icon>
-      </button>
+  <div class="dayview-events">
+    <div class="calendar-slot" *ngFor="let slot of slots">
+      <span *ngIf="slot.hourLabel" class="hour-label">
+        {{slot.hourLabel}}
+      </span>
+      <div class="event-tools">
+        <button mat-button>
+          <mat-icon class="add-event-icon">add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="calendar-event" *ngFor="let event of events" [style.top]="(event.start - start) *100 + 'px'"
+      [style.height]="(event.end - event.start)*100 + 'px'" [style.left]="(event.overlapingCounter * 190 + 50) + 'px'">
+     {{event.overlapingCounter }}
     </div>
   </div>
 </div>

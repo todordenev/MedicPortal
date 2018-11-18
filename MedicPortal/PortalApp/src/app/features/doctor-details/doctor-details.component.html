@@ -28,7 +28,7 @@
   </mat-card>
   <div class="appointments">
     <div>
-      <app-day-view start="8" end="16" [events]="appointments" >
+      <app-day-view start="8" end="16" [events]="appointments" (viewDateChanged)="viewDateChanged($event)" >
       </app-day-view>
     </div>
   </div>
