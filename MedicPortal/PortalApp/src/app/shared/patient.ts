@@ -1,8 +1,10 @@
+import { parse } from 'date-fns';
+
 export class Patient {
     id: string;
     firstName: string;
     lastName: string;
-    birthdate: string;
+    birthdate: Date;
     adress: string;
     telefon: string;
 

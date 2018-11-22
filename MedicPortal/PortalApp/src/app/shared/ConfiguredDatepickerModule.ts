@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatMomentDateModule, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { CustomDateAdapter } from './CustomDateAdapter';
 
 export const MY_FORMATS = {
     parse: {
@@ -18,18 +18,14 @@ export const MY_FORMATS = {
 
 @NgModule({
     imports: [
-        MatDatepickerModule,
-        MatMomentDateModule
     ],
     exports: [
         MatDatepickerModule,
         MatMomentDateModule
     ],
     providers: [
-        MatDatepickerModule,
         { provide: MAT_DATE_LOCALE, useValue: 'bg-BG' },
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
     ]
 })
 export class ConfiguredDatepickerModule { }

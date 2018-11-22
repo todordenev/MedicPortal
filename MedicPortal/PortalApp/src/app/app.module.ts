@@ -14,6 +14,8 @@ import { RoleGuard } from './core/role-guard';
 import { AuthenticationGuard } from './core/authentication-guard';
 import { SharedModule } from './shared/shared.module';
 import { FeaturesModule } from './features/features.module';
+import { DateAdapter } from '@angular/material';
+import { CustomDateAdapter } from './shared/CustomDateAdapter';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { FeaturesModule } from './features/features.module';
       provide: UrlSerializer,
       useClass: LowerCaseUrlSerializer
     },
-    RoleGuard
+    RoleGuard,
+    { provide: DateAdapter, useClass: CustomDateAdapter },
   ],
   bootstrap: [AppComponent]
 })

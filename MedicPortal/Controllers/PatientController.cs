@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -32,7 +33,7 @@ namespace MedicPortal.Controllers
         {
             var userId = User.GetUserId();
             var patients = _dbContext.Patients.Include(p => p.AppUser).Where(p => p.AppUserId == userId).ToList();
-            
+          
             return patients.ToList();
         }
 

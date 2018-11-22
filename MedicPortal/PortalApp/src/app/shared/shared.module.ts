@@ -45,7 +45,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { PatientListitemComponent } from '@app/shared/patient-listitem/patient-listitem.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ConfiguredDatepickerModule } from './MatDatePicker';
+import { ConfiguredDatepickerModule } from './ConfiguredDatepickerModule';
 import { DayViewComponent } from './calendar/day-view/day-view.component';
 import { DateFnsModule, DateFnsConfigurationService } from 'ngx-date-fns';
 
