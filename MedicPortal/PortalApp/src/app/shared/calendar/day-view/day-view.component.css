@@ -16,8 +16,7 @@
 }
 
 .event-tools {
-    position: absolute;
-    right: 0;
+    margin-left: 60px;
     display: none;
 }
 
@@ -33,10 +32,10 @@
 }
 
 .event-tools button.mat-button {
-    width: 16px;
+    width: 150px;
     min-width: 16px;
-    height: 16px;
-    line-height: 16px;
+    height: 24px;
+    line-height: 20px;
     padding: 0;
 }
 

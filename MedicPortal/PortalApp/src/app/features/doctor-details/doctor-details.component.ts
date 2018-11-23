@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Doctor } from '@app/core/entities';
 import { DoctorService } from '@app/core/services';
-import { CalendarEvent } from '@app/shared/calendar/CalendarEvent';
+import { CalendarEvent, fromAppointment } from '@app/shared/calendar/CalendarEvent';
+import { AppointmentService } from '@app/core/services';
+import { map } from 'rxjs/operators';
+import { Appointment } from '@app/core/entities/appointment';
 
 @Component({
   selector: 'app-doctor-details',
@@ -10,29 +13,42 @@ import { CalendarEvent } from '@app/shared/calendar/CalendarEvent';
   styleUrls: ['./doctor-details.component.css']
 })
 export class DoctorDetailsComponent implements OnInit {
-
+  doctorId: string;
   doctor: Doctor;
-  constructor(private doctorService: DoctorService, private route: ActivatedRoute) { }
-  appointments: CalendarEvent[] = [];
+  constructor(private doctorService: DoctorService,
+    private appointmentService: AppointmentService,
+    private route: ActivatedRoute) { }
+  calendarEvents: CalendarEvent[] = [];
   viewDate = new Date();
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.doctorService.getDoctor(id).subscribe((doc: Doctor) => this.doctor = doc);
-    this.appointments.push(new CalendarEvent(10, 10.5, 'Test4', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(8, 8.50, 'Test2', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(8.5, 8.750, 'Test2', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(8.5, 9, 'Test2', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(8, 8.25, 'Test1', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(8.25, 8.75, 'Test1', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(9, 9.25, 'Test3', 'Das ist ein Termin'));
+    this.doctorId = this.route.snapshot.paramMap.get('id');
+    this.doctorService.getDoctor(this.doctorId).subscribe((doc: Doctor) => this.doctor = doc);
+    this.fetchEvents();
+  }
+
+  fetchEvents() {
+    this.appointmentService.getAppointments(this.doctorId, this.viewDate)
+      .pipe(map(appointments => this.toEvents(appointments)))
+      .subscribe(events => this.calendarEvents = events);
   }
   get imageUrl() {
     return './assets/doctor_' + this.doctor.id + '.jpg';
   }
+  toEvents(appointments: Appointment[]): CalendarEvent[] {
+    console.log('toEvents called');
+    const events: CalendarEvent[] = [];
+    appointments.forEach(el => {
+      events.push(fromAppointment(el));
+    });
+    return events;
+  }
+  createAppointment(event) {
+
+  }
+
   viewDateChanged(viewDate) {
-    this.appointments = [];
-    this.appointments.push(new CalendarEvent(8.25, 8.75, 'Test1', 'Das ist ein Termin'));
-    this.appointments.push(new CalendarEvent(9, 9.25, 'Test3', 'Das ist ein Termin'));
+    this.viewDate = viewDate;
+    this.fetchEvents();
   }
 }

@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181109101603_avatarImage")]
-    partial class avatarImage
+    [Migration("20181123122233_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -32,7 +32,11 @@ namespace MedicPortal.Migrations
 
                     b.Property<string>("DoctorId");
 
+                    b.Property<int>("DurationInMinutes");
+
                     b.Property<string>("PatientId");
+
+                    b.Property<DateTime>("Start");
 
                     b.HasKey("Id");
 

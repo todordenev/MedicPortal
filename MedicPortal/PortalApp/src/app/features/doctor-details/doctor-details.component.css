@@ -5,10 +5,7 @@
 
 .mat-card {
     width: 300px;
-    /*min-width: 300px;
-    margin: 5px;
-    height: 400px;
-    box-sizing: border-box; */
+    flex-grow: 0;
 }
 
 .doctor-header-image {
@@ -61,8 +58,9 @@
 .worktime-hours {
     margin-left: 5px;
 }
-.appointments{
-    width: calc(100% - 358px);
+
+.appointments {
+    flex-grow: 1;
     padding: 5px;
     min-width: 300px;
 }

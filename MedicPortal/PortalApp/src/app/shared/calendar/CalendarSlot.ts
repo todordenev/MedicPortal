@@ -3,4 +3,5 @@ export class CalendarSlot {
     end: number;
     canBook: boolean;
     hourLabel: string;
+    startTime: Date;
 }

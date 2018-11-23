@@ -42,7 +42,8 @@ namespace MedicPortal.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
+                    AvatarImage = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -290,7 +291,9 @@ namespace MedicPortal.Migrations
                     PatientId = table.Column<string>(nullable: true),
                     DoctorId = table.Column<string>(nullable: true),
                     ConfirmedByDoctor = table.Column<bool>(nullable: false),
-                    ConfirmedByUser = table.Column<bool>(nullable: false)
+                    ConfirmedByUser = table.Column<bool>(nullable: false),
+                    Start = table.Column<DateTime>(nullable: false),
+                    DurationInMinutes = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

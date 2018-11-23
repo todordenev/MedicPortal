@@ -20,7 +20,7 @@
         </div>
         <div class="worktime-container">
           <div *ngFor="let worktime of workday.worktimes" class="worktime-hours">
-            {{worktime.fromLabel}} - {{worktime.tillLabel}}
+            {{worktime.from | dfnsFormat : 'HH:mm'}} - {{worktime.till | dfnsFormat : 'HH:mm'}}
           </div>
         </div>
       </div>
@@ -28,7 +28,8 @@
   </mat-card>
   <div class="appointments">
     <div>
-      <app-day-view start="8" end="16" [events]="appointments" (viewDateChanged)="viewDateChanged($event)" >
+      <app-day-view start="8" end="16" [events]="calendarEvents" (viewDateChanged)="viewDateChanged($event)" 
+      [viewDate]="viewDate" (newEventClicked)="createAppointment($event)">
       </app-day-view>
     </div>
   </div>

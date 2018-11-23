@@ -17,6 +17,7 @@ namespace MedicPortal.ViewModels.Mappers
             CreateMap<PatientViewModel, Patient>();
             CreateMap<AppUser, UserViewModel>()
                 .ForMember(vm => vm.AvatarImage, map => map.MapFrom(u => GetString(u.AvatarImage)));
+            CreateMap<Appointment, AppointmentViewModelCreation>();
         }
 
         private byte[] GetBytes(string value)

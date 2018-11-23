@@ -11,9 +11,12 @@ import { RouterModule } from '@angular/router';
 import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
 import { AccountPatientsComponent } from '@app/features/account/account-patients/account-patients.component';
 import { DoctorDetailsComponent } from './doctor-details/doctor-details.component';
-import { registerLocaleData } from '@angular/common';
-import localeBg from '@angular/common/locales/bg';
-registerLocaleData(localeBg);
+
+import { MaterialModule } from '@app/shared/Material.module';
+import { DateFnsModule, DateFnsConfigurationService } from 'ngx-date-fns';
+
+
+
 
 @NgModule({
   imports: [
@@ -21,7 +24,9 @@ registerLocaleData(localeBg);
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MaterialModule,
+    DateFnsModule.forRoot()
   ],
   declarations: [
     RegistrationComponent,

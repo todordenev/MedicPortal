@@ -1,6 +1,8 @@
 import { Worktime } from '@app/core/entities/worktime';
-import * as moment from 'moment';
-import 'moment/locale/bg';
+import { startOfWeek, addDays, format } from 'date-fns';
+import * as bgLocale from 'date-fns/locale/bg/index.js';
+
+
 
 export class Workday {
     private _dayNumber: number;
@@ -11,11 +13,14 @@ export class Workday {
     get dayLabel() {
         return this._daylabel;
     }
-
+    today: Date;
     worktimes: Worktime[] = [];
     constructor(dayNumber) {
+        this.today = new Date();
         this._dayNumber = dayNumber;
-        this._daylabel = moment().weekday(this._dayNumber).format('ddd');
+        const day = addDays(startOfWeek(new Date(), { weekStartsOn: 1 }), this._dayNumber);
+        this._daylabel = format(day, 'dd', { locale: bgLocale });
+
     }
 }
 

@@ -16,8 +16,8 @@ export class DoctorListitemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  test(){
-      alert(this.doctor.workdays);
+  test() {
+    alert(this.doctor.workdays);
   }
   get imageUrl() {
     return './assets/doctor_' + this.doctor.id + '.jpg';

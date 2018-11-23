@@ -17,7 +17,7 @@
         {{slot.hourLabel}}
       </span>
       <div class="event-tools">
-        <button mat-button>
+        <button mat-button (click)="newEventClicked.emit(slot.startTime)">
           <mat-icon class="add-event-icon">add</mat-icon>
         </button>
       </div>
@@ -25,6 +25,9 @@
     <div class="calendar-event" *ngFor="let event of events" [style.top]="(event.start - start) *100 + 'px'"
       [style.height]="(event.end - event.start)*100 + 'px'" [style.left]="(event.overlapingCounter * 190 + 50) + 'px'">
      {{event.overlapingCounter }}
+    </div>
+    <div class="now-divider">
+
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CalendarSlot } from '../CalendarSlot';
-import { format, startOfDay, addHours, addDays } from 'date-fns';
+import { format, startOfDay, addHours, addDays, differenceInMinutes } from 'date-fns';
 import { CalendarEvent } from '../CalendarEvent';
 
 @Component({
@@ -9,25 +9,29 @@ import { CalendarEvent } from '../CalendarEvent';
   styleUrls: ['./day-view.component.css']
 })
 export class DayViewComponent implements OnInit {
+  _events: CalendarEvent[] = [];
 
   @Input()
   start: number;
   @Input()
   end: number;
   @Input()
-  duration = 0.25; // calndar-slot = 25px => 1 Hour = 100px;
+  duration = 0.25; // calendar-slot = 25px => 1 Hour = 100px;
   errorMessage: string;
   slots: any[] = [];
+  @Input()
   viewDate: Date;
-
-  _events: CalendarEvent[] = [];
   @Output()
   viewDateChanged: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output()
+  newEventClicked: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output()
+  eventClicked: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   @Input()
   set events(value) {
     this._events = value;
-    this.arrangeEvents();
+    this.moveOverlapingEvents();
   }
   get events() {
     return this._events;
@@ -42,15 +46,15 @@ export class DayViewComponent implements OnInit {
       this.errorMessage = 'Wrong Parameters. End cannot be smaller than start.';
     }
     this.createSlots();
-    //   this.arrangeEvents();
     this.viewDate = new Date();
   }
   createSlots() {
     let counter = this.start;
     do {
       const slot = new CalendarSlot();
+      slot.startTime = addHours(startOfDay(new Date()), counter);
       if (counter % 1 === 0) {
-        slot.hourLabel = format(addHours(startOfDay(new Date()), counter), 'HH:mm');
+        slot.hourLabel = format(slot.startTime, 'HH:mm');
       }
       slot.start = counter;
       counter += this.duration;
@@ -58,9 +62,12 @@ export class DayViewComponent implements OnInit {
       this.slots.push(slot);
     } while (counter < this.end);
   }
-  arrangeEvents(): any {
-    if (typeof (this._events) === typeof ([]) && this._events.length > 0) {
-      this._events = this._events.sort((a, b) => a.start - b.start);
+  /**
+   * Prüft, ob die Termine sich überlapen. 
+   */
+  private moveOverlapingEvents(): any {
+    if (this._events.length > 0) {
+      this._events = this._events.sort((a, b) => differenceInMinutes(a.start, b.start));
       const verticalLines: number[] = [];
       verticalLines.push(this.start);
       this._events.forEach(event => {

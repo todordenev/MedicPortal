@@ -28,7 +28,7 @@ namespace MedicPortal.Data
             new IdentityRole("Admin"),
             new IdentityRole("Doctor")
         };
-        
+
 
         private static readonly List<Doctor> Doctors = new List<Doctor>
         {
@@ -38,7 +38,6 @@ namespace MedicPortal.Data
                 Approved = true, AppUser = AppUsers[4], FirstName = "Irina", IsActive = true, LastName = "Ivanova",
                 Worktimes = new List<Worktime>
                 {
-                    
                     new Worktime {DayOfWeek = 0, From = 8, Till = 10.5},
                     new Worktime {DayOfWeek = 0, From = 10.75, Till = 13},
                     new Worktime {DayOfWeek = 1, From = 8, Till = 10.5},
@@ -53,11 +52,10 @@ namespace MedicPortal.Data
             },
             new Doctor
             {
-                Id="2",
+                Id = "2",
                 Approved = true, AppUser = AppUsers[4], FirstName = "Kunka", IsActive = true, LastName = "Kuncheva",
                 Worktimes = new List<Worktime>
                 {
-                    
                     new Worktime {DayOfWeek = 0, From = 8, Till = 12},
                     new Worktime {DayOfWeek = 0, From = 13, Till = 16},
                     new Worktime {DayOfWeek = 1, From = 9, Till = 12},
@@ -67,7 +65,7 @@ namespace MedicPortal.Data
                     new Worktime {DayOfWeek = 3, From = 8, Till = 12},
                     new Worktime {DayOfWeek = 3, From = 13, Till = 16},
                     new Worktime {DayOfWeek = 4, From = 8, Till = 12},
-                    new Worktime {DayOfWeek = 4, From = 13, Till = 16},
+                    new Worktime {DayOfWeek = 4, From = 13, Till = 16}
                 }
             }
         };
@@ -106,6 +104,31 @@ namespace MedicPortal.Data
             new DoctorSpezialisations {Doctor = Doctors[1], Spezialisation = Spezialisations[2]}
         };
 
+
+        private static readonly List<Appointment> Appointmens = new List<Appointment>
+        {
+            new Appointment
+            {
+                Doctor = Doctors[0], Patient = Patients[0], Start = DateTime.Today.AddHours(8),
+                DurationInMinutes = 15, ConfirmedByDoctor = true, ConfirmedByUser = true
+            },
+            new Appointment
+            {
+                Doctor = Doctors[0], Patient = Patients[1], Start = DateTime.Today.AddHours(8.50),
+                DurationInMinutes = 15, ConfirmedByDoctor = true, ConfirmedByUser = true
+            },
+            new Appointment
+            {
+                Doctor = Doctors[0], Patient = Patients[0], Start = DateTime.Today.AddHours(10),
+                DurationInMinutes = 15, ConfirmedByDoctor = true, ConfirmedByUser = true
+            },
+            new Appointment
+            {
+                Doctor = Doctors[0], Patient = Patients[1], Start = DateTime.Today.AddHours(11.50),
+                DurationInMinutes = 30, ConfirmedByDoctor = true, ConfirmedByUser = true
+            }
+        };
+
         private static UserManager<AppUser> _userManager;
 
         public static void CeedDummyData(ApplicationDbContext dbContext, UserManager<AppUser> userManager)
@@ -126,6 +149,7 @@ namespace MedicPortal.Data
             _dbContext.SaveChanges();
             _dbContext.UserRoles.Add(new IdentityUserRole<string> {RoleId = Roles[0].Id, UserId = AppUsers[4].Id});
             _dbContext.UserRoles.Add(new IdentityUserRole<string> {RoleId = Roles[1].Id, UserId = AppUsers[4].Id});
+            _dbContext.Appointments.AddRange(Appointmens);
             _dbContext.SaveChanges();
         }
 

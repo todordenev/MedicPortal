@@ -16,6 +16,13 @@ import { SharedModule } from './shared/shared.module';
 import { FeaturesModule } from './features/features.module';
 import { DateAdapter } from '@angular/material';
 import { CustomDateAdapter } from './shared/CustomDateAdapter';
+import { MaterialModule } from './shared/Material.module';
+import { ConfiguredDatepickerModule } from './shared/ConfiguredDatepickerModule';
+
+import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
+import * as bgLocale from 'date-fns/locale/bg/index.js';
+const dnsConfigService = new DateFnsConfigurationService();
+dnsConfigService.setLocale(bgLocale);
 
 @NgModule({
   declarations: [
@@ -28,7 +35,10 @@ import { CustomDateAdapter } from './shared/CustomDateAdapter';
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    FeaturesModule
+    FeaturesModule,
+    MaterialModule,
+    ConfiguredDatepickerModule,
+    DateFnsModule.forRoot()
   ],
   providers: [
     AuthenticationGuard,
@@ -38,6 +48,8 @@ import { CustomDateAdapter } from './shared/CustomDateAdapter';
     },
     RoleGuard,
     { provide: DateAdapter, useClass: CustomDateAdapter },
+    { provide: DateFnsConfigurationService, useValue: dnsConfigService } // <-- All pipies in bg by default
+
   ],
   bootstrap: [AppComponent]
 })

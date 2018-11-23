@@ -19,7 +19,7 @@
             </div>
             <div class="worktime-container">
                 <div *ngFor="let worktime of workday.worktimes" class="worktime-hours">
-                    {{worktime.fromLabel}} - {{worktime.tillLabel}}
+                    {{worktime.from | dfnsFormat : 'HH:mm'}} - {{worktime.till | dfnsFormat : 'HH:mm'}}
                 </div>
             </div>
         </div>

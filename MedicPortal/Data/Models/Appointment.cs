@@ -1,4 +1,6 @@
-﻿namespace MedicPortal.Data.Models
+﻿using System;
+
+namespace MedicPortal.Data.Models
 {
     public class Appointment
     {
@@ -9,5 +11,7 @@
         public Doctor Doctor { get; set; }
         public bool ConfirmedByDoctor { get; set; }
         public bool ConfirmedByUser { get; set; }
+        public DateTime Start { get; set; }
+        public int DurationInMinutes { get; set; }
     }
 }

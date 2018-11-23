@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { createPatch, applyPatch } from 'rfc6902';
 import { PatientService } from '@app/core/services';
 import { Patient } from '@app/shared/patient';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-patient-listitem',
@@ -32,9 +33,13 @@ export class PatientListitemComponent implements OnInit {
       adress: [this.patient.adress]
     });
   }
+
   onSubmit() {
     const changedPatient = this.patientForm.value;
-
+    if (changedPatient.birthdate instanceof Date) {
+      // geburtsdatum wurde geändert=> in String umwandeln, da createPatch mit Date nicht gut funktioniert.
+      changedPatient.birthdate = format(changedPatient.birthdate);
+    }
     if (this.patient.id) {
       const changes = createPatch(this.patient, changedPatient);
       this.patientService.update(this.patient.id, changes).subscribe(serverResult => {

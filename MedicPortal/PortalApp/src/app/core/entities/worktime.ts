@@ -1,18 +1,18 @@
-import * as moment from 'moment';
+
+import { startOfDay, addHours } from 'date-fns';
 
 export class Worktime {
     id: number;
     dayOfWeek: number;
-    from: number;
-    till: number;
+    from: Date;
+    till: Date;
     fromLabel: string;
     tillLabel: string;
     constructor(serverObject: any) {
         this.id = serverObject.id;
         this.dayOfWeek = serverObject.dayOfWeek;
-        this.from = serverObject.from;
-        this.till = serverObject.till;
-        this.fromLabel = moment().startOf('day').add('hour', this.from).format('HH:mm');
-        this.tillLabel = moment().startOf('day').add('hour', this.till).format('HH:mm');
+        const midnight = startOfDay(new Date());
+        this.from = addHours(midnight, serverObject.from);
+        this.till = addHours(midnight, serverObject.till);
     }
 }

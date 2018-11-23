@@ -1,14 +1,19 @@
+import { Appointment } from '@app/core/entities/appointment';
+import { parse, startOfDay, getHours, getMinutes } from 'date-fns';
+
+
 export class CalendarEvent {
-    overlapingCounter: number;
     start: number;
     end: number;
-    title: string;
-    body: string;
+    title?: string;
+    body?: string;
+    overlapingCounter?: number;
+}
 
-    constructor(start?: number, end?: number, title?: string, body?: string) {
-        this.start = start;
-        this.end = end;
-        this.title = title;
-        this.body = body;
-    }
+export function fromAppointment(appointment: Appointment) {
+    const calEvent = new CalendarEvent();
+    const start = parse(appointment.start);
+    calEvent.start = getHours(start) + (getMinutes(start) / 60);
+    calEvent.end = calEvent.start + (appointment.durationInMinutes / 60);
+    return calEvent;
 }
