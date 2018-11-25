@@ -7,6 +7,7 @@ import { FeaturesModule } from './features/features.module';
 import { DoctorListComponent } from './features/doctor-list/doctor-list.component';
 import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
 import { DoctorDetailsComponent } from './features/doctor-details/doctor-details.component';
+import { NewAppointmentComponent } from './features/new-appointment/new-appointment.component';
 
 const routes: Routes = [
   { path: '', component: DoctorListComponent },
@@ -15,6 +16,8 @@ const routes: Routes = [
   { path: 'logout', component: LoginComponent, canActivate: [AuthenticationGuard] },
   { path: 'register', component: RegistrationComponent },
   { path: 'manage', component: AccountViewComponent, canActivate: [AuthenticationGuard] },
+  { path: 'new-appointment', component: NewAppointmentComponent, canActivate: [AuthenticationGuard] },
+
 ];
 
 @NgModule({
