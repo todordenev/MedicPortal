@@ -15,15 +15,15 @@ export class AuthenticationGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean> {
         return this.userService.isLoggedIn
-        .pipe(
-            take(1),
-            map((isLoggedIn: boolean) => {
-                if (!isLoggedIn) {
-                    this.router.navigate(['/login']);
-                    return false;
-                }
-                return true;
-            })
-        );
+            .pipe(
+                take(1),
+                map((isLoggedIn: boolean) => {
+                    if (!isLoggedIn) {
+                        this.router.navigate(['/login', { 'source': state.url }]);
+                        return false;
+                    }
+                    return true;
+                })
+            );
     }
 }

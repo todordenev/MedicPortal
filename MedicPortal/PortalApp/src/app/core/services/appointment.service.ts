@@ -10,6 +10,7 @@ import { handleError } from '../entities/helpers';
   providedIn: 'root'
 })
 export class AppointmentService {
+
   serviceEndpoint = 'api/appointments';
 
   constructor(private http: HttpClient) { }
@@ -25,6 +26,9 @@ export class AppointmentService {
         catchError(handleError)
       );
   }
+  create(appointment): any {
+    return this.http.post(this.serviceEndpoint, appointment);
+  }
 
   private setAppointments(serverResult): Appointment[] {
     const result: Appointment[] = [];
@@ -33,4 +37,5 @@ export class AppointmentService {
     });
     return result;
   }
+
 }

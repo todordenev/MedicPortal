@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
-import { DoctorService, Doctor } from '@app/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute,  } from '@angular/router';
+import { DoctorService, Doctor, AppointmentService, } from '@app/core';
+import { Appointment } from '@app/core/entities/appointment';
 
 @Component({
     selector: 'app-new-appointment',
@@ -14,8 +15,9 @@ export class NewAppointmentComponent implements OnInit {
     doctor: any;
 
     constructor(private route: ActivatedRoute,
-        private doctorService: DoctorService,) {
-        
+        private doctorService: DoctorService,
+        private appointmentService: AppointmentService,
+        private location: Location) {
     }
 
     ngOnInit() {
@@ -25,5 +27,11 @@ export class NewAppointmentComponent implements OnInit {
     }
     onNoClick(): void {
 
+    }
+    createAppointment() {
+        const appointment = new Appointment();
+        appointment.doctorId = this.doctorId;
+        
+        this.appointmentService.create(appointment).subscribe(() => this.location.back());
     }
 }

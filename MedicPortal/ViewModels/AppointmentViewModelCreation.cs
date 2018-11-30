@@ -10,6 +10,6 @@ namespace MedicPortal.ViewModels
         public string PatientId { get; set; }
         public string DoctorId { get; set; }
         public DateTime Start { get; set; }
-        public TimeSpan Duration { get; set; }
+        public int DurationInMinutes { get; set; }
     }
 }

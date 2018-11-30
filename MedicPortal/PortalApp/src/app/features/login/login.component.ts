@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '@app/core/services';
 
 @Component({
@@ -14,11 +14,12 @@ export class LoginComponent implements OnInit {
     userName: string;
     constructor(private userService: UserService,
         private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
         private router: Router) { }
     ngOnInit() {
         this.createFormGroup();
         this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
-        this.userService.user.subscribe(user=>this.userName = user.displayName);
+        this.userService.user.subscribe(user => this.userName = user.displayName);
     }
     createFormGroup() {
         this.loginForm = this.formBuilder.group({
@@ -28,7 +29,11 @@ export class LoginComponent implements OnInit {
     }
     onSubmit({ value, valid }) {
         this.userService.login(value).subscribe((status) => {
-        //    this.router.navigate(['/doctors']);
+            let source = this.route.snapshot.paramMap.get('source');
+            if (!source) {
+                source = '/';
+            }
+            this.router.navigate([source]);
         });
     }
     logout() {

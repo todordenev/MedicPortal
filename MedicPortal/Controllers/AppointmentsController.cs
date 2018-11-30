@@ -53,18 +53,26 @@ namespace MedicPortal.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] AppointmentViewModelCreation model)
         {
-            var appointment = _mapper.Map<Appointment>(model);
-            appointment.ConfirmedByDoctor = model.DoctorId == CurrentUserId;
-            appointment.ConfirmedByUser =
-                _dbContext.Patients.Any(p => p.AppUserId == CurrentUserId && p.Id == model.PatientId);
-
-            if (User.IsPortalAdmin() || appointment.ConfirmedByDoctor || appointment.ConfirmedByUser)
+            try
             {
-                _dbContext.Appointments.Add(appointment);
-                _dbContext.SaveChanges();
-            }
+                var appointment = _mapper.Map<Appointment>(model);
+                appointment.ConfirmedByDoctor = model.DoctorId == CurrentUserId;
+                appointment.ConfirmedByUser =
+                    _dbContext.Patients.Any(p => p.AppUserId == CurrentUserId && p.Id == model.PatientId);
 
-            return Unauthorized();
+                if (User.IsPortalAdmin() || appointment.ConfirmedByDoctor || appointment.ConfirmedByUser)
+                {
+                    _dbContext.Appointments.Add(appointment);
+                    _dbContext.SaveChanges();
+                }
+
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
 

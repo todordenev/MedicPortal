@@ -10,22 +10,39 @@ import { handleError } from '../entities/helpers';
 })
 export class DoctorService {
     docotrEndpointUrl = '/api/doctors';
+    doctors: Doctor[] = [];
+    myDoctors: Doctor[] = [];
     constructor(private http: HttpClient) { }
-
     getDoctors(): Observable<Doctor[]> {
+        if (this.doctors.length > 0) {
+            of(this.doctors);
+        }
         return this.http.get(this.docotrEndpointUrl)
             .pipe(
-                map(serverResult => this.toDoctors(serverResult)),
+                map(serverResult => this.mapToDoctors(serverResult)),
                 catchError(handleError)
             );
     }
 
     getMyDoctors(): Observable<Doctor[]> {
+        if (this.myDoctors.length > 0) {
+            of(this.myDoctors);
+        }
         return this.http.get(this.docotrEndpointUrl + '/foraccount')
             .pipe(
-                map(serverResult => this.toDoctors(serverResult)),
+                map(serverResult => this.mapToMyDoctors(serverResult)),
                 catchError(handleError)
             );
+    }
+
+    mapToDoctors(serverResult) {
+        this.doctors = this.toDoctors(serverResult);
+        return this.doctors;
+    }
+
+    mapToMyDoctors(serverResult) {
+        this.myDoctors = this.toDoctors(serverResult);
+        return this.myDoctors;
     }
 
     toDoctors(serverResult) {
@@ -40,15 +57,16 @@ export class DoctorService {
     }
 
     getDoctor(id: string): Observable<Doctor> {
-        const url = this.docotrEndpointUrl + '/' + id;
-        return this.http.get(url)
-            .pipe(
-                map(doctor => new Doctor(doctor)),
-                catchError(handleError)
-            );
-    }
-
-    clearCachedDoctors() {
-        throw new Error();
+        const doctor = this.doctors.find(d => d.id === id);
+        if (doctor) {
+           return of(doctor);
+        } else {
+            const url = this.docotrEndpointUrl + '/' + id;
+            return this.http.get(url)
+                .pipe(
+                    map(d => new Doctor(d)),
+                    catchError(handleError)
+                );
+        }
     }
 }

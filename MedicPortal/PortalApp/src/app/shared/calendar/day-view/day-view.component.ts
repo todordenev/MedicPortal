@@ -29,7 +29,7 @@ export class DayViewComponent implements OnInit {
     eventClicked: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
     createNewEvent(time) {
-        this.newEventClicked.emit(time)
+        this.newEventClicked.emit(time);
     }
     @Input()
     set events(value) {
@@ -66,7 +66,7 @@ export class DayViewComponent implements OnInit {
         } while (counter < this.end);
     }
     /**
-     * Prüft, ob die Termine sich überlapen. 
+     * Prüft, ob die Termine sich überlapen.
      */
     private moveOverlapingEvents(): any {
         if (this._events.length > 0) {
