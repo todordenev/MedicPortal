@@ -1,0 +1,6 @@
+.doctor-header-image {
+    
+    background-size: cover; 
+    width: calc(100px-20px);
+    margin: 10px;
+}

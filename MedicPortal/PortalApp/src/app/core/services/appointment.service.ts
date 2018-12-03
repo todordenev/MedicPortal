@@ -7,35 +7,47 @@ import { map, catchError } from 'rxjs/operators';
 import { handleError } from '../entities/helpers';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AppointmentService {
+    serviceEndpoint = 'api/appointments';
 
-  serviceEndpoint = 'api/appointments';
+    constructor(private http: HttpClient) { }
 
-  constructor(private http: HttpClient) { }
-
-  getAppointments(doctorId: string, date?: Date): Observable<Appointment[]> {
-    if (!date) {
-      date = new Date();
+    getAppointments(doctorId: string, date?: Date): Observable<Appointment[]> {
+        if (!date) {
+            date = new Date();
+        }
+        const nowString = format(date, 'YYYY-MM-DDTHH:mm');
+        return this.http.get(this.serviceEndpoint + '/doctor/' + doctorId + '/' + nowString)
+            .pipe(
+                map(serverResult => this.mapAppointments(serverResult)),
+                catchError(handleError)
+            );
     }
-    const nowString = format(date, 'YYYY-MM-DDTHH:mm');
-    return this.http.get(this.serviceEndpoint + '/doctor/' + doctorId + '/' + nowString)
-      .pipe(
-        map(serverResult => this.setAppointments(serverResult)),
-        catchError(handleError)
-      );
-  }
-  create(appointment): any {
-    return this.http.post(this.serviceEndpoint, appointment);
-  }
 
-  private setAppointments(serverResult): Appointment[] {
-    const result: Appointment[] = [];
-    serverResult.forEach(element => {
-      result.push(element as Appointment);
-    });
-    return result;
-  }
+    getDoctorAppointments(doctorId: string, date?: Date): Observable<Appointment[]> {
+        if (!date) {
+            date = new Date();
+        }
+        const nowString = format(date, 'YYYY-MM-DDTHH:mm');
+        return this.http.get(this.serviceEndpoint + '/doctorappointments/' + doctorId + '/' + nowString + '/all')
+            .pipe(
+                map(serverResult => this.mapAppointments(serverResult)),
+                catchError(handleError)
+            );
+    }
+
+    create(appointment): any {
+        return this.http.post(this.serviceEndpoint, appointment);
+    }
+
+    private mapAppointments(serverResult): Appointment[] {
+        const result: Appointment[] = [];
+        serverResult.forEach(element => {
+            result.push(element as Appointment);
+        });
+        return result;
+    }
 
 }

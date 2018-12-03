@@ -15,9 +15,7 @@ import { DoctorDetailsComponent } from './doctor-details/doctor-details.componen
 import { MaterialModule } from '@app/shared/Material.module';
 import { DateFnsModule, DateFnsConfigurationService } from 'ngx-date-fns';
 import { NewAppointmentComponent } from './new-appointment/new-appointment.component';
-
-
-
+import { AccountDoctorComponent } from './account/account-doctor/account-doctor.component';
 
 @NgModule({
   imports: [
@@ -38,7 +36,8 @@ import { NewAppointmentComponent } from './new-appointment/new-appointment.compo
     DoctorListitemComponent,
     DoctorDetailsComponent,
     AccountPatientsComponent,
-    NewAppointmentComponent
+    NewAppointmentComponent,
+    AccountDoctorComponent
   ],
   exports: [
     RegistrationComponent,

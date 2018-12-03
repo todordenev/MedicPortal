@@ -39,7 +39,7 @@ export class DoctorDetailsComponent implements OnInit {
     get imageUrl() {
         return './assets/doctor_' + this.doctor.id + '.jpg';
     }
-    toEvents(appointments: Appointment[]): CalendarEvent[] {
+    toEvents(appointments: any[]): CalendarEvent[] {
         console.log('toEvents called');
         const events: CalendarEvent[] = [];
         appointments.forEach(el => {
@@ -51,8 +51,6 @@ export class DoctorDetailsComponent implements OnInit {
         const formatedStartTime = format(event,'YYYY-MM-DDTHH:mm');
         this.router.navigate(['/new-appointment', { doctorid: this.doctorId, start: formatedStartTime }])
     }
-
-
     viewDateChanged(viewDate) {
         this.viewDate = viewDate;
         this.fetchEvents();
