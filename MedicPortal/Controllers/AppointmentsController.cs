@@ -51,7 +51,7 @@ namespace MedicPortal.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] AppointmentViewModelCreation model)
+        public IActionResult Post([FromBody] AppointmentCreation model)
         {
             try
             {
@@ -64,6 +64,7 @@ namespace MedicPortal.Controllers
                 {
                     _dbContext.Appointments.Add(appointment);
                     _dbContext.SaveChanges();
+                    return Ok();
                 }
 
                 return Unauthorized();
@@ -80,12 +81,53 @@ namespace MedicPortal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Get(string doctorId, DateTime date)
         {
+            var currentUserId = User.GetUserId();
+            var user = _dbContext.Users.Include(u => u.Doctors)
+                .First(u => u.Id == currentUserId);
+
             var from = date.Date;
             var till = from.AddDays(1);
-            var appointments = await _dbContext.Appointments
+            var appointments = await _dbContext.Appointments.Include(a => a.Patient)
                 .Where(a => a.DoctorId == doctorId && a.Start > from && a.Start < till)
+                .Select(app => MaskIfNotAutorized(app, user))
                 .ToListAsync();
             return Ok(appointments);
+        }
+
+        [HttpGet("doctorappointments/{doctorId}/{date}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetForDoctor(string doctorId, DateTime date)
+        {
+            var currentUserId = User.GetUserId();
+            var user = _dbContext.Users.Include(u => u.Doctors)
+                .First(u => u.Id == currentUserId);
+            if (User.IsPortalAdmin() || user.Doctors.Any(d => d.Id == doctorId))
+            {
+                var from = date.Date;
+                var till = @from.AddDays(1);
+                var appointments = await _dbContext.Appointments.Include(a => a.Patient)
+                    .Where(a => a.DoctorId == doctorId && a.Start > @from && a.Start < till)
+                    .ToListAsync();
+                return Ok(appointments);
+            }
+
+            return Unauthorized();
+        }
+
+
+        private AppointmentView MaskIfNotAutorized(Appointment app, AppUser user)
+        {
+            if (user.Doctors.Any(d => d.Id == app.DoctorId))
+            {
+                return _mapper.Map<AppointmentView>(app);
+            }
+
+            if (user.Patients.Any(p => p.Id == app.Id))
+            {
+                return _mapper.Map<AppointmentView>(app);
+            }
+
+            return new AppointmentView {Start = app.Start, DurationInMinutes = app.DurationInMinutes};
         }
 
 

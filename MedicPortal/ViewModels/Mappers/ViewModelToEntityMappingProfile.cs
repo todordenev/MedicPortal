@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using AutoMapper;
 using MedicPortal.Data.Models;
 
@@ -9,7 +8,8 @@ namespace MedicPortal.ViewModels.Mappers
     {
         public ViewModelToEntityMappingProfile()
         {
-            CreateMap<RegistrationViewModel, AppUser>().ForMember(au => au.AvatarImage,
+            CreateMap<RegistrationViewModel, AppUser>()
+                .ForMember(au => au.AvatarImage,
                     map => map.MapFrom(vm => GetBytes(vm.AvatarImageSrc)))
                 .ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
             CreateMap<DoctorViewModel, Doctor>();
@@ -17,7 +17,10 @@ namespace MedicPortal.ViewModels.Mappers
             CreateMap<PatientViewModel, Patient>();
             CreateMap<AppUser, UserViewModel>()
                 .ForMember(vm => vm.AvatarImage, map => map.MapFrom(u => GetString(u.AvatarImage)));
-            CreateMap<Appointment, AppointmentViewModelCreation>();
+            CreateMap<AppointmentCreation, Appointment>();
+            CreateMap<Appointment, AppointmentView>()
+                .ForMember(app => app.Title,
+                    map => map.MapFrom(vm => vm.Patient.FirstName + " " + vm.Patient.LastName));
         }
 
         private byte[] GetBytes(string value)
@@ -29,6 +32,5 @@ namespace MedicPortal.ViewModels.Mappers
         {
             return Encoding.ASCII.GetString(value);
         }
-        
     }
 }

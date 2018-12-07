@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace MedicPortal.ViewModels
 {
-    public class AppointmentViewModelCreation
+    public class AppointmentView
     {
-        public string PatientId { get; set; }
-        public string DoctorId { get; set; }
+        public string Id { get; set; }
+        public string Title { get; set; }
         public DateTime Start { get; set; }
         public int DurationInMinutes { get; set; }
     }
