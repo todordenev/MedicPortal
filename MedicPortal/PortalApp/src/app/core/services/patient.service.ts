@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { Patient } from '@app/shared/patient';
+import { Patient } from '@app/core/entities/patient';
 
 
 @Injectable({
@@ -34,7 +34,7 @@ export class PatientService {
         return this.patients;
     }
     mapServerPatient(serverObject): Patient {
-        const patient = new Patient(serverObject);
+        const patient = serverObject as Patient;
         return patient;
     }
 

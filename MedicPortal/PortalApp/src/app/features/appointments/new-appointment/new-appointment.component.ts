@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, } from '@angular/router';
 import { DoctorService, Doctor, AppointmentService, PatientService, } from '@app/core';
 import { Appointment } from '@app/core/entities/appointment';
-import { Patient } from '@app/shared/patient';
+import { Patient } from '@app/core/entities/patient';
 
 @Component({
     selector: 'app-new-appointment',

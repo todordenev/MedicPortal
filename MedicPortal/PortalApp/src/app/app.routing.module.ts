@@ -6,8 +6,8 @@ import { AccountRegistrationComponent } from './features/account/account-registr
 import { FeaturesModule } from './features/features.module';
 import { DoctorListComponent } from './features/doctor-search';
 import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
-import { DoctorDetailsComponent } from './features/doctor-details/doctor-details.component';
-import { NewAppointmentComponent } from './features/new-appointment/new-appointment.component';
+import { DoctorDetailsComponent } from './features/appointments';
+import { NewAppointmentComponent } from './features/appointments';
 
 const routes: Routes = [
   { path: '', component: DoctorListComponent },

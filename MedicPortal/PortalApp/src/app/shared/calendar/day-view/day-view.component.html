@@ -4,8 +4,11 @@
       <mat-icon>navigate_before</mat-icon>
     </button>
     <div class="viewdate-label">
-      <div>{{ viewDate | dfnsFormat : 'DD.MM.YYYY' }}</div>
-      <div>{{ viewDate | dfnsFormat : '(dddd)' }}</div>
+      <div (click)="viewDatePicker.open()">
+        <input class="date-input" disabled matInput [matDatepicker]="viewDatePicker" [(ngModel)]="viewDate" (ngModelChange)="viewDateChange($event)">
+        <mat-datepicker #viewDatePicker disabled="false"></mat-datepicker>
+        <div>{{ viewDate | dfnsFormat : '(dddd)' }}</div>
+      </div>
     </div>
     <button mat-button (click)="moveViewDate(1)">
       <mat-icon>navigate_next</mat-icon>
@@ -24,7 +27,7 @@
     </div>
     <div class="calendar-event" *ngFor="let event of events" [style.top]="(event.start - start) *100 + 'px'"
       [style.height]="(event.end - event.start)*100 + 'px'" [style.left]="(event.overlapingCounter * 190 + 50) + 'px'">
-     {{event.title}}
+      {{event.title}}
     </div>
     <div class="now-divider">
 

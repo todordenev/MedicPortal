@@ -91,9 +91,10 @@ namespace MedicPortal.Data
 
         private static readonly List<Spezialisation> Spezialisations = new List<Spezialisation>
         {
-            new Spezialisation {Name = "Kinderarzt"},
-            new Spezialisation {Name = "Innere Medizin"},
-            new Spezialisation {Name = "Ortopedie"}
+            new Spezialisation {Name = "Педиатър"},
+            new Spezialisation {Name = "Алерголог"},
+            new Spezialisation {Name = "Общ лекър"},
+            new Spezialisation {Name = "Вътрешни болести"}
         };
 
         private static readonly List<DoctorSpezialisations> DoctorSpezialisations = new List<DoctorSpezialisations>

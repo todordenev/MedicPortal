@@ -58,7 +58,13 @@
     margin-right: 5px;
     width: 105px;
 }
-
+.date-input{
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    color: black;
+}
 .dayview-events {
     position: relative;
 }

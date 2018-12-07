@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { createPatch, applyPatch } from 'rfc6902';
 import { PatientService } from '@app/core/services';
-import { Patient } from '@app/shared/patient';
+import { Patient } from '@app/core/entities/patient';
 import { format } from 'date-fns';
 
 @Component({

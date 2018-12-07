@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PatientService } from '@app/core/services';
-import { Patient } from '@app/shared/patient';
+import { Patient } from '@app/core/entities/patient';
 
 @Component({
   selector: 'app-account-patients',

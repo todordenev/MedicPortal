@@ -24,7 +24,7 @@ export class DoctorDetailsComponent implements OnInit {
         private router: Router) { }
     calendarEvents: CalendarEvent[] = [];
     viewDate = new Date();
-
+    appointmentCategory;
     ngOnInit() {
         this.doctorId = this.route.snapshot.paramMap.get('id');
         this.doctorService.getDoctor(this.doctorId).subscribe((doc: Doctor) => this.doctor = doc);
@@ -47,9 +47,9 @@ export class DoctorDetailsComponent implements OnInit {
         });
         return events;
     }
-    createAppointment(event:Date) {        
-        const formatedStartTime = format(event,'YYYY-MM-DDTHH:mm');
-        this.router.navigate(['/new-appointment', { doctorid: this.doctorId, start: formatedStartTime }])
+    createAppointment(event: Date) {
+        const formatedStartTime = format(event, 'YYYY-MM-DDTHH:mm');
+        this.router.navigate(['/new-appointment', { doctorid: this.doctorId, start: formatedStartTime }]);
     }
     viewDateChanged(viewDate) {
         this.viewDate = viewDate;

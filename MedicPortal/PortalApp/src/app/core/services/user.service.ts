@@ -3,9 +3,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { authTokenNameConst } from '@app/shared/constants';
+import { authTokenNameConst } from '@app/core/constants';
 import { User } from '@app/shared/user';
-import { UserCredentials, Registration } from '@app/shared/registration';
+import { UserCredentials, Registration } from '@app/core/entities/registration';
 
 @Injectable({
     providedIn: 'root'

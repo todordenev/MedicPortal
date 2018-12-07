@@ -18,6 +18,7 @@ import { DateAdapter } from '@angular/material';
 import { CustomDateAdapter } from './shared/CustomDateAdapter';
 import { MaterialModule } from './shared/Material.module';
 import { ConfiguredDatepickerModule } from './shared/ConfiguredDatepickerModule';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
 import * as bgLocale from 'date-fns/locale/bg/index.js';
@@ -38,7 +39,8 @@ dnsConfigService.setLocale(bgLocale);
     FeaturesModule,
     MaterialModule,
     ConfiguredDatepickerModule,
-    DateFnsModule.forRoot()
+    DateFnsModule.forRoot(),
+    FlexLayoutModule
   ],
   providers: [
     AuthenticationGuard,

@@ -1,8 +1,17 @@
 import { DateAdapter, NativeDateAdapter } from '@angular/material';
-import { format, startOfDay, addHours, addDays, getYear, getMonth, getDate, getDay, startOfToday, parse, addYears } from 'date-fns';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Inject, Optional } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 
 export class CustomDateAdapter extends NativeDateAdapter {
+    /**
+     *
+     */
+    constructor(@Optional() @Inject(MAT_DATE_FORMATS) formats: any,
+        @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string, platform: Platform) {
+        super(dateLocale, platform);
+
+    }
     getYear(date: Date): number {
         console.log('getYear');
         const year = super.getYear(date);
@@ -56,6 +65,7 @@ export class CustomDateAdapter extends NativeDateAdapter {
         return super.today();
     }
     parse(value: any): Date {
+        const parseFormat = MAT_DATE_FORMATS;
         const date = super.parse(value);
         console.log('parse');
         return date;

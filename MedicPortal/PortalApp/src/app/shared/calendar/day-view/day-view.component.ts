@@ -10,15 +10,16 @@ import { CalendarEvent } from '../CalendarEvent';
 })
 export class DayViewComponent implements OnInit {
     _events: CalendarEvent[] = [];
-
+    errorMessage: string;
+    slots: any[] = [];
     @Input()
     start: number;
     @Input()
     end: number;
     @Input()
+    showTimes = [{ start: 8.5, end: 10 }, { start: 10.25, end: 13 }];
+    @Input()
     duration = 0.25; // calendar-slot = 25px => 1 Hour = 100px;
-    errorMessage: string;
-    slots: any[] = [];
     @Input()
     viewDate: Date;
     @Output()
@@ -52,18 +53,29 @@ export class DayViewComponent implements OnInit {
         this.viewDate = new Date();
     }
     createSlots() {
-        let counter = this.start;
-        do {
-            const slot = new CalendarSlot();
-            slot.startTime = addHours(startOfDay(new Date()), counter);
-            if (counter % 1 === 0) {
-                slot.hourLabel = format(slot.startTime, 'HH:mm');
+
+        for (let i = 0; i < this.showTimes.length; i++) {
+            let counter = this.showTimes[i].start;
+            do {
+                const slot = new CalendarSlot();
+                slot.startTime = addHours(startOfDay(new Date()), counter);
+                if (counter % 1 === 0) {
+                    slot.hourLabel = format(slot.startTime, 'HH:mm');
+                }
+                slot.start = counter;
+                counter += this.duration;
+                slot.end = counter;
+                this.slots.push(slot);
+            } while (counter < this.showTimes[i].end);
+
+            if ((i + 1) < this.showTimes.length) {
+                const slot = new CalendarSlot();
+                slot.start = counter;
+                slot.end = counter + this.duration;
+                slot.hourLabel = 'пауза';
+                this.slots.push(slot);
             }
-            slot.start = counter;
-            counter += this.duration;
-            slot.end = counter;
-            this.slots.push(slot);
-        } while (counter < this.end);
+        }
     }
     /**
      * Prüft, ob die Termine sich überlapen.
@@ -98,4 +110,8 @@ export class DayViewComponent implements OnInit {
         this.viewDate = addDays(this.viewDate, days);
         this.viewDateChanged.emit(this.viewDate);
     }
+    viewDateChange(event) {
+        this.viewDateChanged.emit(this.viewDate);
+    }
+
 }
