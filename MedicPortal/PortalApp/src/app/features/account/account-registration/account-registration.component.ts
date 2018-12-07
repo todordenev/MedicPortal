@@ -5,10 +5,10 @@ import { User } from '@app/shared/user';
 
 @Component({
     selector: 'app-registration',
-    templateUrl: './registration.component.html',
-    styleUrls: ['./registration.component.css']
+    templateUrl: './account-registration.component.html',
+    styleUrls: ['./account-registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class AccountRegistrationComponent implements OnInit {
     userImgSrc = 'api/accounts/avatarimage';
     registrationForm: FormGroup;
     isLoggedIn: boolean;

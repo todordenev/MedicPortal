@@ -7,14 +7,14 @@ import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter }
 })
 export class CaptureImageComponent implements OnInit {
 
-    @ViewChild("video")
+    @ViewChild('video')
     public video: ElementRef;
 
-    @ViewChild("canvas")
+    @ViewChild('canvas')
     public canvas: ElementRef;
     isCapturing = false;
     @Input()
-    imgSrc = "";
+    imgSrc = '';
     @Output()
     imgChanged = new EventEmitter<string>();
 
@@ -38,8 +38,9 @@ export class CaptureImageComponent implements OnInit {
         const videoElement = this.video.nativeElement;
         this.canvas.nativeElement.width = videoElement.videoWidth;
         this.canvas.nativeElement.height = videoElement.videoHeight;
-        var context = this.canvas.nativeElement.getContext("2d").drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
-        this.imgSrc = this.canvas.nativeElement.toDataURL("image/png");
+        const context = this.canvas.nativeElement.getContext('2d');
+        context.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
+        this.imgSrc = this.canvas.nativeElement.toDataURL('image/png');
         this.isCapturing = false;
         this.imgChanged.emit(this.imgSrc);
     }
