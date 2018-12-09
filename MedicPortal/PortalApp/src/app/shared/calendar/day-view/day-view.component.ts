@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CalendarSlot } from '../CalendarSlot';
+import { CalendarSlot } from '../slot/CalendarSlot';
 import { format, startOfDay, addHours, addDays, differenceInMinutes } from 'date-fns';
 import { CalendarEvent } from '../CalendarEvent';
 
@@ -12,18 +12,11 @@ export class DayViewComponent implements OnInit {
     _events: CalendarEvent[] = [];
     errorMessage: string;
     slots: any[] = [];
-    @Input()
-    start: number;
-    @Input()
-    end: number;
+
     @Input()
     showTimes = [{ start: 8.5, end: 10 }, { start: 10.25, end: 13 }];
     @Input()
-    duration = 0.25; // calendar-slot = 25px => 1 Hour = 100px;
-    @Input()
-    viewDate: Date;
-    @Output()
-    viewDateChanged: EventEmitter<Date> = new EventEmitter<Date>();
+    duration = 0.25; // calendar-slot = 25px => 1 Hour = 100px;    
     @Output()
     newEventClicked: EventEmitter<Date> = new EventEmitter<Date>();
     @Output()
@@ -44,16 +37,9 @@ export class DayViewComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.start = 8;
-        this.end = 16;
-        if (this.end <= this.start) {
-            this.errorMessage = 'Wrong Parameters. End cannot be smaller than start.';
-        }
         this.createSlots();
-        this.viewDate = new Date();
     }
     createSlots() {
-
         for (let i = 0; i < this.showTimes.length; i++) {
             let counter = this.showTimes[i].start;
             do {
@@ -84,7 +70,7 @@ export class DayViewComponent implements OnInit {
         if (this._events.length > 0) {
             this._events = this._events.sort((a, b) => a.start - b.start);
             const verticalLines: number[] = [];
-            verticalLines.push(this.start);
+            verticalLines.push(0);
             this._events.forEach(event => {
                 let indexLine = 0;
                 let lineFound = false;
@@ -106,12 +92,4 @@ export class DayViewComponent implements OnInit {
             });
         }
     }
-    moveViewDate(days: number) {
-        this.viewDate = addDays(this.viewDate, days);
-        this.viewDateChanged.emit(this.viewDate);
-    }
-    viewDateChange(event) {
-        this.viewDateChanged.emit(this.viewDate);
-    }
-
 }

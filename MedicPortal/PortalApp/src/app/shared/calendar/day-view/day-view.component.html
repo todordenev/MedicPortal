@@ -1,19 +1,4 @@
-<div>
-  <div class="dayview-tools">
-    <button mat-button (click)="moveViewDate(-1)">
-      <mat-icon>navigate_before</mat-icon>
-    </button>
-    <div class="viewdate-label">
-      <div (click)="viewDatePicker.open()">
-        <input class="date-input" disabled matInput [matDatepicker]="viewDatePicker" [(ngModel)]="viewDate" (ngModelChange)="viewDateChange($event)">
-        <mat-datepicker #viewDatePicker disabled="false"></mat-datepicker>
-        <div>{{ viewDate | dfnsFormat : '(dddd)' }}</div>
-      </div>
-    </div>
-    <button mat-button (click)="moveViewDate(1)">
-      <mat-icon>navigate_next</mat-icon>
-    </button>
-  </div>
+<div> 
   <div class="dayview-events">
     <div class="calendar-slot" *ngFor="let slot of slots">
       <span *ngIf="slot.hourLabel" class="hour-label">

@@ -26,11 +26,6 @@
     height: 16px;
     ;
 }
-
-.calendar-slot:hover .event-tools {
-    display: block;
-}
-
 .event-tools button.mat-button {
     width: 150px;
     min-width: 16px;
@@ -39,32 +34,10 @@
     padding: 0;
 }
 
-.dayview-tools {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    margin: 15px;
+.calendar-slot:hover .event-tools {
+    display: block;
 }
 
-.dayview-tools>button.mat-button {
-    min-width: 36px;
-    width: 36px;
-    padding: 0;
-}
-
-.viewdate-label {
-    text-align: center;
-    margin-left: 5px;
-    margin-right: 5px;
-    width: 105px;
-}
-.date-input{
-    border: none;
-    background-color: transparent;
-    width: 100%;
-    text-align: center;
-    color: black;
-}
 .dayview-events {
     position: relative;
 }

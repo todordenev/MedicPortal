@@ -14,7 +14,7 @@ export function GetWorkdays(worktimes: Worktime[]) {
             workday = new Workday(worktime.dayOfWeek);
             workdaysDict[worktime.dayOfWeek] = workday;
         }
-        workday.worktimes.push(new Worktime(worktime));
+        workday.worktimes.push(worktime);
     }
     return SortWorkdays(workdaysDict);
 }

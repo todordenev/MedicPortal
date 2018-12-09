@@ -64,3 +64,32 @@
     padding: 5px;
     min-width: 300px;
 }
+
+
+
+.dayview-tools {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 15px;
+}
+
+.dayview-tools>button.mat-button {
+    min-width: 36px;
+    width: 36px;
+    padding: 0;
+}
+
+.viewdate-label {
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 105px;
+}
+.date-input{
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    color: black;
+}

@@ -4,7 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '@app/shared/Material.module';
+import { MaterialModule } from '@app/core/Material.module';
 import { DateFnsModule, DateFnsConfigurationService } from 'ngx-date-fns';
 import { AccountModule } from './account/account.module';
 import { DoctorSearchModule } from './doctor-search/doctor-search.module';

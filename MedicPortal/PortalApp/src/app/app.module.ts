@@ -16,7 +16,7 @@ import { SharedModule } from './shared/shared.module';
 import { FeaturesModule } from './features/features.module';
 import { DateAdapter } from '@angular/material';
 import { CustomDateAdapter } from './shared/CustomDateAdapter';
-import { MaterialModule } from './shared/Material.module';
+import { MaterialModule } from './core/Material.module';
 import { ConfiguredDatepickerModule } from './shared/ConfiguredDatepickerModule';
 import { FlexLayoutModule } from '@angular/flex-layout';
 

@@ -111,22 +111,23 @@ namespace MedicPortal.Data
             new Appointment
             {
                 Doctor = Doctors[0], Patient = Patients[0], Start = DateTime.Today.AddHours(8),
-                DurationInMinutes = 15, ConfirmedByDoctor = true, ConfirmedByUser = true
+                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CatogoryId = 0
             },
             new Appointment
-            {
+            {       
                 Doctor = Doctors[0], Patient = Patients[1], Start = DateTime.Today.AddHours(8.50),
-                DurationInMinutes = 15, ConfirmedByDoctor = true, ConfirmedByUser = true
+                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CatogoryId=1
+
             },
             new Appointment
             {
                 Doctor = Doctors[0], Patient = Patients[0], Start = DateTime.Today.AddHours(10),
-                DurationInMinutes = 15, ConfirmedByDoctor = true, ConfirmedByUser = true
+                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true,CatogoryId = 0
             },
             new Appointment
             {
                 Doctor = Doctors[0], Patient = Patients[1], Start = DateTime.Today.AddHours(11.50),
-                DurationInMinutes = 30, ConfirmedByDoctor = true, ConfirmedByUser = true
+                DurationInMinutes = 30, ConfirmedByDoctor = true, ConfirmedByUser = true,CatogoryId = 2
             }
         };
 

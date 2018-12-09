@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
 import { AccountPatientsComponent } from '@app/features/account/account-patients/account-patients.component';
 
-import { MaterialModule } from '@app/shared/Material.module';
+import { MaterialModule } from '@app/core/Material.module';
 import { DateFnsModule, DateFnsConfigurationService } from 'ngx-date-fns';
 import { AccountRegistrationComponent } from './account-registration/account-registration.component';
 

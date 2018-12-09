@@ -1,50 +1,61 @@
 <div class="doctor-details">
-  <mat-card *ngIf="doctor">
-    <mat-card-header>
-      <div mat-card-avatar class="doctor-header-image" [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
-      <mat-card-title>{{doctor.displayName}}</mat-card-title>
-      <mat-card-subtitle>
-        <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
-      </mat-card-subtitle>
-    </mat-card-header>
-    <div class="image-container">
-      <img mat-card-image [src]="imageUrl" alt="{{doctor.name}}">
-    </div>
-    <mat-card-content>
-      <div class="workday-header main">
-        Работно време
-      </div>
-      <div *ngFor="let workday of doctor.workdays" class="workday-container">
-        <div class="worktime-header">
-          {{workday.dayLabel}}
+    <mat-card *ngIf="doctor">
+        <mat-card-header>
+            <div mat-card-avatar class="doctor-header-image" [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
+            <mat-card-title>{{doctor.displayName}}</mat-card-title>
+            <mat-card-subtitle>
+                <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <div class="image-container">
+            <img mat-card-image [src]="imageUrl" alt="{{doctor.name}}">
         </div>
-        <div class="worktime-container">
-          <div *ngFor="let worktime of workday.worktimes" class="worktime-hours">
-            {{worktime.from | dfnsFormat : 'HH:mm'}} - {{worktime.till | dfnsFormat : 'HH:mm'}}
-          </div>
+        <mat-card-content>
+            <div class="workday-header main">
+                Работно време
+            </div>
+            <div *ngFor="let workday of doctor.workdays" class="workday-container">
+                <div class="worktime-header">
+                    {{workday.dayLabel}}
+                </div>
+                <div class="worktime-container">
+                    <app-worktime *ngFor="let worktime of workday.worktimes"> </app-worktime>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <div class="appointments">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-form-field>
+                <mat-select placeholder="Тип час" [(ngModel)]="appointmentCategory">
+                    <mat-option value="test">
+                        Преглед
+                    </mat-option>
+                    <mat-option value="test3">
+                        За рецепта
+                    </mat-option>
+                    <mat-option value="test2">
+                        Консултация
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="dayview-tools">
+                <button mat-button (click)="moveViewDate(-1)">
+                    <mat-icon>navigate_before</mat-icon>
+                </button>
+                <div class="viewdate-label">
+                    <div (click)="viewDatePicker.open()">
+                        <input class="date-input" disabled matInput [matDatepicker]="viewDatePicker" (click)="viewDatePicker.open()" [(ngModel)]="viewDate">
+                        <mat-datepicker #viewDatePicker disabled="false"></mat-datepicker>
+                        <div>{{ viewDate | dfnsFormat : '(dddd)' }}</div>
+                    </div>
+                </div>
+                <button mat-button (click)="moveViewDate(1)">
+                    <mat-icon>navigate_next</mat-icon>
+                </button>
+            </div>
         </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <div class="appointments">
-    <div fxLayout="row" fxLayoutAlign="center center" >
-      <mat-form-field>
-        <mat-select placeholder="Тип час" [(ngModel)]="appointmentCategory">
-          <mat-option value="test">
-            Преглед
-          </mat-option>
-          <mat-option value="test3">
-            За рецепта
-          </mat-option>
-          <mat-option value="test2">
-            Консултация
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <app-day-view [events]="calendarEvents" (newEventClicked)="createAppointment($event)" [showTimes] ="worktimes" >
+        </app-day-view>
     </div>
-    <app-day-view start="8" end="16" [events]="calendarEvents" (viewDateChanged)="viewDateChanged($event)" [viewDate]="viewDate"
-      (newEventClicked)="createAppointment($event)">
-    </app-day-view>
-  </div>
-
 </div>

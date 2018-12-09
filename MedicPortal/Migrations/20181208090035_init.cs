@@ -293,7 +293,8 @@ namespace MedicPortal.Migrations
                     ConfirmedByDoctor = table.Column<bool>(nullable: false),
                     ConfirmedByUser = table.Column<bool>(nullable: false),
                     Start = table.Column<DateTime>(nullable: false),
-                    DurationInMinutes = table.Column<int>(nullable: false)
+                    DurationInMinutes = table.Column<int>(nullable: false),
+                    CatogoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

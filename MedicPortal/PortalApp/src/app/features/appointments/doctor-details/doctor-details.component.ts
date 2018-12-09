@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Doctor } from '@app/core/entities';
+import { Doctor, Workday, Worktime } from '@app/core/entities';
 import { DoctorService } from '@app/core/services';
 import { CalendarEvent, fromAppointment } from '@app/shared/calendar/CalendarEvent';
 import { AppointmentService } from '@app/core/services';
 import { map } from 'rxjs/operators';
-import { Appointment } from '@app/core/entities/appointment';
-import { MatDialog } from '@angular/material';
-import { NewAppointmentComponent } from '../new-appointment/new-appointment.component';
-import { format } from 'date-fns';
+import { format, addDays, getDay } from 'date-fns';
 
 @Component({
     selector: 'app-doctor-details',
@@ -16,21 +13,48 @@ import { format } from 'date-fns';
     styleUrls: ['./doctor-details.component.css']
 })
 export class DoctorDetailsComponent implements OnInit {
+
     doctorId: string;
-    doctor: Doctor;
+    _doctor: Doctor;
+    calendarEvents: CalendarEvent[] = [];
+    _viewDate = new Date();
+    appointmentCategory;
+    worktimes: Worktime[] = [];
     constructor(private doctorService: DoctorService,
         private appointmentService: AppointmentService,
-        private route: ActivatedRoute,
+        private route: ActivatedRoute, 
         private router: Router) { }
-    calendarEvents: CalendarEvent[] = [];
-    viewDate = new Date();
-    appointmentCategory;
     ngOnInit() {
         this.doctorId = this.route.snapshot.paramMap.get('id');
+        this._viewDate = new Date();
         this.doctorService.getDoctor(this.doctorId).subscribe((doc: Doctor) => this.doctor = doc);
+    }
+    get viewDate() {
+        return this._viewDate;
+    }
+    set viewDate(value) {
+        this._viewDate = value;
+        this.estimateWorktimes();
         this.fetchEvents();
     }
-
+    set doctor(value) {
+        this._doctor = value;
+        this.estimateWorktimes();
+        this.fetchEvents();
+    }
+    get doctor() {
+        return this._doctor;
+    }
+    estimateWorktimes(): any {
+        var currentDayNumber = getDay(this.viewDate) - 1;
+        var workday = this.doctor.workdays.find(wd => wd.dayNumber === currentDayNumber);
+        if (workday) {
+            this.worktimes = workday.worktimes;
+        }
+        else {
+            this.worktimes = [];
+        }
+    }
     fetchEvents() {
         this.appointmentService.getAppointments(this.doctorId, this.viewDate)
             .pipe(map(appointments => this.toEvents(appointments)))
@@ -53,6 +77,8 @@ export class DoctorDetailsComponent implements OnInit {
     }
     viewDateChanged(viewDate) {
         this.viewDate = viewDate;
-        this.fetchEvents();
+    }
+    moveViewDate(days: number) {
+        this.viewDate = addDays(this.viewDate, days);
     }
 }

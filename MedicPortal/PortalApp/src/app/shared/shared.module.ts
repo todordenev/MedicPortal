@@ -7,7 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfiguredDatepickerModule } from './ConfiguredDatepickerModule';
 import { DayViewComponent } from './calendar/day-view/day-view.component';
 import { DateFnsModule } from 'ngx-date-fns';
-import { MaterialModule } from './Material.module';
+import { MaterialModule } from '@app/core/Material.module';
+import { SlotComponent } from './calendar/slot/slot.component';
+import { WorktimeComponent } from './worktime/worktime.component';
 
 @NgModule({
     imports: [
@@ -16,21 +18,22 @@ import { MaterialModule } from './Material.module';
         FormsModule,
         ConfiguredDatepickerModule,
         ReactiveFormsModule,
-        DateFnsModule.forRoot()
+        DateFnsModule.forRoot(),
     ],
     exports: [
         CaptureImageComponent,
         PatientListitemComponent,
-        DayViewComponent
+        DayViewComponent,
+        WorktimeComponent
     ],
     declarations: [
         CaptureImageComponent,
         PatientListitemComponent,
-        DayViewComponent
+        DayViewComponent,
+        SlotComponent,
+        WorktimeComponent
     ],
     providers: [
     ]
 })
 export class SharedModule { }
-
-export { CaptureImageComponent };

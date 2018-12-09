@@ -18,9 +18,7 @@
                 {{workday.dayLabel}}
             </div>
             <div class="worktime-container">
-                <div *ngFor="let worktime of workday.worktimes" class="worktime-hours">
-                    {{worktime.from | dfnsFormat : 'HH:mm'}} - {{worktime.till | dfnsFormat : 'HH:mm'}}
-                </div>
+                <app-worktime *ngFor="let worktime of workday.worktimes"> </app-worktime>
             </div>
         </div>
     </mat-card-content>
