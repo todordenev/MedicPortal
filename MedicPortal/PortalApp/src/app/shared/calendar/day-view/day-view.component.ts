@@ -12,6 +12,8 @@ import { Worktime } from '@app/core';
 export class DayViewComponent implements OnInit {
     private _events: CalendarEvent[] = [];
     private _worktimes: Worktime[] = [];
+    private _viewDate: Date;
+
     errorMessage: string;
     slots: any[] = [];
 
@@ -25,6 +27,14 @@ export class DayViewComponent implements OnInit {
     }
     @Input()
     duration = 10; // calendar-slot = 25px => 1 Hour = 100px;
+    @Input()
+    set viewDate(value: Date) {
+        this._viewDate = value;
+        this.createSlots();
+    }
+    get viewDate() {
+        return this._viewDate;
+    }
     @Output()
     newEventClicked: EventEmitter<Date> = new EventEmitter<Date>();
     @Output()
@@ -51,8 +61,8 @@ export class DayViewComponent implements OnInit {
         this.slots = [];
         for (let i = 0; i < this.worktimes.length; i++) {
             const worktime = this.worktimes[i];
-            const worktimeStart = addHours(startOfDay(new Date()), worktime.from);
-            const worktimeEnd = addHours(startOfDay(new Date()), worktime.till);
+            const worktimeStart = addHours(startOfDay(this.viewDate), worktime.from);
+            const worktimeEnd = addHours(startOfDay(this.viewDate), worktime.till);
             let currentTime = worktimeStart;
             do {
                 const slot = new Slot();
@@ -64,9 +74,10 @@ export class DayViewComponent implements OnInit {
             } while (compareAsc(worktimeEnd, currentTime) > 0);
 
             if ((i + 1) < this.worktimes.length) {
+                const nextWorktimeStart = addHours(startOfDay(this.viewDate), this.worktimes[i + 1].from);
                 const slot = new Slot();
                 slot.startTime = currentTime;
-                slot.duration = differenceInMinutes(this.worktimes[i + 1].from, worktimeEnd);
+                slot.duration = differenceInMinutes(nextWorktimeStart, worktimeEnd);
                 slot.isWorktime = false;
                 this.slots.push(slot);
             }

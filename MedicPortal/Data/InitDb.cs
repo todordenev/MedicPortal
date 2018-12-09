@@ -93,7 +93,7 @@ namespace MedicPortal.Data
         {
             new Spezialisation {Name = "Педиатър"},
             new Spezialisation {Name = "Алерголог"},
-            new Spezialisation {Name = "Общ лекър"},
+            new Spezialisation {Name = "Общ лекaр"},
             new Spezialisation {Name = "Вътрешни болести"}
         };
 

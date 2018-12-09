@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Slot } from './slot';
-import { format } from 'date-fns';
+import { format, getMinutes } from 'date-fns';
 
 @Component({
   selector: 'app-slot',
@@ -11,15 +11,19 @@ export class SlotComponent implements OnInit {
 
   @Input()
   slot: Slot;
-
+  hourSlot = false;
   slotLable: string;
+  @Output()
+  newEventClicked: EventEmitter<Date> = new EventEmitter<Date>();
   constructor() { }
 
   ngOnInit() {
     if (this.slot.isWorktime) {
       this.slotLable = format(this.slot.startTime, 'HH:mm');
-    } else {
-      this.slotLable = 'пауза';
     }
+    this.hourSlot = getMinutes(this.slot.startTime) === 0;
+  }
+  createNewEvent(time) {
+    this.newEventClicked.emit(time);
   }
 }

@@ -1,4 +1,4 @@
-<div class="calendar-slot"  [ngClass]="{'slot-pause' : !slot.isWorktime, 'slot-worktime' : slot.isWorktime}">
+<div class="calendar-slot" [style.height]="slot.duration*3 + 'px'" [style.line-height]="slot.duration*3 + 'px'" [ngClass]="{'slot-pause' : !slot.isWorktime, 'slot-worktime' : slot.isWorktime, 'slot-hour':hourSlot}">
   <span class="hour-label">
     {{slotLable}}
   </span>

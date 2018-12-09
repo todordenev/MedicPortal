@@ -1,12 +1,15 @@
 <div>
   <div class="dayview-events">
-    <app-slot *ngFor="let slot of slots" [slot]="slot"></app-slot>
+    <app-slot *ngFor="let slot of slots" [slot]="slot"  (newEventClicked)="createNewEvent($event)" ></app-slot>
     <div class="calendar-event" *ngFor="let event of events" [style.top]="(event.start - start) *100 + 'px'"
       [style.height]="(event.end - event.start)*100 + 'px'" [style.left]="(event.overlapingCounter * 190 + 50) + 'px'">
       {{event.title}}
     </div>
     <div class="now-divider">
 
+    </div>
+    <div *ngIf="slots.length == 0">
+      Почивен ден
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 .calendar-slot {
-    border-top: 1px gray dotted;
+    border-bottom: 1px gray dotted;
     background-color: #fefefe;
     min-width: 200px;
     height: 24px;
@@ -32,4 +32,11 @@
 
 .calendar-slot:hover .event-tools {
     display: block;
+}
+.slot-hour{
+    font-weight: 450;    
+}
+.slot-pause{
+    background-color: #fefefe;
+    max-height: 50px;
 }

@@ -13,7 +13,6 @@ import { format, addDays, getDay } from 'date-fns';
     styleUrls: ['./doctor-details.component.css']
 })
 export class DoctorDetailsComponent implements OnInit {
-
     doctorId: string;
     _doctor: Doctor;
     calendarEvents: CalendarEvent[] = [];

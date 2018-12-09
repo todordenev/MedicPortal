@@ -1,8 +1,7 @@
-
-
-
 .dayview-events {
     position: relative;
+   
+    min-height: 50px;
 }
 
 .calendar-event {
