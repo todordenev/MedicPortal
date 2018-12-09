@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CalendarSlot } from '../slot/CalendarSlot';
-import { format, startOfDay, addHours, addDays, differenceInMinutes } from 'date-fns';
+import { Slot } from '../slot/slot';
+import { format, startOfDay, addHours, addDays, differenceInMinutes, addMinutes, compareAsc } from 'date-fns';
 import { CalendarEvent } from '../CalendarEvent';
+import { Worktime } from '@app/core';
 
 @Component({
     selector: 'app-day-view',
@@ -9,14 +10,21 @@ import { CalendarEvent } from '../CalendarEvent';
     styleUrls: ['./day-view.component.css']
 })
 export class DayViewComponent implements OnInit {
-    _events: CalendarEvent[] = [];
+    private _events: CalendarEvent[] = [];
+    private _worktimes: Worktime[] = [];
     errorMessage: string;
     slots: any[] = [];
 
     @Input()
-    showTimes = [{ start: 8.5, end: 10 }, { start: 10.25, end: 13 }];
+    set worktimes(value) {
+        this._worktimes = value;
+        this.createSlots();
+    }
+    get worktimes() {
+        return this._worktimes;
+    }
     @Input()
-    duration = 0.25; // calendar-slot = 25px => 1 Hour = 100px;    
+    duration = 10; // calendar-slot = 25px => 1 Hour = 100px;
     @Output()
     newEventClicked: EventEmitter<Date> = new EventEmitter<Date>();
     @Output()
@@ -40,25 +48,26 @@ export class DayViewComponent implements OnInit {
         this.createSlots();
     }
     createSlots() {
-        for (let i = 0; i < this.showTimes.length; i++) {
-            let counter = this.showTimes[i].start;
+        this.slots = [];
+        for (let i = 0; i < this.worktimes.length; i++) {
+            const worktime = this.worktimes[i];
+            const worktimeStart = addHours(startOfDay(new Date()), worktime.from);
+            const worktimeEnd = addHours(startOfDay(new Date()), worktime.till);
+            let currentTime = worktimeStart;
             do {
-                const slot = new CalendarSlot();
-                slot.startTime = addHours(startOfDay(new Date()), counter);
-                if (counter % 1 === 0) {
-                    slot.hourLabel = format(slot.startTime, 'HH:mm');
-                }
-                slot.start = counter;
-                counter += this.duration;
-                slot.end = counter;
+                const slot = new Slot();
+                slot.startTime = currentTime;
+                slot.duration = this.duration;
+                slot.isWorktime = true;
                 this.slots.push(slot);
-            } while (counter < this.showTimes[i].end);
+                currentTime = addMinutes(currentTime, this.duration);
+            } while (compareAsc(worktimeEnd, currentTime) > 0);
 
-            if ((i + 1) < this.showTimes.length) {
-                const slot = new CalendarSlot();
-                slot.start = counter;
-                slot.end = counter + this.duration;
-                slot.hourLabel = 'пауза';
+            if ((i + 1) < this.worktimes.length) {
+                const slot = new Slot();
+                slot.startTime = currentTime;
+                slot.duration = differenceInMinutes(this.worktimes[i + 1].from, worktimeEnd);
+                slot.isWorktime = false;
                 this.slots.push(slot);
             }
         }

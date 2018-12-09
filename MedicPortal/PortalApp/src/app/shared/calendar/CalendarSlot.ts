@@ -5,3 +5,4 @@ export class CalendarSlot {
     hourLabel: string;
     startTime: Date;
 }
+

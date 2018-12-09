@@ -1,3 +1,10 @@
-<p>
-  slot works!
-</p>
+<div class="calendar-slot"  [ngClass]="{'slot-pause' : !slot.isWorktime, 'slot-worktime' : slot.isWorktime}">
+  <span class="hour-label">
+    {{slotLable}}
+  </span>
+  <div *ngIf="slot.isWorktime" class="event-tools">
+    <button mat-button (click)="createNewEvent(slot.startTime)">
+      <mat-icon class="add-event-icon">add</mat-icon>
+    </button>
+  </div>
+</div>

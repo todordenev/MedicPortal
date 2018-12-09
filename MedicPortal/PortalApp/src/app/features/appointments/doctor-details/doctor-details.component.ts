@@ -22,7 +22,7 @@ export class DoctorDetailsComponent implements OnInit {
     worktimes: Worktime[] = [];
     constructor(private doctorService: DoctorService,
         private appointmentService: AppointmentService,
-        private route: ActivatedRoute, 
+        private route: ActivatedRoute,
         private router: Router) { }
     ngOnInit() {
         this.doctorId = this.route.snapshot.paramMap.get('id');
@@ -46,12 +46,11 @@ export class DoctorDetailsComponent implements OnInit {
         return this._doctor;
     }
     estimateWorktimes(): any {
-        var currentDayNumber = getDay(this.viewDate) - 1;
-        var workday = this.doctor.workdays.find(wd => wd.dayNumber === currentDayNumber);
+        const currentDayNumber = getDay(this.viewDate) - 1;
+        const workday = this.doctor.workdays.find(wd => wd.dayNumber === currentDayNumber);
         if (workday) {
             this.worktimes = workday.worktimes;
-        }
-        else {
+        } else {
             this.worktimes = [];
         }
     }

@@ -10,7 +10,7 @@ import { startOfDay, format, addHours } from 'date-fns';
 export class WorktimeComponent implements OnInit {
 
     @Input()
-    worktime: Worktime
+    worktime: Worktime;
 
     fromLabel: string;
     tillLabel: string;

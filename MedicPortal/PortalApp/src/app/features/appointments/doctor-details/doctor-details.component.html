@@ -19,7 +19,7 @@
                     {{workday.dayLabel}}
                 </div>
                 <div class="worktime-container">
-                    <app-worktime *ngFor="let worktime of workday.worktimes"> </app-worktime>
+                    <app-worktime *ngFor="let worktime of workday.worktimes" [worktime] = "worktime"> </app-worktime>
                 </div>
             </div>
         </mat-card-content>
@@ -55,7 +55,7 @@
                 </button>
             </div>
         </div>
-        <app-day-view [events]="calendarEvents" (newEventClicked)="createAppointment($event)" [showTimes] ="worktimes" >
+        <app-day-view [events]="calendarEvents" (newEventClicked)="createAppointment($event)" [worktimes] ="worktimes" >
         </app-day-view>
     </div>
 </div>

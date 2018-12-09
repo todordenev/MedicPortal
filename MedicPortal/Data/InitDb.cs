@@ -38,8 +38,8 @@ namespace MedicPortal.Data
                 Approved = true, AppUser = AppUsers[4], FirstName = "Irina", IsActive = true, LastName = "Ivanova",
                 Worktimes = new List<Worktime>
                 {
-                    new Worktime {DayOfWeek = 0, From = 8, Till = 10.5},
-                    new Worktime {DayOfWeek = 0, From = 10.75, Till = 13},
+                    new Worktime {DayOfWeek = 0, From = 7.5, Till = 10.5},
+                    new Worktime {DayOfWeek = 0, From = 11, Till = 13.5},
                     new Worktime {DayOfWeek = 1, From = 8, Till = 10.5},
                     new Worktime {DayOfWeek = 1, From = 10.75, Till = 13},
                     new Worktime {DayOfWeek = 2, From = 9, Till = 10.5},

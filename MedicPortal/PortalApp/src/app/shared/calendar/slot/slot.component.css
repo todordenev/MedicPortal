@@ -1,0 +1,35 @@
+.calendar-slot {
+    border-top: 1px gray dotted;
+    background-color: #fefefe;
+    min-width: 200px;
+    height: 24px;
+    position: relative;
+}
+
+.hour-label {
+    position: absolute;
+    z-index: 100;
+}
+
+.event-tools {
+    margin-left: 60px;
+    display: none;
+}
+
+.event-tools mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    ;
+}
+.event-tools button.mat-button {
+    width: 150px;
+    min-width: 16px;
+    height: 24px;
+    line-height: 20px;
+    padding: 0;
+}
+
+.calendar-slot:hover .event-tools {
+    display: block;
+}

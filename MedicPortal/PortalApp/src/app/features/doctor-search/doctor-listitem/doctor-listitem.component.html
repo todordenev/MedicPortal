@@ -18,7 +18,7 @@
                 {{workday.dayLabel}}
             </div>
             <div class="worktime-container">
-                <app-worktime *ngFor="let worktime of workday.worktimes"> </app-worktime>
+                <app-worktime *ngFor="let worktime of workday.worktimes" [worktime] = "worktime"> </app-worktime>
             </div>
         </div>
     </mat-card-content>
