@@ -16,6 +16,7 @@ export class NewAppointmentComponent implements OnInit {
     start: any;
     doctor: any;
     patients: Patient[];
+    categoryId: string;
 
     constructor(private route: ActivatedRoute,
         private doctorService: DoctorService,
@@ -25,6 +26,7 @@ export class NewAppointmentComponent implements OnInit {
     ngOnInit() {
         this.doctorId = this.route.snapshot.paramMap.get('doctorid');
         this.start = this.route.snapshot.paramMap.get('start');
+        this.categoryId = this.route.snapshot.paramMap.get('categoryId');
         this.doctorService.getDoctor(this.doctorId).subscribe((doc: Doctor) => this.doctor = doc);
         this.patientService.getPatients().subscribe(patients => this.setPatients(patients));
     }
@@ -33,7 +35,6 @@ export class NewAppointmentComponent implements OnInit {
         if (patients.length > 0) {
             this.patientId = patients[0].id;
         }
-
     }
     onNoClick(): void {
 
@@ -43,7 +44,8 @@ export class NewAppointmentComponent implements OnInit {
         appointment.doctorId = this.doctorId;
         appointment.patientId = this.patientId;
         appointment.start = this.start;
-        appointment.durationInMinutes = 15;
+        appointment.categoryId = this.categoryId;
+        appointment.durationInMinutes = 10;
         this.appointmentService.create(appointment).subscribe(() => this.location.back());
     }
 }

@@ -3,8 +3,9 @@
     {{slotLable}}
   </span>
   <div *ngIf="slot.isWorktime" class="event-tools">
-    <button mat-button (click)="createNewEvent(slot.startTime)">
+    <button mat-button (click)="createNewEvent(slot.start)">
       <mat-icon class="add-event-icon">add</mat-icon>
     </button>
   </div>
+  <app-day-event *ngFor="let event of slot.events" [event]="event"></app-day-event>
 </div>

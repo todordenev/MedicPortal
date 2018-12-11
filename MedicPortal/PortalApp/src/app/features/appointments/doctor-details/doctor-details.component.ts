@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Doctor, Workday, Worktime } from '@app/core/entities';
+import { Doctor, Worktime, Appointment } from '@app/core/entities';
 import { DoctorService } from '@app/core/services';
-import { CalendarEvent, fromAppointment } from '@app/shared/calendar/CalendarEvent';
 import { AppointmentService } from '@app/core/services';
-import { map } from 'rxjs/operators';
 import { format, addDays, getDay } from 'date-fns';
+import { AppointmentView } from '@app/core/entities';
 
 @Component({
     selector: 'app-doctor-details',
@@ -15,9 +14,9 @@ import { format, addDays, getDay } from 'date-fns';
 export class DoctorDetailsComponent implements OnInit {
     doctorId: string;
     _doctor: Doctor;
-    calendarEvents: CalendarEvent[] = [];
+    calendarEvents: AppointmentView[] = [];
     _viewDate = new Date();
-    appointmentCategory;
+    categoryId = '0';
     worktimes: Worktime[] = [];
     constructor(private doctorService: DoctorService,
         private appointmentService: AppointmentService,
@@ -33,13 +32,18 @@ export class DoctorDetailsComponent implements OnInit {
     }
     set viewDate(value) {
         this._viewDate = value;
+        this.calendarEvents = [];
         this.estimateWorktimes();
-        this.fetchEvents();
+        if (this.worktimes.length > 0) {
+            this.fetchEvents();
+        }
     }
     set doctor(value) {
         this._doctor = value;
         this.estimateWorktimes();
-        this.fetchEvents();
+        if (this.worktimes.length > 0) {
+            this.fetchEvents();
+        }
     }
     get doctor() {
         return this._doctor;
@@ -55,23 +59,19 @@ export class DoctorDetailsComponent implements OnInit {
     }
     fetchEvents() {
         this.appointmentService.getAppointments(this.doctorId, this.viewDate)
-            .pipe(map(appointments => this.toEvents(appointments)))
             .subscribe(events => this.calendarEvents = events);
     }
     get imageUrl() {
         return './assets/doctor_' + this.doctor.id + '.jpg';
     }
-    toEvents(appointments: any[]): CalendarEvent[] {
-        console.log('toEvents called');
-        const events: CalendarEvent[] = [];
-        appointments.forEach(el => {
-            events.push(fromAppointment(el));
-        });
-        return events;
-    }
+
     createAppointment(event: Date) {
+        const now = new Date();
+        if (event < now) {
+            return;
+        }
         const formatedStartTime = format(event, 'YYYY-MM-DDTHH:mm');
-        this.router.navigate(['/new-appointment', { doctorid: this.doctorId, start: formatedStartTime }]);
+        this.router.navigate(['/new-appointment', { doctorid: this.doctorId, start: formatedStartTime, categoryId: this.categoryId }]);
     }
     viewDateChanged(viewDate) {
         this.viewDate = viewDate;

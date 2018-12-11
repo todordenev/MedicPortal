@@ -1,0 +1,9 @@
+<div
+  class="calendar-event"
+  [style.top]="(event.start - start) *100 + 'px'"
+  [style.height]="event.durationInMinutes*3 + 'px'"
+  [style.left]="(event.overlapingCounter * 190 + 50) + 'px'"
+>
+  <span>{{event.title}}</span>
+
+</div>

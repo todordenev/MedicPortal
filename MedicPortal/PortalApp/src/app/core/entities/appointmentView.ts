@@ -3,4 +3,5 @@ export class AppointmentView {
     title: string;
     start: Date;
     durationInMinutes: number;
+    catogoryId: number;
 }

@@ -1,16 +1,11 @@
 .dayview-events {
     position: relative;
-   
     min-height: 50px;
 }
 
-.calendar-event {
+.now-divider {
     position: absolute;
-    width: 180px;
-    min-height: 3px;
-    background-color: gray;
-    border: 1px darkgray solid;
-    border-radius: 7px;
-    box-sizing: border-box;
-    left: 50px;
+    width: 100%;
+    border-top: 2px solid red;
+    display: none;
 }

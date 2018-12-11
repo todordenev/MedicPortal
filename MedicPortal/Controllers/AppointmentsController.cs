@@ -50,6 +50,19 @@ namespace MedicPortal.Controllers
             return Unauthorized();
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get()
+        {
+            var currentUserId = User.GetUserId();
+            var now = DateTime.Today;
+            var appointment = await _dbContext.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Where(a => a.Patient.AppUserId == currentUserId && a.Start > now).ToListAsync();
+
+            return Ok(appointment);
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody] AppointmentCreation model)
         {
@@ -104,9 +117,9 @@ namespace MedicPortal.Controllers
             if (User.IsPortalAdmin() || user.Doctors.Any(d => d.Id == doctorId))
             {
                 var from = date.Date;
-                var till = @from.AddDays(1);
+                var till = from.AddDays(1);
                 var appointments = await _dbContext.Appointments.Include(a => a.Patient)
-                    .Where(a => a.DoctorId == doctorId && a.Start > @from && a.Start < till)
+                    .Where(a => a.DoctorId == doctorId && a.Start > from && a.Start < till)
                     .ToListAsync();
                 return Ok(appointments);
             }

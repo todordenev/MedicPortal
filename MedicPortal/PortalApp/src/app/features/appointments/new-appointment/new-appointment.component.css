@@ -1,6 +1,14 @@
+
 .doctor-header-image {
     
     background-size: cover; 
     width: calc(100px-20px);
     margin: 10px;
+}
+.mat-card{
+    margin: 5px;
+    border-radius: 5px;
+}
+.content-info{
+    padding:15px 5px;
 }

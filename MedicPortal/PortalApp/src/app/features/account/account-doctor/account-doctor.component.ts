@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from '@app/core';
 import { ActivatedRoute } from '@angular/router';
-import { CalendarEvent, fromAppointment } from '@app/shared/calendar/CalendarEvent';
+import { DayEvent, fromAppointment } from '@app/shared/calendar/day-event/DayEvent';
 import { format } from 'date-fns';
 import { map } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 export class AccountDoctorComponent implements OnInit {
     doctorId: any;
     viewDate = new Date();
-    calendarEvents: CalendarEvent[] = [];
+    calendarEvents: DayEvent[] = [];
 
     constructor(
         private appointmentService: AppointmentService,
@@ -21,24 +21,24 @@ export class AccountDoctorComponent implements OnInit {
 
     ngOnInit() {
         this.doctorId = this.route.snapshot.paramMap.get('id');
-       
+
     }
     fetchEvents() {
-        this.appointmentService.getDoctorAppointments(this.doctorId,this.viewDate)
-        .pipe(map(appointments => this.toEvents(appointments)))
-        .subscribe(events => this.calendarEvents = events);
+        this.appointmentService.getDoctorAppointments(this.doctorId, this.viewDate)
+            .pipe(map(appointments => this.toEvents(appointments)))
+            .subscribe(events => this.calendarEvents = events);
     }
-    toEvents(appointments: any[]): CalendarEvent[] {
+    toEvents(appointments: any[]): DayEvent[] {
         console.log('toEvents called');
-        const events: CalendarEvent[] = [];
+        const events: DayEvent[] = [];
         appointments.forEach(el => {
             events.push(fromAppointment(el));
         });
         return events;
     }
-    createAppointment(event:Date) {        
-        const formatedStartTime = format(event,'YYYY-MM-DDTHH:mm');
-       // this.router.navigate(['/new-appointment', { doctorid: this.doctorId, start: formatedStartTime }]);
+    createAppointment(event: Date) {
+        const formatedStartTime = format(event, 'YYYY-MM-DDTHH:mm');
+        // this.router.navigate(['/new-appointment', { doctorid: this.doctorId, start: formatedStartTime }]);
     }
     viewDateChanged(viewDate) {
         this.viewDate = viewDate;

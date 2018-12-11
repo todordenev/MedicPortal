@@ -19,9 +19,9 @@ export class SlotComponent implements OnInit {
 
   ngOnInit() {
     if (this.slot.isWorktime) {
-      this.slotLable = format(this.slot.startTime, 'HH:mm');
+      this.slotLable = format(this.slot.start, 'HH:mm');
     }
-    this.hourSlot = getMinutes(this.slot.startTime) === 0;
+    this.hourSlot = getMinutes(this.slot.start) === 0;
   }
   createNewEvent(time) {
     this.newEventClicked.emit(time);

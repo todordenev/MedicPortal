@@ -6,4 +6,5 @@ export class Appointment {
     confirmedByUser?: boolean;
     start?: Date;
     durationInMinutes: number;
+    categoryId: string;
 }

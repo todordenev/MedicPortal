@@ -20,23 +20,26 @@
     font-size: 16px;
     width: 16px;
     height: 16px;
-    ;
 }
+
 .event-tools button.mat-button {
     width: 150px;
     min-width: 16px;
-    height: 24px;
+    height: 26px;
     line-height: 20px;
     padding: 0;
+    border-radius: 3px;
 }
 
 .calendar-slot:hover .event-tools {
     display: block;
 }
-.slot-hour{
-    font-weight: 450;    
+
+.slot-hour .hour-label {
+    font-weight: 450;
 }
-.slot-pause{
+
+.slot-pause {
     background-color: #fefefe;
-    max-height: 50px;
+   
 }

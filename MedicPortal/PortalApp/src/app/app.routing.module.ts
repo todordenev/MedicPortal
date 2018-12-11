@@ -5,9 +5,10 @@ import { AuthenticationGuard } from './core/authentication-guard';
 import { AccountRegistrationComponent } from './features/account/account-registration/account-registration.component';
 import { FeaturesModule } from './features/features.module';
 import { DoctorListComponent } from './features/doctor-search';
-import { AccountViewComponent } from '@app/features/account/account-view/account-view.component';
 import { DoctorDetailsComponent } from './features/appointments';
 import { NewAppointmentComponent } from './features/appointments';
+import { AccountPatientsComponent } from './features/account/account-patients/account-patients.component';
+import { AccountDoctorComponent } from './features/account/account-doctor/account-doctor.component';
 
 const routes: Routes = [
   { path: '', component: DoctorListComponent },
@@ -15,9 +16,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LoginComponent, canActivate: [AuthenticationGuard] },
   { path: 'register', component: AccountRegistrationComponent },
-  { path: 'manage', component: AccountViewComponent, canActivate: [AuthenticationGuard] },
-  { path: 'new-appointment', component: NewAppointmentComponent, canActivate: [AuthenticationGuard] },
-
+  { path: 'account-manage', component: AccountRegistrationComponent, canActivate: [AuthenticationGuard] },
+  { path: 'account-patients', component: AccountPatientsComponent, canActivate: [AuthenticationGuard] },
+   { path: 'account-doctors', component: AccountDoctorComponent, canActivate: [AuthenticationGuard] },
+  { path: 'new-appointment', component: NewAppointmentComponent, canActivate: [AuthenticationGuard] }
 ];
 
 @NgModule({

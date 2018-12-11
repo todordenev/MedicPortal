@@ -10,6 +10,7 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { MaterialModule } from '@app/core/Material.module';
 import { SlotComponent } from './calendar/slot/slot.component';
 import { WorktimeComponent } from './worktime/worktime.component';
+import { DayEventComponent } from './calendar/day-event/day-event.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import { WorktimeComponent } from './worktime/worktime.component';
         PatientListitemComponent,
         DayViewComponent,
         SlotComponent,
-        WorktimeComponent
+        WorktimeComponent,
+        DayEventComponent
     ],
     providers: [
     ]

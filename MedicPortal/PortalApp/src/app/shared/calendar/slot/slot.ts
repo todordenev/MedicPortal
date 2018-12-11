@@ -1,7 +1,11 @@
+import { Appointment } from '@app/core';
+
 export class Slot {
-    start: number;
+    start: Date;
+    end: Date;
     duration: number;
     canBook: boolean;
-    startTime: Date;
     isWorktime: boolean;
+    nextSlot: Slot;
+    events: Appointment[] = [];
 }
