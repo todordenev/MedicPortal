@@ -15,7 +15,7 @@ namespace MedicPortal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -191,6 +191,32 @@ namespace MedicPortal.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.SerialAppointment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DayOfWeek");
+
+                    b.Property<string>("DoctorId");
+
+                    b.Property<int>("DurationInMinutes");
+
+                    b.Property<DateTime?>("EndDate");
+
+                    b.Property<double>("From");
+
+                    b.Property<DateTime?>("StartDate");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("SerialAppointments");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.Spezialisation", b =>
@@ -398,6 +424,13 @@ namespace MedicPortal.Migrations
                     b.HasOne("MedicPortal.Data.Models.AppUser", "AppUser")
                         .WithMany("Patients")
                         .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.SerialAppointment", b =>
+                {
+                    b.HasOne("MedicPortal.Data.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.Worktime", b =>

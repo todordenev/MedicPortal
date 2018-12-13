@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MedicPortal.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -262,6 +262,30 @@ namespace MedicPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SerialAppointments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    DayOfWeek = table.Column<int>(nullable: false),
+                    From = table.Column<double>(nullable: false),
+                    DurationInMinutes = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    DoctorId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SerialAppointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SerialAppointments_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Worktimes",
                 columns: table => new
                 {
@@ -414,6 +438,11 @@ namespace MedicPortal.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SerialAppointments_DoctorId",
+                table: "SerialAppointments",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Worktimes_DoctorId",
                 table: "Worktimes",
                 column: "DoctorId");
@@ -447,6 +476,9 @@ namespace MedicPortal.Migrations
 
             migrationBuilder.DropTable(
                 name: "DoctorSpezialisations");
+
+            migrationBuilder.DropTable(
+                name: "SerialAppointments");
 
             migrationBuilder.DropTable(
                 name: "Worktimes");

@@ -1,9 +1,10 @@
 .calendar-slot {
-    border-bottom: 1px gray dotted;
+    border-top: 1px gray dotted;
     background-color: #fefefe;
     min-width: 200px;
     height: 24px;
     position: relative;
+    box-sizing: border-box;
 }
 
 .hour-label {

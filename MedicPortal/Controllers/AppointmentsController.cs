@@ -98,13 +98,30 @@ namespace MedicPortal.Controllers
             var user = _dbContext.Users.Include(u => u.Doctors)
                 .First(u => u.Id == currentUserId);
 
-            var from = date.Date;
-            var till = from.AddDays(1);
+            var today0Hours = date.Date;
+            var today24Hours = today0Hours.AddDays(1);
             var appointments = await _dbContext.Appointments.Include(a => a.Patient)
-                .Where(a => a.DoctorId == doctorId && a.Start > from && a.Start < till)
+                .Where(a => a.DoctorId == doctorId && today0Hours < a.Start && a.Start < today24Hours)
                 .Select(app => MaskIfNotAutorized(app, user))
                 .ToListAsync();
+            var dayofWeek = ((int) date.DayOfWeek - 1) % 7;
+
+            var now = DateTime.Now;
+            var serialAppointments = _dbContext.SerialAppointments
+                .Where(a => a.DoctorId == doctorId && a.DayOfWeek == dayofWeek)
+                .Where(a => a.StartDate < now && now < a.EndDate)
+                .Select(a => ToAppointmentView(a, today0Hours));
+            appointments.AddRange(serialAppointments);
             return Ok(appointments);
+        }
+
+        private AppointmentView ToAppointmentView(SerialAppointment serialAppointment, DateTime date)
+        {
+            var result = new AppointmentView();
+            result.Title = serialAppointment.Title;
+            result.DurationInMinutes = serialAppointment.DurationInMinutes;
+            result.Start = date.AddHours(serialAppointment.From);
+            return result;
         }
 
         [HttpGet("doctorappointments/{doctorId}/{date}")]

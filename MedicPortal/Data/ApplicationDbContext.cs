@@ -16,6 +16,7 @@ namespace MedicPortal.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Spezialisation> Spezialisations { get; set; }
         public DbSet<DoctorSpezialisations> DoctorSpezialisations { get; set; }
+        public DbSet<SerialAppointment> SerialAppointments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,6 +39,7 @@ namespace MedicPortal.Data
             builder.Entity<Worktime>().HasOne(w => w.Doctor).WithMany(d => d.Worktimes);
             builder.Entity<Appointment>().HasOne(a => a.Doctor);
             builder.Entity<Appointment>().HasOne(a => a.Patient);
+            builder.Entity<SerialAppointment>().HasOne(a => a.Doctor);
         }
     }
 }

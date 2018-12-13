@@ -35,19 +35,19 @@ namespace MedicPortal.Data
             new Doctor
             {
                 Id = "1",
-                Approved = true, AppUser = AppUsers[4], FirstName = "Irina", IsActive = true, LastName = "Ivanova",
+                Approved = true, AppUser = AppUsers[4], FirstName = "Ирина", IsActive = true, LastName = "Иванова",
                 Worktimes = new List<Worktime>
                 {
                     new Worktime {DayOfWeek = 0, From = 7.5, Till = 10.5},
                     new Worktime {DayOfWeek = 0, From = 11, Till = 13.5},
-                    new Worktime {DayOfWeek = 1, From = 8, Till = 10.5},
-                    new Worktime {DayOfWeek = 1, From = 10.75, Till = 13},
-                    new Worktime {DayOfWeek = 2, From = 9, Till = 10.5},
-                    new Worktime {DayOfWeek = 2, From = 10.75, Till = 13},
-                    new Worktime {DayOfWeek = 3, From = 8.5, Till = 10.75},
-                    new Worktime {DayOfWeek = 3, From = 11, Till = 12.5},
-                    new Worktime {DayOfWeek = 4, From = 12.5, Till = 14.5},
-                    new Worktime {DayOfWeek = 4, From = 14.75, Till = 18}
+                    new Worktime {DayOfWeek = 1, From = 7.5, Till = 10.5},
+                    new Worktime {DayOfWeek = 1, From = 10.75, Till = 13.5},
+                    new Worktime {DayOfWeek = 2, From = 7.5, Till = 10.5},
+                    new Worktime {DayOfWeek = 2, From = 10.75, Till = 13.5},
+                    new Worktime {DayOfWeek = 3, From = 12.5, Till = 15.5},
+                    new Worktime {DayOfWeek = 3, From = 15.75, Till = 18},
+                    new Worktime {DayOfWeek = 4, From = 7.5, Till = 10.5},
+                    new Worktime {DayOfWeek = 4, From = 10.75, Till = 13}
                 }
             },
             new Doctor
@@ -114,22 +114,76 @@ namespace MedicPortal.Data
                 DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CatogoryId = 0
             },
             new Appointment
-            {       
+            {
                 Doctor = Doctors[0], Patient = Patients[1], Start = DateTime.Today.AddHours(8.50),
-                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CatogoryId=1
-
+                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CatogoryId = 1
             },
             new Appointment
             {
                 Doctor = Doctors[0], Patient = Patients[0], Start = DateTime.Today.AddHours(10),
-                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true,CatogoryId = 0
+                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CatogoryId = 0
             },
             new Appointment
             {
                 Doctor = Doctors[0], Patient = Patients[1], Start = DateTime.Today.AddHours(11.50),
-                DurationInMinutes = 30, ConfirmedByDoctor = true, ConfirmedByUser = true,CatogoryId = 2
+                DurationInMinutes = 30, ConfirmedByDoctor = true, ConfirmedByUser = true, CatogoryId = 2
             }
         };
+
+        public static SerialAppointment[] SerialAppointments =
+        {
+            new SerialAppointment
+            {
+                Doctor = Doctors[0],
+                DayOfWeek = 0,
+                From = 7.5,
+                DurationInMinutes = 90,
+                Title = "Работно време без часове",
+                StartDate = DateTime.Today,
+                EndDate = DateTime.MaxValue
+            },
+            new SerialAppointment
+            {
+                Doctor = Doctors[0],
+                DayOfWeek = 1,
+                From = 7.5,
+                DurationInMinutes = 90,
+                Title = "Работно време без часове",
+                StartDate = DateTime.Today,
+                EndDate = DateTime.MaxValue
+            },
+            new SerialAppointment
+            {
+                Doctor = Doctors[0],
+                DayOfWeek = 2,
+                From = 7.5,
+                DurationInMinutes = 90,
+                Title = "Работно време без часове",
+                StartDate = DateTime.Today,
+                EndDate = DateTime.MaxValue
+            },
+            new SerialAppointment
+            {
+                Doctor = Doctors[0],
+                DayOfWeek = 3,
+                From = 12.5,
+                DurationInMinutes = 90,
+                Title = "Работно време без часове",
+                StartDate = DateTime.Today,
+                EndDate = DateTime.MaxValue
+            },
+            new SerialAppointment
+            {
+                Doctor = Doctors[0],
+                DayOfWeek = 4,
+                From = 7.5,
+                DurationInMinutes = 90,
+                Title = "Работно време без часове",
+                StartDate = DateTime.Today,
+                EndDate = DateTime.MaxValue
+            }
+        };
+
 
         private static UserManager<AppUser> _userManager;
 
@@ -152,6 +206,7 @@ namespace MedicPortal.Data
             _dbContext.UserRoles.Add(new IdentityUserRole<string> {RoleId = Roles[0].Id, UserId = AppUsers[4].Id});
             _dbContext.UserRoles.Add(new IdentityUserRole<string> {RoleId = Roles[1].Id, UserId = AppUsers[4].Id});
             _dbContext.Appointments.AddRange(Appointmens);
+            _dbContext.SerialAppointments.AddRange(SerialAppointments);
             _dbContext.SaveChanges();
         }
 

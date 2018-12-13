@@ -13,6 +13,7 @@ export class SlotComponent implements OnInit {
   slot: Slot;
   hourSlot = false;
   slotLable: string;
+  now = Date.now();
   @Output()
   newEventClicked: EventEmitter<Date> = new EventEmitter<Date>();
   constructor() { }
