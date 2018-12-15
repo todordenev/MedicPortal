@@ -1,6 +1,5 @@
 :host {
     width: 300px;
-    height: 400px;
     box-sizing: border-box;   
 }
 .mat-card {
@@ -43,7 +42,7 @@
 
 .workday-header.main {
     font-weight: 500;
-    margin-left: 5px;
+    margin: 5px 5px 5px 25px;
 }
 
 .workday-container {

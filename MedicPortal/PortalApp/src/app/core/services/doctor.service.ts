@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Doctor } from '@app/core/entities';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { handleError } from '../entities/helpers';
+import { handleError, GetWorkdays } from '../entities/helpers';
 
 @Injectable({
     providedIn: 'root'
@@ -48,9 +48,8 @@ export class DoctorService {
     toDoctors(serverResult) {
         const doctorsArray: Doctor[] = [];
         if (serverResult) {
-            serverResult.forEach(element => {
-                const doc = new Doctor(element);
-                doctorsArray.push(doc);
+            serverResult.forEach(d => {
+                doctorsArray.push(this.mapToDoctor(d));
             });
         }
         return doctorsArray;
@@ -59,14 +58,20 @@ export class DoctorService {
     getDoctor(id: string): Observable<Doctor> {
         const doctor = this.doctors.find(d => d.id === id);
         if (doctor) {
-           return of(doctor);
+            return of(doctor);
         } else {
             const url = this.docotrEndpointUrl + '/' + id;
             return this.http.get(url)
                 .pipe(
-                    map(d => new Doctor(d)),
+                    map(d => this.mapToDoctor(d)),
                     catchError(handleError)
                 );
         }
+    }
+
+    mapToDoctor(serverObject) {
+        const doc = { ...serverObject } as Doctor;
+        doc.workdays = GetWorkdays(doc.worktimes);
+        return doc;
     }
 }

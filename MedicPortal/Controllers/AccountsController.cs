@@ -61,7 +61,7 @@ namespace MedicPortal.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
-        public async Task<IActionResult> OnLogin([FromBody] LoginViewModel credentials)
+        public async Task<IActionResult> OnLogin([FromBody] AppUserCredential credentials)
         {
             return await OnLogin(credentials.UserName, credentials.Password);
         }

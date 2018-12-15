@@ -8,9 +8,6 @@ namespace MedicPortal.TransportObjects.AppointmentDtos
     {
         public MappingProfile()
         {
-            CreateMap<DoctorCreate, Doctor>();
-            CreateMap<WorktimeView, Worktime>();
-
             CreateMap<AppointmentCreate, Appointment>();
             CreateMap<Appointment, AppointmentView>()
                 .ForMember(app => app.Title,

@@ -3,7 +3,7 @@
         <div mat-card-avatar class="doctor-header-image" [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
         <mat-card-title><a routerLink="/doctors/{{doctor.id}}">{{doctor.displayName}}</a></mat-card-title>
         <mat-card-subtitle>
-            <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
+            <span *ngFor="let spec of doctor.specialisations">{{spec}}</span>
         </mat-card-subtitle>
     </mat-card-header>
     <div class="image-container">

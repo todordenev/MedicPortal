@@ -9,7 +9,7 @@ namespace MedicPortal.ViewModels.Validators
         public static void AddValidators(this IServiceCollection services)
         {
             services.AddTransient<IValidator<AppUserCreate>, RegistrationViewModelValidator>();
-            services.AddTransient<IValidator<LoginViewModel>, LoginViewModelValidator>();
+            services.AddTransient<IValidator<AppUserCredential>, LoginViewModelValidator>();
         }
     }
 }

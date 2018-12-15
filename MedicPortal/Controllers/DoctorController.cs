@@ -6,7 +6,6 @@ using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
 using MedicPortal.TransportObjects.DoctorDtos;
-using MedicPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -30,40 +29,47 @@ namespace MedicPortal.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public List<Doctor> Get()
+        public List<DoctorView> Get()
         {
             var doctors = _dbContext.Doctors.Where(d => d.IsActive && d.Approved)
                 .Include(d => d.Worktimes)
                 .Include(d => d.DoctorSpezialisations)
                 .ThenInclude(ds => ds.Spezialisation)
+                .Select(d => _mapper.Map<DoctorView>(d))
                 .ToList();
             return doctors;
         }
 
         // GET api/doctors
         [HttpGet]
-        [Route("foraccount")]
-        public List<Doctor> GetMyDoctors()
+        [Route("accountdoctors")]
+        public List<DoctorView> GetAccountDoctors()
         {
             var userId = User.GetUserId();
-            var doctors = _dbContext.Doctors.Where(d => d.AppUserId == userId).Include(d => d.Worktimes)
-                .Include(d => d.DoctorSpezialisations).ThenInclude(ds => ds.Spezialisation).ToList();
+            var doctors = _dbContext.Doctors
+                .Where(d => d.AppUserId == userId)
+                .Include(d => d.Worktimes)
+                .Include(d => d.DoctorSpezialisations)
+                .ThenInclude(ds => ds.Spezialisation)
+                .Select(d => _mapper.Map<DoctorView>(d))
+                .ToList();
             return doctors;
         }
 
         // GET api/doctors/5
         [HttpGet("{id}")]
-        public ActionResult<Doctor> Get(string id)
+        public ActionResult<DoctorView> Get(string id)
         {
             if (id.IsNullOrEmpty())
             {
                 return BadRequest();
-            } 
+            }
 
             var doctor = _dbContext.Doctors
                 .Include(d => d.Worktimes)
                 .Include(d => d.DoctorSpezialisations)
                 .ThenInclude(ds => ds.Spezialisation)
+                .Select(d => _mapper.Map<DoctorView>(d))
                 .FirstOrDefault(d => d.Id == id);
             if (doctor == null)
             {
@@ -123,7 +129,7 @@ namespace MedicPortal.Controllers
                 return BadRequest();
             }
 
-            _dbContext.Doctors.Remove(doctor);
+            doctor.IsActive = false;
             _dbContext.SaveChanges();
 
             return Ok();

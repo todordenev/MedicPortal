@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Doctor } from '@app/core/entities';
+import { Doctor, Workday } from '@app/core/entities';
+import { GetWorkdays } from '@app/core/entities/helpers';
 
 
 @Component({
@@ -10,7 +11,6 @@ import { Doctor } from '@app/core/entities';
 export class DoctorListitemComponent implements OnInit {
   @Input()
   doctor: Doctor;
-
   constructor() { }
 
   ngOnInit(): void {

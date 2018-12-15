@@ -9,6 +9,7 @@ namespace MedicPortal.TransportObjects.PatientDtos
         public MappingProfile()
         {
             CreateMap<PatientCreate, Patient>();
+            CreateMap<Patient, PatientView>();
         }
 
     }

@@ -1,5 +1,5 @@
 import { Workday } from './workday';
-import { GetWorkdays } from './helpers';
+import { Worktime } from '.';
 export class Doctor {
     id: string;
     name: string;
@@ -8,14 +8,5 @@ export class Doctor {
     firstName: string;
     lastName: string;
     displayName: string;
-    constructor(serverObject?: any) {
-        this.id = serverObject.id;
-        this.firstName = serverObject.firstName;
-        this.lastName = serverObject.lastName;
-        this.displayName = this.firstName + ' ' + this.lastName;
-        this.workdays = GetWorkdays(serverObject.worktimes);
-        serverObject.doctorSpezialisations.forEach(docSpec => {
-            this.spezialisations.push(docSpec.spezialisation.name);
-        });
-    }
+    worktimes: Worktime[];
 }
