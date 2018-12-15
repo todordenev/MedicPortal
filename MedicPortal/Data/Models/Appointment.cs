@@ -4,7 +4,7 @@ namespace MedicPortal.Data.Models
 {
     public class Appointment
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string PatientId { get; set; }
         public Patient Patient { get; set; }
         public string DoctorId { get; set; }
@@ -14,5 +14,6 @@ namespace MedicPortal.Data.Models
         public DateTime Start { get; set; }
         public int DurationInMinutes { get; set; }
         public int CatogoryId { get; set; }
+        public bool Canceled { get; set; }
     }
 }

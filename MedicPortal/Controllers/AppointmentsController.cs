@@ -12,9 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedicPortal.Controllers
 {
-    [Route("api/appointments")]
-    [ApiController]
     [Authorize]
+    [ApiController]
+    [Route("api/appointments")]
     [Produces("application/json")]
     public class AppointmentsController : ControllerBase
     {
@@ -29,39 +29,6 @@ namespace MedicPortal.Controllers
         }
 
         public string CurrentUserId => _currentUserId ?? (_currentUserId = User.GetUserId());
-
-        // GET api/appointments/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
-        {
-            var appointment = await _dbContext.Appointments.Include(a => a.Doctor).FirstOrDefaultAsync(d => d.Id == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-
-            if (User.IsPortalAdmin()
-                || IsCurrentUserDoctor(appointment)
-                || IsCurrentUserPatient(appointment))
-            {
-                return Ok(appointment);
-            }
-
-            return Unauthorized();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get()
-        {
-            var currentUserId = User.GetUserId();
-            var now = DateTime.Today;
-            var appointment = await _dbContext.Appointments
-                .Include(a => a.Doctor)
-                .Include(a => a.Patient)
-                .Where(a => a.Patient.AppUserId == currentUserId && a.Start > now).ToListAsync();
-
-            return Ok(appointment);
-        }
 
         [HttpPost]
         public IActionResult Post([FromBody] AppointmentCreation model)
@@ -88,7 +55,6 @@ namespace MedicPortal.Controllers
                 throw;
             }
         }
-
 
         [HttpGet("doctor/{doctorId}/{date}")]
         [AllowAnonymous]
@@ -125,7 +91,6 @@ namespace MedicPortal.Controllers
         }
 
         [HttpGet("doctorappointments/{doctorId}/{date}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetForDoctor(string doctorId, DateTime date)
         {
             var currentUserId = User.GetUserId();
@@ -136,7 +101,7 @@ namespace MedicPortal.Controllers
                 var from = date.Date;
                 var till = from.AddDays(1);
                 var appointments = await _dbContext.Appointments.Include(a => a.Patient)
-                    .Where(a => a.DoctorId == doctorId && a.Start > from && a.Start < till)
+                    .Where(a => a.DoctorId == doctorId && from < a.Start && a.Start < till)
                     .ToListAsync();
                 return Ok(appointments);
             }

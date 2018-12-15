@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'register', component: AccountRegistrationComponent },
   { path: 'account-manage', component: AccountRegistrationComponent, canActivate: [AuthenticationGuard] },
   { path: 'account-patients', component: AccountPatientsComponent, canActivate: [AuthenticationGuard] },
-   { path: 'account-doctors', component: AccountDoctorComponent, canActivate: [AuthenticationGuard] },
+  { path: 'account-doctors', component: AccountDoctorComponent, canActivate: [AuthenticationGuard] },
   { path: 'new-appointment', component: NewAppointmentComponent, canActivate: [AuthenticationGuard] }
 ];
 

@@ -4,7 +4,7 @@ namespace MedicPortal.Data.Models
 {
     public class SerialAppointment
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         public int DayOfWeek { get; set; }
 

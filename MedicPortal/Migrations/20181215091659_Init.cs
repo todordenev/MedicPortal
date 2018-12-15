@@ -191,6 +191,28 @@ namespace MedicPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EntityChanges",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    EntityName = table.Column<string>(nullable: true),
+                    EntityId = table.Column<string>(nullable: true),
+                    Action = table.Column<string>(nullable: true),
+                    Changed = table.Column<DateTime>(nullable: false),
+                    ChangedById = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntityChanges", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EntityChanges_AspNetUsers_ChangedById",
+                        column: x => x.ChangedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
@@ -289,8 +311,7 @@ namespace MedicPortal.Migrations
                 name: "Worktimes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     DayOfWeek = table.Column<int>(nullable: false),
                     From = table.Column<double>(nullable: false),
                     Till = table.Column<double>(nullable: false),
@@ -318,7 +339,8 @@ namespace MedicPortal.Migrations
                     ConfirmedByUser = table.Column<bool>(nullable: false),
                     Start = table.Column<DateTime>(nullable: false),
                     DurationInMinutes = table.Column<int>(nullable: false),
-                    CatogoryId = table.Column<int>(nullable: false)
+                    CatogoryId = table.Column<int>(nullable: false),
+                    Canceled = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -433,6 +455,11 @@ namespace MedicPortal.Migrations
                 column: "SpezialisationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EntityChanges_ChangedById",
+                table: "EntityChanges",
+                column: "ChangedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patients_AppUserId",
                 table: "Patients",
                 column: "AppUserId");
@@ -476,6 +503,9 @@ namespace MedicPortal.Migrations
 
             migrationBuilder.DropTable(
                 name: "DoctorSpezialisations");
+
+            migrationBuilder.DropTable(
+                name: "EntityChanges");
 
             migrationBuilder.DropTable(
                 name: "SerialAppointments");

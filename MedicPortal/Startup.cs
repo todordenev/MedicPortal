@@ -8,12 +8,14 @@ using MedicPortal.ViewModels.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 
 namespace MedicPortal
@@ -34,7 +36,7 @@ namespace MedicPortal
                 .AddJsonOptions(
                     options =>
                     {
-                       // options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
+                        // options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     }
                 );
@@ -59,7 +61,7 @@ namespace MedicPortal
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.TryAddTransient<IHttpContextAccessor,HttpContextAccessor>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/logIn";

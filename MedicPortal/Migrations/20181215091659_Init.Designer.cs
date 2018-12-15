@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181212173555_Init")]
+    [Migration("20181215091659_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,8 @@ namespace MedicPortal.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Canceled");
 
                     b.Property<int>("CatogoryId");
 
@@ -171,6 +173,28 @@ namespace MedicPortal.Migrations
                     b.ToTable("DoctorSpezialisations");
                 });
 
+            modelBuilder.Entity("MedicPortal.Data.Models.EntityChange", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Action");
+
+                    b.Property<DateTime>("Changed");
+
+                    b.Property<string>("ChangedById");
+
+                    b.Property<string>("EntityId");
+
+                    b.Property<string>("EntityName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChangedById");
+
+                    b.ToTable("EntityChanges");
+                });
+
             modelBuilder.Entity("MedicPortal.Data.Models.Patient", b =>
                 {
                     b.Property<string>("Id")
@@ -235,9 +259,8 @@ namespace MedicPortal.Migrations
 
             modelBuilder.Entity("MedicPortal.Data.Models.Worktime", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("DayOfWeek");
 
@@ -419,6 +442,13 @@ namespace MedicPortal.Migrations
                         .WithMany("DoctorSpezialisationses")
                         .HasForeignKey("SpezialisationId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.EntityChange", b =>
+                {
+                    b.HasOne("MedicPortal.Data.Models.AppUser", "ChangedBy")
+                        .WithMany()
+                        .HasForeignKey("ChangedById");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.Patient", b =>
