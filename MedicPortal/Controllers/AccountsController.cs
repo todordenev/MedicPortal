@@ -4,6 +4,7 @@ using AutoMapper;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
+using MedicPortal.TransportObjects.AppUserDtos;
 using MedicPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,7 @@ namespace MedicPortal.Controllers
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegistrationViewModel model)
+        public async Task<IActionResult> Register([FromBody] AppUserCreate model)
         {
             if (!ModelState.IsValid)
             {
@@ -88,9 +89,9 @@ namespace MedicPortal.Controllers
             return Ok(userVm);
         }
 
-        private UserViewModel GetUserInfo(AppUser user)
+        private AppUserView GetUserInfo(AppUser user)
         {
-            var userVm = _mapper.Map<UserViewModel>(user);
+            var userVm = _mapper.Map<AppUserView>(user);
             foreach (var roleId in _appDbContext.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId))
             {
                 userVm.Roles.Add(_appDbContext.Roles.Find(roleId).Name);

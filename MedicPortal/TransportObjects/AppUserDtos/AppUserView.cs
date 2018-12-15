@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace MedicPortal.ViewModels
+namespace MedicPortal.TransportObjects.AppUserDtos
 {
-    public class UserViewModel
+    public class AppUserView
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

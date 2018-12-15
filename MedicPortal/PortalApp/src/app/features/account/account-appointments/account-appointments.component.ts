@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppointmentService } from '@app/core';
 
 @Component({
   selector: 'app-account-appointments',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountAppointmentsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private appointmentService: AppointmentService
+  ) { }
 
   ngOnInit() {
+    this.appointmentService.getAccountAppointments();
   }
 
 }

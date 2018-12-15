@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MedicPortal.ViewModels
+namespace MedicPortal.TransportObjects.AppointmentDtos
 {
     public class AppointmentView
     {

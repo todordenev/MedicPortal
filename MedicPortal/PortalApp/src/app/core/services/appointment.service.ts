@@ -11,6 +11,7 @@ import { AppointmentView } from '../entities/appointmentView';
     providedIn: 'root'
 })
 export class AppointmentService {
+
     serviceEndpoint = 'api/appointments';
 
     constructor(private http: HttpClient) { }
@@ -37,6 +38,13 @@ export class AppointmentService {
                 map(serverResult => this.mapAppointments(serverResult)),
                 catchError(handleError)
             );
+    }
+    getAccountAppointments(): Observable<AppointmentView[]> {
+        return this.http.get(this.serviceEndpoint + '/accountappointments')
+        .pipe(
+            map(serverResult => this.mapAppointments(serverResult)),
+            catchError(handleError)
+        );
     }
 
     create(appointment): any {

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
-using MedicPortal.ViewModels;
+using MedicPortal.TransportObjects.PatientDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -33,12 +32,12 @@ namespace MedicPortal.Controllers
         {
             var userId = User.GetUserId();
             var patients = _dbContext.Patients.Include(p => p.AppUser).Where(p => p.AppUserId == userId).ToList();
-          
+
             return patients.ToList();
         }
 
         [HttpPost]
-        public Patient Post([FromBody] PatientViewModel model)
+        public Patient Post([FromBody] PatientCreate model) 
         {
             var patient = _mapper.Map<Patient>(model);
             patient.AppUserId = User.GetUserId();

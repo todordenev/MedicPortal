@@ -5,6 +5,7 @@ using AutoMapper;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
+using MedicPortal.TransportObjects.DoctorDtos;
 using MedicPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -73,7 +74,7 @@ namespace MedicPortal.Controllers
         }
 
         [HttpPost]
-        public Doctor Post([FromBody] DoctorViewModel model)
+        public Doctor Post([FromBody] DoctorCreate model)
         {
             var doc = _mapper.Map<Doctor>(model);
             doc.AppUserId = User.GetUserId();
@@ -95,7 +96,7 @@ namespace MedicPortal.Controllers
 
             if (doctor.AppUserId != User.GetUserId())
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
             if (doctorPatch.Operations.Any())

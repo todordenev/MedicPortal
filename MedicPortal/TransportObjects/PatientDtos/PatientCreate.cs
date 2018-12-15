@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MedicPortal.ViewModels
+namespace MedicPortal.TransportObjects.PatientDtos
 {
-    public class PatientViewModel
+    public class PatientCreate
     {
         public string Id { get; set; }
         public string FirstName { get; set; }

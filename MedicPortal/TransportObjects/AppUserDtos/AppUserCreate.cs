@@ -1,6 +1,6 @@
-﻿namespace MedicPortal.ViewModels
+﻿namespace MedicPortal.TransportObjects.AppUserDtos
 {
-    public class RegistrationViewModel
+    public class AppUserCreate
     {
         public string Email { get; set; }
         public string Password { get; set; }

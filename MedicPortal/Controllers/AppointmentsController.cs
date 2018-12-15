@@ -5,6 +5,7 @@ using AutoMapper;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
+using MedicPortal.TransportObjects.AppointmentDtos;
 using MedicPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace MedicPortal.Controllers
         public string CurrentUserId => _currentUserId ?? (_currentUserId = User.GetUserId());
 
         [HttpPost]
-        public IActionResult Post([FromBody] AppointmentCreation model)
+        public IActionResult Post([FromBody] AppointmentCreate model)
         {
             try
             {
@@ -66,10 +67,11 @@ namespace MedicPortal.Controllers
 
             var today0Hours = date.Date;
             var today24Hours = today0Hours.AddDays(1);
-            var appointments = await _dbContext.Appointments.Include(a => a.Patient)
+            var tempAppointments = await _dbContext.Appointments.Include(a => a.Patient)
                 .Where(a => a.DoctorId == doctorId && today0Hours < a.Start && a.Start < today24Hours)
-                .Select(app => MaskIfNotAutorized(app, user))
                 .ToListAsync();
+            var appointments = tempAppointments.Select(app => MaskIfNotAutorized(app, user)).ToList();
+
             var dayofWeek = ((int) date.DayOfWeek - 1) % 7;
 
             var now = DateTime.Now;
@@ -81,14 +83,6 @@ namespace MedicPortal.Controllers
             return Ok(appointments);
         }
 
-        private AppointmentView ToAppointmentView(SerialAppointment serialAppointment, DateTime date)
-        {
-            var result = new AppointmentView();
-            result.Title = serialAppointment.Title;
-            result.DurationInMinutes = serialAppointment.DurationInMinutes;
-            result.Start = date.AddHours(serialAppointment.From);
-            return result;
-        }
 
         [HttpGet("doctorappointments/{doctorId}/{date}")]
         public async Task<IActionResult> GetForDoctor(string doctorId, DateTime date)
@@ -109,15 +103,21 @@ namespace MedicPortal.Controllers
             return Unauthorized();
         }
 
+        private AppointmentView ToAppointmentView(SerialAppointment serialAppointment, DateTime date)
+        {
+            var appointmentView = _mapper.Map<AppointmentView>(serialAppointment);
+            appointmentView.Start = date.AddHours(serialAppointment.From);
+            return appointmentView;
+        }
 
         private AppointmentView MaskIfNotAutorized(Appointment app, AppUser user)
         {
-            if (user.Doctors.Any(d => d.Id == app.DoctorId))
+            if (IsCurrentUserDoctor(app))
             {
                 return _mapper.Map<AppointmentView>(app);
             }
 
-            if (user.Patients.Any(p => p.Id == app.Id))
+            if (IsCurrentUserPatient(app))
             {
                 return _mapper.Map<AppointmentView>(app);
             }
@@ -133,9 +133,7 @@ namespace MedicPortal.Controllers
 
         private bool IsCurrentUserPatient(Appointment appointment)
         {
-            var currentUserId = User.GetUserId();
-            var patientsIds = _dbContext.Patients.Where(p => p.AppUserId == currentUserId).Select(p => p.Id);
-            return patientsIds.Any(patId => patId == appointment.PatientId);
+            return appointment.Patient.AppUserId == User.GetUserId();
         }
     }
 }

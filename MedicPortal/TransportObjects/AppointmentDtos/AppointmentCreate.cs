@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace MedicPortal.ViewModels
+namespace MedicPortal.TransportObjects.AppointmentDtos
 {
-    public class AppointmentCreation
+    public class AppointmentCreate
     {
         public string PatientId { get; set; }
         public string DoctorId { get; set; }

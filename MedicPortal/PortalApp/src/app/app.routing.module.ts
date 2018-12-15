@@ -9,6 +9,7 @@ import { DoctorDetailsComponent } from './features/appointments';
 import { NewAppointmentComponent } from './features/appointments';
 import { AccountPatientsComponent } from './features/account/account-patients/account-patients.component';
 import { AccountDoctorComponent } from './features/account/account-doctor/account-doctor.component';
+import { AccountAppointmentsComponent } from './features/account';
 
 const routes: Routes = [
   { path: '', component: DoctorListComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'account-manage', component: AccountRegistrationComponent, canActivate: [AuthenticationGuard] },
   { path: 'account-patients', component: AccountPatientsComponent, canActivate: [AuthenticationGuard] },
   { path: 'account-doctors', component: AccountDoctorComponent, canActivate: [AuthenticationGuard] },
+  { path: 'account-appointments', component: AccountAppointmentsComponent, canActivate: [AuthenticationGuard] },
   { path: 'new-appointment', component: NewAppointmentComponent, canActivate: [AuthenticationGuard] }
 ];
 
