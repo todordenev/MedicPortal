@@ -1,4 +1,6 @@
 ﻿using System;
+using MedicPortal.TransportObjects.DoctorDtos;
+using MedicPortal.TransportObjects.PatientDtos;
 
 namespace MedicPortal.TransportObjects.AppointmentDtos
 {
@@ -8,6 +10,8 @@ namespace MedicPortal.TransportObjects.AppointmentDtos
         public string Title { get; set; }
         public DateTime Start { get; set; }
         public int DurationInMinutes { get; set; }
-        public int CatogoryId { get; set; }
+        public int CategoryId { get; set; }
+        public DoctorView Doctor { get; set; }
+        public PatientView Patient { get; set; }
     }
 }

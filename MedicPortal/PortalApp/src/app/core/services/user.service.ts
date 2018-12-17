@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { authTokenNameConst } from '@app/core/constants';
-import { User } from '@app/shared/user';
+import { User } from '@app/core/entities/user';
 import { UserCredentials, Registration } from '@app/core/entities/registration';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class UserService implements OnInit {
         const userJson = localStorage.getItem(authTokenNameConst);
         if (userJson && userJson !== 'undefined') {
             const cachedUser = JSON.parse(userJson);
-            this._user = new BehaviorSubject<User>(new User(cachedUser));
+            this._user = new BehaviorSubject<User>(cachedUser as User);
             this._loggedIn.next(true);
 
         } else {
@@ -85,7 +85,7 @@ export class UserService implements OnInit {
     private onUserLoggedIn(user) {
         const userString = JSON.stringify(user);
         localStorage.setItem(authTokenNameConst, userString);
-        this._user.next(new User(user));
+        this._user.next(user as User);
         this._loggedIn.next(true);
         this._loadingUserInfo.next(false);
     }

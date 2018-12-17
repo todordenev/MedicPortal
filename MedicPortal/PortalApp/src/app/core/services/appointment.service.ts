@@ -12,6 +12,7 @@ import { AppointmentView } from '../entities/appointmentView';
 })
 export class AppointmentService {
 
+
     serviceEndpoint = 'api/appointments';
 
     constructor(private http: HttpClient) { }
@@ -40,15 +41,19 @@ export class AppointmentService {
             );
     }
     getAccountAppointments(): Observable<AppointmentView[]> {
-        return this.http.get(this.serviceEndpoint + '/accountappointments')
-        .pipe(
-            map(serverResult => this.mapAppointments(serverResult)),
-            catchError(handleError)
-        );
+        return this.http.get(this.serviceEndpoint + '/foraccount')
+            .pipe(
+                map(serverResult => this.mapAppointments(serverResult)),
+                catchError(handleError)
+            );
     }
 
     create(appointment): any {
         return this.http.post(this.serviceEndpoint, appointment);
+    }
+
+    cancel(id: any): any {
+        return this.http.delete(this.serviceEndpoint + '/' + id);
     }
 
     private mapAppointments(serverResult): AppointmentView[] {

@@ -2,7 +2,7 @@
 using MedicPortal.TransportObjects.AppUserDtos;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MedicPortal.ViewModels.Validators
+namespace MedicPortal.Validators
 {
     public static class ValidatorsExt
     {

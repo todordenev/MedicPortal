@@ -52,6 +52,8 @@ namespace MedicPortal.Data
             builder.Entity<Worktime>().HasOne(w => w.Doctor).WithMany(d => d.Worktimes);
             builder.Entity<Appointment>().HasOne(a => a.Doctor);
             builder.Entity<Appointment>().HasOne(a => a.Patient);
+            builder.Entity<Appointment>().HasOne(a => a.CanceledBy);
+
             builder.Entity<SerialAppointment>().HasOne(a => a.Doctor);
             builder.Entity<EntityChange>().HasOne(e => e.ChangedBy);
         }

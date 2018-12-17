@@ -26,7 +26,9 @@ namespace MedicPortal.Migrations
 
                     b.Property<bool>("Canceled");
 
-                    b.Property<int>("CatogoryId");
+                    b.Property<string>("CanceledById");
+
+                    b.Property<int>("CategoryId");
 
                     b.Property<bool>("ConfirmedByDoctor");
 
@@ -41,6 +43,8 @@ namespace MedicPortal.Migrations
                     b.Property<DateTime>("Start");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CanceledById");
 
                     b.HasIndex("DoctorId");
 
@@ -387,6 +391,10 @@ namespace MedicPortal.Migrations
 
             modelBuilder.Entity("MedicPortal.Data.Models.Appointment", b =>
                 {
+                    b.HasOne("MedicPortal.Data.Models.AppUser", "CanceledBy")
+                        .WithMany()
+                        .HasForeignKey("CanceledById");
+
                     b.HasOne("MedicPortal.Data.Models.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId");

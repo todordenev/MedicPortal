@@ -13,7 +13,9 @@ namespace MedicPortal.Data.Models
         public bool ConfirmedByUser { get; set; }
         public DateTime Start { get; set; }
         public int DurationInMinutes { get; set; }
-        public int CatogoryId { get; set; }
+        public int CategoryId { get; set; }
         public bool Canceled { get; set; }
+        public string CanceledById { get; set; }
+        public AppUser CanceledBy { get; set; }
     }
 }

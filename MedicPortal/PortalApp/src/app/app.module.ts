@@ -13,7 +13,6 @@ import { LowerCaseUrlSerializer } from './shared/lower-case-url-serializer';
 import { RoleGuard } from './core/role-guard';
 import { AuthenticationGuard } from './core/authentication-guard';
 import { SharedModule } from './shared/shared.module';
-import { FeaturesModule } from './features/features.module';
 import { DateAdapter } from '@angular/material';
 import { CustomDateAdapter } from './shared/CustomDateAdapter';
 import { MaterialModule } from './core/Material.module';
@@ -22,6 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
 import * as bgLocale from 'date-fns/locale/bg/index.js';
+import { DoctorModule } from './features/doctor';
 const dnsConfigService = new DateFnsConfigurationService();
 dnsConfigService.setLocale(bgLocale);
 
@@ -36,7 +36,7 @@ dnsConfigService.setLocale(bgLocale);
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    FeaturesModule,
+    DoctorModule,
     MaterialModule,
     ConfiguredDatepickerModule,
     DateFnsModule.forRoot(),

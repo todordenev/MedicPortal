@@ -4,7 +4,7 @@ using AutoMapper;
 using FluentValidation.AspNetCore;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
-using MedicPortal.ViewModels.Validators;
+using MedicPortal.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -119,10 +119,10 @@ namespace MedicPortal
 
                 spa.Options.SourcePath = "PortalApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer("start");
-                }
+                //if (env.IsDevelopment())
+                //{
+                //    spa.UseAngularCliServer("start");
+                //}
             });
         }
     }

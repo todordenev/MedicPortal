@@ -339,12 +339,19 @@ namespace MedicPortal.Migrations
                     ConfirmedByUser = table.Column<bool>(nullable: false),
                     Start = table.Column<DateTime>(nullable: false),
                     DurationInMinutes = table.Column<int>(nullable: false),
-                    CatogoryId = table.Column<int>(nullable: false),
-                    Canceled = table.Column<bool>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false),
+                    Canceled = table.Column<bool>(nullable: false),
+                    CanceledById = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_AspNetUsers_CanceledById",
+                        column: x => x.CanceledById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Appointments_Doctors_DoctorId",
                         column: x => x.DoctorId,
@@ -384,6 +391,11 @@ namespace MedicPortal.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_CanceledById",
+                table: "Appointments",
+                column: "CanceledById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_DoctorId",

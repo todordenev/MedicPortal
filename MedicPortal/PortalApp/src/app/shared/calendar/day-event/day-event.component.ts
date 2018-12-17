@@ -10,9 +10,9 @@ export class DayEventComponent implements OnInit {
 
   @Input()
   event: AppointmentView;
+  title: string;
   constructor() { }
 
   ngOnInit() {
-  //  this.element.nativeElement.style.top = '30px';
   }
 }

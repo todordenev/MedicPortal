@@ -1,0 +1,22 @@
+.appointments-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.doctor-header-image {
+    background-size: cover;
+    margin: 10px;
+}
+
+.info-header {
+    width: 100px;
+    display: inline-block;
+    margin: 2px;
+}
+
+mat-card {
+    margin: 5px;
+    width: 300px;
+}
+.mat-card-title{
+    margin:20px 0;
+}

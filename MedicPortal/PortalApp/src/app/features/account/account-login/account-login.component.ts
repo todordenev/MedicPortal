@@ -5,10 +5,10 @@ import { UserService } from '@app/core/services';
 
 @Component({
     selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    templateUrl: './account-login.component.html',
+    styleUrls: ['./account-login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class AccountLoginComponent implements OnInit {
     loginForm: FormGroup;
     isLoggedIn: boolean;
     userName: string;

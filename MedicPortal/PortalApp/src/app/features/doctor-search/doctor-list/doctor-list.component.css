@@ -1,6 +1,5 @@
 .doctors-container {
     display: flex;
     max-width: 1400px;
-    margin: auto;
     flex-wrap: wrap;
 }

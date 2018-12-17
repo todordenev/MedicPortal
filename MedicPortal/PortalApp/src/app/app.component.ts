@@ -1,6 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '@app/core/services';
+import { User } from './core/entities/user';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { UserService } from '@app/core/services';
 export class AppComponent implements OnInit {
     isLoggedIn: boolean;
     userName: string;
+    user: User;
     mobileQuery: MediaQueryList;
     private _mobileQueryListener: () => void;
     constructor(private userService: UserService,
@@ -19,9 +21,26 @@ export class AppComponent implements OnInit {
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
     }
-
     ngOnInit(): void {
         this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
-        this.userService.user.subscribe(user => this.userName = user.displayName);
+        this.userService.user.subscribe(user => this.setUser(user));
+    }
+    setUser(user: User) {
+        this.user = user;
+        this.userName = user.displayName;
+    }
+    userInRole(roles: string[]) {
+        if (this.user) {
+            let roleFound = false;
+            roles.forEach(expectedRole => {
+                const indexOfExpectedRole = this.user.roles.indexOf(expectedRole);
+                if (indexOfExpectedRole > -1) {
+                    roleFound = true;
+                }
+            });
+            return roleFound;
+        } else {
+            return false;
+        }
     }
 }

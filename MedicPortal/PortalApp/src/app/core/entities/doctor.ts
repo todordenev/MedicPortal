@@ -7,6 +7,5 @@ export class Doctor {
     spezialisations: string[] = [];
     firstName: string;
     lastName: string;
-    displayName: string;
     worktimes: Worktime[];
 }

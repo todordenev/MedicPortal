@@ -10,8 +10,6 @@ namespace MedicPortal.TransportObjects.DoctorDtos
         {
             CreateMap<DoctorCreate, Doctor>();
             CreateMap<Doctor, DoctorView>()
-                .ForMember(d => d.DisplayName,
-                    map => map.MapFrom(d => $"{d.FirstName} {d.LastName}"))
                 .ForMember(d => d.Specialisations,
                     map => map.MapFrom(
                         d => d.DoctorSpezialisations.Select(dspec => dspec.Spezialisation.Name)));

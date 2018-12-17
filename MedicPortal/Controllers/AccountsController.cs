@@ -5,7 +5,6 @@ using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
 using MedicPortal.TransportObjects.AppUserDtos;
-using MedicPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -85,6 +84,10 @@ namespace MedicPortal.Controllers
         {
             var userId = User.GetUserId();
             var user = await _appDbContext.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
             var userVm = GetUserInfo(user);
             return Ok(userVm);
         }

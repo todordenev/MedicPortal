@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MedicPortal.TransportObjects.AppUserDtos;
 
-namespace MedicPortal.ViewModels.Validators
+namespace MedicPortal.Validators
 {
     public class RegistrationViewModelValidator : AbstractValidator<AppUserCreate>
     {
