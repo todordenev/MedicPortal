@@ -35,7 +35,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-button *ngIf="!appointment.canceled" (click)="cancel(appointment)">Откажи</button>
-      <span>Часът беше отказън!</span>
+      <span *ngIf="appointment.canceled">Часът беше отказън!</span>
     </mat-card-actions>
   </mat-card>
  

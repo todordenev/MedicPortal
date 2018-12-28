@@ -129,7 +129,6 @@ namespace MedicPortal.Controllers
             var appointmets = await _dbContext.Appointments
                 .Where(a => a.Patient.AppUserId == currentUserId)
                 .Where(a => a.Start > today)
-                .Where(a => !a.Canceled)
                 .Include(a => a.Patient)
                 .Include(a => a.Doctor).ToListAsync();
             var appointmentView = appointmets.Select(a => _mapper.Map<AppointmentView>(a)).ToList();

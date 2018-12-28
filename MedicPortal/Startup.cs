@@ -119,10 +119,10 @@ namespace MedicPortal
 
                 spa.Options.SourcePath = "PortalApp";
 
-                //if (env.IsDevelopment())
-                //{
-                //    spa.UseAngularCliServer("start");
-                //}
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer("start");
+                }
             });
         }
     }

@@ -24,8 +24,15 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Mappers\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Mappers\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Mappers\**" />
+    <None Remove="Mappers\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,10 +66,6 @@
     <Compile Remove="Migrations\20181215091659_Init.cs" />
     <Compile Remove="Migrations\20181216151741_Init.cs" />
     <Compile Remove="Migrations\20181216163909_Init.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Mappers\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

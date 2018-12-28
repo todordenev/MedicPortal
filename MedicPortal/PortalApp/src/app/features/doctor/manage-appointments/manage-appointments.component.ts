@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppointmentService } from '@app/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-appointments',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageAppointmentsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private appointmentService: AppointmentService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
   }

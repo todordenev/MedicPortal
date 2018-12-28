@@ -41,19 +41,19 @@
         <a [routerLink]="[ '/' ]"
            mat-list-item>
           <mat-icon>face</mat-icon>
-          Доктори
+          Лекари
         </a>
         <a [routerLink]="[ '/account-appointments']"
            mat-list-item
            *ngIf="isLoggedIn">
           <mat-icon>event</mat-icon>
-          Запазени часове
+          Моите часове
         </a>
         <a [routerLink]="[ '/account-patients' ]"
            mat-list-item
            *ngIf="isLoggedIn">
           <mat-icon>group</mat-icon>
-          <span>Регистрирани пациенти</span>
+          <span>Моите пациенти</span>
         </a>
         <div *ngIf="userInRole(['Admin','Doctor'])">
           <mat-divider></mat-divider>
