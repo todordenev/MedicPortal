@@ -16,7 +16,7 @@ namespace MedicPortal.Controllers
     [Produces("application/json")]
     public class AccountsController : Controller
     {
-        private readonly ApplicationDbContext _appDbContext;
+        private readonly ApplicationDbContext _dbContext;
 
         private readonly IMapper _mapper;
         private readonly SignInManager<AppUser> _signInManager;
@@ -25,12 +25,12 @@ namespace MedicPortal.Controllers
         public AccountsController(
             UserManager<AppUser> userManager,
             IMapper mapper,
-            ApplicationDbContext appDbContext,
+            ApplicationDbContext dbContext,
             SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _appDbContext = appDbContext;
+            _dbContext = dbContext;
             _signInManager = signInManager;
         }
 
@@ -54,6 +54,9 @@ namespace MedicPortal.Controllers
                 ModelState.AddErrors(createdResult.Errors);
                 return BadRequest(ModelState);
             }
+
+            var user = _dbContext.Users.First(u => u.UserName == model.Email);
+            _dbContext.CreatePatientOnRegistration(user);
             return await OnLogin(userName, model.Password);
         }
 
@@ -74,7 +77,7 @@ namespace MedicPortal.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = _appDbContext.Users.First(u => u.UserName == userName);
+            var user = _dbContext.Users.First(u => u.UserName == userName);
             var userVm = GetUserInfo(user);
             return Ok(userVm);
         }
@@ -84,11 +87,12 @@ namespace MedicPortal.Controllers
         public async Task<IActionResult> GetUser()
         {
             var userId = User.GetUserId();
-            var user = await _appDbContext.Users.FindAsync(userId);
+            var user = await _dbContext.Users.FindAsync(userId);
             if (user == null)
             {
                 return Unauthorized();
             }
+
             var userVm = GetUserInfo(user);
             return Ok(userVm);
         }
@@ -96,12 +100,14 @@ namespace MedicPortal.Controllers
         private AppUserView GetUserInfo(AppUser user)
         {
             var userVm = _mapper.Map<AppUserView>(user);
-            foreach (var roleId in _appDbContext.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId))
+            foreach (var roleId in _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId))
             {
-                userVm.Roles.Add(_appDbContext.Roles.Find(roleId).Name);
+                userVm.Roles.Add(_dbContext.Roles.Find(roleId).Name);
             }
+
             return userVm;
         }
+
 
         [HttpPost]
         [Route("logout")]

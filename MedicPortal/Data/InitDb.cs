@@ -19,7 +19,10 @@ namespace MedicPortal.Data
             new AppUser {Email = "user4@test.de", FirstName = "Test4", LastName = "User", PhoneNumber = "01234"},
             new AppUser
             {
-                Email = "todor_denev@yahoo.com", FirstName = "Todor", LastName = "Denev", PhoneNumber = "01234"
+                Email = "todor_denev@yahoo.com",
+                FirstName = "Todor",
+                LastName = "Denev",
+                PhoneNumber = "01234"
             }
         };
 
@@ -35,7 +38,11 @@ namespace MedicPortal.Data
             new Doctor
             {
                 Id = "1",
-                Approved = true, AppUser = AppUsers[4], FirstName = "Ирина", IsActive = true, LastName = "Иванова",
+                Approved = true,
+                AppUser = AppUsers[4],
+                FirstName = "Ирина",
+                IsActive = true,
+                LastName = "Иванова",
                 Worktimes = new List<Worktime>
                 {
                     new Worktime {DayOfWeek = 0, From = 7.5, Till = 10.5},
@@ -53,7 +60,11 @@ namespace MedicPortal.Data
             new Doctor
             {
                 Id = "2",
-                Approved = true, AppUser = AppUsers[4], FirstName = "Kunka", IsActive = true, LastName = "Kuncheva",
+                Approved = true,
+                AppUser = AppUsers[4],
+                FirstName = "Kunka",
+                IsActive = true,
+                LastName = "Kuncheva",
                 Worktimes = new List<Worktime>
                 {
                     new Worktime {DayOfWeek = 0, From = 8, Till = 12},
@@ -74,18 +85,19 @@ namespace MedicPortal.Data
         {
             new Patient
             {
-                FirstName = "Todor", Adress = "Tiulbenska 62", AppUser = AppUsers[4],
-                Birthdate = new DateTime(1982, 12, 11), LastName = "Denev", Telefon = "012345"
+                FirstName = "Thea",
+                Adress = "Mühlenstraße 4",
+                AppUser = AppUsers[4],
+                Birthdate = new DateTime(2016, 2, 20),
+                LastName = "Denev"
             },
             new Patient
             {
-                FirstName = "Thea", Adress = "Mühlenstraße 4", AppUser = AppUsers[4],
-                Birthdate = new DateTime(2016, 2, 20), LastName = "Denev"
-            },
-            new Patient
-            {
-                FirstName = "Daniel", Adress = "Mühlenstraße 4", AppUser = AppUsers[4],
-                Birthdate = new DateTime(2013, 10, 7), LastName = "Denev"
+                FirstName = "Daniel",
+                Adress = "Mühlenstraße 4",
+                AppUser = AppUsers[4],
+                Birthdate = new DateTime(2013, 10, 7),
+                LastName = "Denev"
             }
         };
 
@@ -110,23 +122,43 @@ namespace MedicPortal.Data
         {
             new Appointment
             {
-                Doctor = Doctors[0], Patient = Patients[0], Start = DateTime.Today.AddHours(8),
-                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CategoryId = 0
+                Doctor = Doctors[0],
+                Patient = Patients[0],
+                Start = DateTime.Today.AddHours(8),
+                DurationInMinutes = 10,
+                ConfirmedByDoctor = true,
+                ConfirmedByUser = true,
+                CategoryId = 0
             },
             new Appointment
             {
-                Doctor = Doctors[0], Patient = Patients[1], Start = DateTime.Today.AddHours(8.50),
-                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CategoryId = 1
+                Doctor = Doctors[0],
+                Patient = Patients[1],
+                Start = DateTime.Today.AddHours(8.50),
+                DurationInMinutes = 10,
+                ConfirmedByDoctor = true,
+                ConfirmedByUser = true,
+                CategoryId = 1
             },
             new Appointment
             {
-                Doctor = Doctors[0], Patient = Patients[0], Start = DateTime.Today.AddHours(10),
-                DurationInMinutes = 10, ConfirmedByDoctor = true, ConfirmedByUser = true, CategoryId = 0
+                Doctor = Doctors[0],
+                Patient = Patients[0],
+                Start = DateTime.Today.AddHours(10),
+                DurationInMinutes = 10,
+                ConfirmedByDoctor = true,
+                ConfirmedByUser = true,
+                CategoryId = 0
             },
             new Appointment
             {
-                Doctor = Doctors[0], Patient = Patients[1], Start = DateTime.Today.AddHours(11.50),
-                DurationInMinutes = 30, ConfirmedByDoctor = true, ConfirmedByUser = true, CategoryId = 2
+                Doctor = Doctors[0],
+                Patient = Patients[1],
+                Start = DateTime.Today.AddHours(11.50),
+                DurationInMinutes = 30,
+                ConfirmedByDoctor = true,
+                ConfirmedByUser = true,
+                CategoryId = 2
             }
         };
 
@@ -223,6 +255,7 @@ namespace MedicPortal.Data
         {
             appUser.UserName = appUser.Email;
             await _userManager.CreateAsync(appUser, "123456");
+            _dbContext.CreatePatientOnRegistration(appUser);
         }
     }
 }

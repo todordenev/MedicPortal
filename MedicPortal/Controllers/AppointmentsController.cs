@@ -101,8 +101,7 @@ namespace MedicPortal.Controllers
             return Ok(appointments);
         }
 
-
-        [HttpGet("doctorappointments/{doctorId}/{date}")]
+        [HttpGet("fordoctor/{doctorId}/{date}")]
         public async Task<IActionResult> GetForDoctor(string doctorId, DateTime date)
         {
             var currentUserId = User.GetUserId();
