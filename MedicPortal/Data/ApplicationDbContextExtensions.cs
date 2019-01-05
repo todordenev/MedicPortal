@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using MedicPortal.Data.Models;
-using MedicPortal.TransportObjects.AppUserDtos;
 
 namespace MedicPortal.Data
 {
@@ -15,7 +13,7 @@ namespace MedicPortal.Data
                 LastName = user.LastName,
                 Telefon = user.PhoneNumber,
                 AppUserId = user.Id,
-                Birthdate = new DateTime(1900,0,0)
+                Birthdate = new DateTime(1980,1,1)
             };
             dbContext.Patients.Add(patient);
             dbContext.SaveChanges();

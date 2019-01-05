@@ -13,5 +13,7 @@ namespace MedicPortal.TransportObjects.AppointmentDtos
         public int CategoryId { get; set; }
         public DoctorView Doctor { get; set; }
         public PatientView Patient { get; set; }
+        public bool Canceled { get; set; }
+
     }
 }

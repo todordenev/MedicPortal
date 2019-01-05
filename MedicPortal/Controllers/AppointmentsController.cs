@@ -70,6 +70,7 @@ namespace MedicPortal.Controllers
             {
                 appointment.Canceled = true;
                 appointment.CanceledById = CurrentUserId;
+                _dbContext.SaveChanges();
                 return Ok();
             }
 
