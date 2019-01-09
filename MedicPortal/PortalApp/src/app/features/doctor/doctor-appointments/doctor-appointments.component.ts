@@ -3,11 +3,11 @@ import { AppointmentService } from '@app/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-manage-appointments',
-  templateUrl: './manage-appointments.component.html',
-  styleUrls: ['./manage-appointments.component.css']
+  selector: 'app-doctor-appointments',
+  templateUrl: './doctor-appointments.component.html',
+  styleUrls: ['./doctor-appointments.component.css']
 })
-export class ManageAppointmentsComponent implements OnInit {
+export class DoctorAppointmentsComponent implements OnInit {
 
   constructor(private appointmentService: AppointmentService,
     private route: ActivatedRoute,

@@ -40,10 +40,11 @@ namespace MedicPortal.Controllers
             return doctors;
         }
 
-        // GET api/doctors
+        // GET api/doctors/mydoctors
         [HttpGet]
-        [Route("accountdoctors")]
-        public List<DoctorView> GetAccountDoctors()
+        [Route("mydoctors")]
+        [Authorize(Roles = "Admin,Doctor")]
+        public List<DoctorView> GetMyDoctors()
         {
             var userId = User.GetUserId();
             var doctors = _dbContext.Doctors

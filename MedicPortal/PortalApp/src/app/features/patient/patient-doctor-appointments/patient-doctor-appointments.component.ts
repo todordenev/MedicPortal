@@ -7,11 +7,10 @@ import { format, addDays, getDay } from 'date-fns';
 import { AppointmentView } from '@app/core/entities';
 
 @Component({
-    selector: 'app-doctor-details',
-    templateUrl: './doctor-details.component.html',
-    styleUrls: ['./doctor-details.component.css']
+    templateUrl: './patient-doctor-appointments.component.html',
+    styleUrls: ['./patient-doctor-appointments.component.css']
 })
-export class DoctorDetailsComponent implements OnInit {
+export class PatientDoctorAppointmentsComponent implements OnInit {
     doctorId: string;
     _doctor: Doctor;
     calendarEvents: AppointmentView[] = [];

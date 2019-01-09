@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ManageAppointmentsComponent } from './manage-appointments/manage-appointments.component';
-import { ManagePatientsComponent } from './manage-patients/manage-patients.component';
+import { DoctorPatientsComponent } from './doctor-patients/doctor-patients.component';
+import { DoctorAppointmentsComponent } from './doctor-appointments/doctor-appointments.component';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    ManageAppointmentsComponent,
-    ManagePatientsComponent
+    DoctorAppointmentsComponent,
+    DoctorPatientsComponent
   ],
   exports: [
-    ManageAppointmentsComponent
+    DoctorAppointmentsComponent
   ]
 })
 export class DoctorModule { }

@@ -6,11 +6,10 @@ import { Appointment } from '@app/core/entities/appointment';
 import { Patient } from '@app/core/entities/patient';
 
 @Component({
-    selector: 'app-new-appointment',
-    templateUrl: './new-appointment.component.html',
-    styleUrls: ['./new-appointment.component.css']
+    templateUrl: './create-appointment.component.html',
+    styleUrls: ['./create-appointment.component.css']
 })
-export class NewAppointmentComponent implements OnInit {
+export class CreateAppointmentComponent implements OnInit {
     doctorId: string;
     patientId: string;
     start: any;

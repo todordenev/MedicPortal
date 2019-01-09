@@ -28,7 +28,7 @@ export class DoctorService {
         if (this.myDoctors.length > 0) {
             of(this.myDoctors);
         }
-        return this.http.get(this.docotrEndpointUrl + '/foraccount')
+        return this.http.get(this.docotrEndpointUrl + '/doctor')
             .pipe(
                 map(serverResult => this.mapToMyDoctors(serverResult)),
                 catchError(handleError)

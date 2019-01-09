@@ -21,7 +21,6 @@ export class AccountDoctorComponent implements OnInit {
 
     ngOnInit() {
         this.doctorId = this.route.snapshot.paramMap.get('id');
-
     }
     fetchEvents() {
         this.appointmentService.getDoctorAppointments(this.doctorId, this.viewDate)

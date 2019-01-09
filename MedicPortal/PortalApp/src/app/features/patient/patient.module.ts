@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewAppointmentComponent } from './new-appointment/new-appointment.component';
-import { DoctorDetailsComponent } from './doctor-details/doctor-details.component';
 import { MaterialModule } from '@app/core/Material.module';
 import { DateFnsModule } from 'ngx-date-fns';
 import { SharedModule } from '@app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
+import { PatientDoctorAppointmentsComponent } from './patient-doctor-appointments/patient-doctor-appointments.component';
 
 @NgModule({
   imports: [
@@ -21,12 +21,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule
   ],
   declarations: [
-    DoctorDetailsComponent,
-    NewAppointmentComponent
+    PatientDoctorAppointmentsComponent,
+    CreateAppointmentComponent
   ],
   exports: [
-    NewAppointmentComponent,
-    DoctorDetailsComponent
+    PatientDoctorAppointmentsComponent,
+    CreateAppointmentComponent
   ]
 })
-export class AppointmentsModule { }
+export class PatientModule { }
