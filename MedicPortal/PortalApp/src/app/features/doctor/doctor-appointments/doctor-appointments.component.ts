@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from '@app/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LocaleSettings } from 'primeng/calendar';
+import { LocaleService } from '@app/core/services/locale.service';
 
 @Component({
   selector: 'app-doctor-appointments',
@@ -9,14 +11,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DoctorAppointmentsComponent implements OnInit {
 
+  locale: LocaleSettings;
   value = new Date();
 
   constructor(
     private appointmentService: AppointmentService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private localeService: LocaleService) {
+    this.locale = localeService.current;
+  }
 
   ngOnInit() {
+
   }
 
 }

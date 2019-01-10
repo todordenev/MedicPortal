@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Appointment } from '../entities/appointment';
-import { format, parse } from 'date-fns';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { handleError } from '../entities/helpers';

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -13,7 +13,7 @@ import { LowerCaseUrlSerializer } from './shared/lower-case-url-serializer';
 import { RoleGuard } from './core/role-guard';
 import { AuthenticationGuard } from './core/authentication-guard';
 import { SharedModule } from './shared/shared.module';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule, MatToolbarModule } from '@angular/material';
 import { CustomDateAdapter } from './shared/CustomDateAdapter';
 import { MaterialModule } from './core/Material.module';
 import { ConfiguredDatepickerModule } from './shared/ConfiguredDatepickerModule';
@@ -22,6 +22,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
 import * as bgLocale from 'date-fns/locale/bg/index.js';
 import { DoctorModule } from './features/doctor';
+import { CalendarModule } from 'primeng/calendar';
 const dnsConfigService = new DateFnsConfigurationService();
 dnsConfigService.setLocale(bgLocale);
 
@@ -37,10 +38,14 @@ dnsConfigService.setLocale(bgLocale);
     HttpClientModule,
     SharedModule,
     DoctorModule,
-    MaterialModule,
     ConfiguredDatepickerModule,
     DateFnsModule.forRoot(),
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatToolbarModule
   ],
   providers: [
     AuthenticationGuard,
