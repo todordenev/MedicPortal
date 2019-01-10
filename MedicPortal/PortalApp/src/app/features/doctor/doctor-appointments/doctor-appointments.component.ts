@@ -9,7 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DoctorAppointmentsComponent implements OnInit {
 
-  constructor(private appointmentService: AppointmentService,
+  value = new Date();
+
+  constructor(
+    private appointmentService: AppointmentService,
     private route: ActivatedRoute,
     private router: Router) { }
 
