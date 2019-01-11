@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocaleSettings } from 'primeng/calendar';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +43,11 @@ export class LocaleService {
     clear: 'Изчисти',
     dateFormat: 'dd.mm.yy'
   };
-  current: LocaleSettings;
+
+  get current(): Observable<LocaleSettings> {
+    return this._current.asObservable();
+  }
+  _current = new BehaviorSubject<LocaleSettings>(this.bg);
   constructor() {
-    this.current = this.bg;
   }
 }

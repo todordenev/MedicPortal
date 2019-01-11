@@ -19,7 +19,7 @@ export class DoctorAppointmentsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private localeService: LocaleService) {
-    this.locale = localeService.current;
+    this.localeService.current.subscribe(value => this.locale = value);
   }
 
   ngOnInit() {

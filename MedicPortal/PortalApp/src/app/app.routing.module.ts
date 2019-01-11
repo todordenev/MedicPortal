@@ -24,7 +24,12 @@ const routes: Routes = [
   { path: 'account-doctors', component: AccountDoctorComponent, canActivate: [AuthenticationGuard] },
   { path: 'account-appointments', component: AccountAppointmentsComponent, canActivate: [AuthenticationGuard] },
   { path: 'new-appointment', component: CreateAppointmentComponent, canActivate: [AuthenticationGuard] },
-  { path: 'doctor-appointments', component: DoctorAppointmentsComponent, canActivate: [AuthenticationGuard, RoleGuard] },
+  {
+    path: 'doctor-appointments',
+    component: DoctorAppointmentsComponent,
+    canActivate: [AuthenticationGuard, RoleGuard],
+    data: { roles: ['Doctor', 'Admin'] }
+  },
   { path: 'doctor-patients', component: DoctorPatientsComponent, canActivate: [AuthenticationGuard, RoleGuard] }
 ];
 

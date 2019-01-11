@@ -45,9 +45,16 @@ export class UserService implements OnInit {
 
     hasRole(roleName: string) {
         try {
-            const helper = new JwtHelperService();
-
-            return true;
+            const userRoles = this._user.value.roles;
+            if (userRoles && userRoles.length > 0) {
+                for (let i = 0; i < userRoles.length; i++) {
+                    const role = userRoles[i];
+                    if (role === roleName) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         } catch (error) {
             return false;
         }
