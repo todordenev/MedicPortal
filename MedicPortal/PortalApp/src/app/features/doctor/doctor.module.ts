@@ -6,16 +6,21 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { DoctorAppointmentsListComponent } from './doctor-appointments/doctor-appointments-list/doctor-appointments-list.component';
+import { TabViewModule } from 'primeng/tabview';
 @NgModule({
   imports: [
     CommonModule,
-    BrowserModule, BrowserAnimationsModule, FormsModule, CalendarModule
-
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    CalendarModule,
+    TabViewModule
   ],
   declarations: [
     DoctorAppointmentsComponent,
-    DoctorPatientsComponent
+    DoctorPatientsComponent,
+    DoctorAppointmentsListComponent
   ],
   exports: [
     DoctorAppointmentsComponent,

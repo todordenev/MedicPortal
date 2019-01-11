@@ -1,6 +1,10 @@
 <div class="doctor-details">
-    <div>doctor-Appointments works</div>
-    <p-calendar [(ngModel)]="value" [locale]="locale" ></p-calendar>
+    <p-tabView>
+        <p-tabPanel [header]="doctor.firstName + ' ' +doctor.lastName"
+                    *ngFor="let doctor of myDoctors; let i = index">
+            <app-doctor-appointments-list [doctor]="doctor"></app-doctor-appointments-list>
+        </p-tabPanel>
+    </p-tabView>
     <!-- <mat-card *ngIf="doctor">
       <mat-card-header>
           <div mat-card-avatar

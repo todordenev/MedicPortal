@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppointmentService } from '@app/core';
+import { AppointmentService, DoctorService, Doctor } from '@app/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocaleSettings } from 'primeng/calendar';
 import { LocaleService } from '@app/core/services/locale.service';
@@ -10,20 +10,25 @@ import { LocaleService } from '@app/core/services/locale.service';
   styleUrls: ['./doctor-appointments.component.css']
 })
 export class DoctorAppointmentsComponent implements OnInit {
-
   locale: LocaleSettings;
-  value = new Date();
+  viewDate = new Date();
+  private _myDoctors: Doctor[];
+  get myDoctors(): Doctor[] {
+    return this._myDoctors;
+  }
+  set myDoctors(doctors: Doctor[]) {
+    this._myDoctors = doctors;
+  }
 
   constructor(
     private appointmentService: AppointmentService,
-    private route: ActivatedRoute,
-    private router: Router,
+    private doctorService: DoctorService,
     private localeService: LocaleService) {
-    this.localeService.current.subscribe(value => this.locale = value);
   }
 
   ngOnInit() {
-
+    this.localeService.current.subscribe(value => this.locale = value);
+    this.doctorService.getMyDoctors().subscribe(doctors => this.myDoctors = doctors);
   }
 
 }

@@ -10,6 +10,7 @@ import { User } from './core/entities/user';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+    display = true;
     isLoggedIn: boolean;
     userName: string;
     user: User;
@@ -25,9 +26,9 @@ export class AppComponent implements OnInit {
         this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
         this.userService.user.subscribe(user => this.setUser(user));
     }
-    setUser(user: User) { 
+    setUser(user: User) {
         this.user = user;
-        this.userName = user.firstName + ' '+ user.lastName;
+        this.userName = user.firstName + ' ' + user.lastName;
     }
     userInRole(roles: string[]) {
         if (this.user) {

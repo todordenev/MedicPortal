@@ -23,6 +23,8 @@ import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
 import * as bgLocale from 'date-fns/locale/bg/index.js';
 import { DoctorModule } from './features/doctor';
 import { CalendarModule } from 'primeng/calendar';
+import {SidebarModule} from 'primeng/sidebar';
+
 const dnsConfigService = new DateFnsConfigurationService();
 dnsConfigService.setLocale(bgLocale);
 
@@ -45,7 +47,8 @@ dnsConfigService.setLocale(bgLocale);
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    SidebarModule
   ],
   providers: [
     AuthenticationGuard,

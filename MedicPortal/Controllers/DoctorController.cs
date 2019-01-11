@@ -49,9 +49,6 @@ namespace MedicPortal.Controllers
             var userId = User.GetUserId();
             var doctors = _dbContext.Doctors
                 .Where(d => d.AppUserId == userId)
-                .Include(d => d.Worktimes)
-                .Include(d => d.DoctorSpezialisations)
-                .ThenInclude(ds => ds.Spezialisation)
                 .Select(d => _mapper.Map<DoctorView>(d))
                 .ToList();
             return doctors;
