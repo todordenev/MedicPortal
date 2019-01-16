@@ -12,7 +12,7 @@ namespace MedicPortal.Helpers
 
         public static bool IsPortalAdmin(this ClaimsPrincipal user)
         {
-            return user.IsInRole("admin");
+            return user.IsInRole("Admin");
         }
     }
 }

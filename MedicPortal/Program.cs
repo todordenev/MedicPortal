@@ -1,9 +1,7 @@
 using System;
 using MedicPortal.Data;
-using MedicPortal.Data.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MedicPortal
@@ -17,11 +15,11 @@ namespace MedicPortal
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var dbContext = services.GetRequiredService<ApplicationDbContext>();
-                UserManager<AppUser> userManager = services.GetRequiredService<UserManager<AppUser>>();
+
                 try
                 {
-                    InitDb.CeedDummyData(dbContext,userManager);
+                    var initDb = new InitDb(services);
+                    initDb.CeedDummyData();
                 }
                 catch (Exception ex)
                 {

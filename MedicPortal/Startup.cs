@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using MedicPortal.Data;
+using MedicPortal.Data.Managers;
 using MedicPortal.Data.Models;
 using MedicPortal.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -62,6 +63,7 @@ namespace MedicPortal
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.TryAddTransient<IHttpContextAccessor,HttpContextAccessor>();
+            services.AddTransient<AccountManager, AccountManager>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/logIn";
