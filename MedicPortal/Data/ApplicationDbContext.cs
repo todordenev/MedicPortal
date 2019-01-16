@@ -4,7 +4,6 @@ using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicPortal.Data
@@ -28,7 +27,6 @@ namespace MedicPortal.Data
         public DbSet<DoctorSpezialisations> DoctorSpezialisations { get; set; }
         public DbSet<SerialAppointment> SerialAppointments { get; set; }
         public DbSet<EntityChange> EntityChanges { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -103,12 +103,13 @@ namespace MedicPortal.Controllers
         }
 
         [HttpGet("fordoctor/{doctorId}/{date}")]
+        [Authorize(Roles = "Doctor,Admin")]
         public async Task<IActionResult> GetForDoctor(string doctorId, DateTime date)
         {
-            var currentUserId = User.GetUserId();
-            var user = _dbContext.Users.Include(u => u.Doctors)
-                .First(u => u.Id == currentUserId);
-            if (User.IsPortalAdmin() || user.Doctors.Any(d => d.Id == doctorId))
+           
+            var doctor = await _dbContext.Doctors.FindAsync(doctorId);
+            
+            if (User.IsPortalAdmin() || doctor.AppUserId == CurrentUserId)
             {
                 var from = date.Date;
                 var till = from.AddDays(1);

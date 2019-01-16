@@ -33,7 +33,7 @@ export class AppointmentService {
             date = new Date();
         }
         const nowString = format(date, 'YYYY-MM-DDTHH:mm');
-        return this.http.get(this.serviceEndpoint + '/doctorappointments/' + doctorId + '/' + nowString + '/all')
+        return this.http.get(this.serviceEndpoint + '/fordoctor/' + doctorId + '/' + nowString)
             .pipe(
                 map(serverResult => this.mapAppointments(serverResult)),
                 catchError(handleError)
