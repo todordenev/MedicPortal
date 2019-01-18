@@ -84,7 +84,7 @@ namespace MedicPortal.Controllers
             var today0Hours = date.Date;
             var today24Hours = today0Hours.AddDays(1);
             var tempAppointments = await _dbContext.Appointments
-                .Include(a => a.Patient).Include(a=>a.Doctor)
+                .Include(a => a.Patient).Include(a => a.Doctor)
                 .Where(a => a.DoctorId == doctorId)
                 .Where(a => today0Hours < a.Start && a.Start < today24Hours)
                 .Where(a => !a.Canceled)
@@ -106,10 +106,7 @@ namespace MedicPortal.Controllers
         [Authorize(Roles = "Doctor,Admin")]
         public async Task<IActionResult> GetForDoctor(string doctorId, DateTime date)
         {
-           
-            var doctor = await _dbContext.Doctors.FindAsync(doctorId);
-            
-            if (User.IsPortalAdmin() || doctor.AppUserId == CurrentUserId)
+            if (User.IsPortalAdmin() || User.HasClaim(RessourceClaimTypes.PatientPermission, doctorId))
             {
                 var from = date.Date;
                 var till = from.AddDays(1);
@@ -146,7 +143,7 @@ namespace MedicPortal.Controllers
 
         private AppointmentView MaskIfNotAutorized(Appointment app)
         {
-            if (IsCurrentUserDoctor(app))
+            if (User.HasClaim(RessourceClaimTypes.DoctorPermission, app.DoctorId))
             {
                 return _mapper.Map<AppointmentView>(app);
             }
@@ -157,12 +154,6 @@ namespace MedicPortal.Controllers
             }
 
             return new AppointmentView {Start = app.Start, DurationInMinutes = app.DurationInMinutes};
-        }
-
-
-        private bool IsCurrentUserDoctor(Appointment appointment)
-        {
-            return appointment.Doctor.AppUserId == CurrentUserId;
         }
 
         private bool IsCurrentUserPatient(Appointment appointment)

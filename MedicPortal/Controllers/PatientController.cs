@@ -31,13 +31,16 @@ namespace MedicPortal.Controllers
         public List<Patient> Get()
         {
             var userId = User.GetUserId();
-            var patients = _dbContext.Patients.Include(p => p.AppUser).Where(p => p.AppUserId == userId).ToList();
+            var patients = _dbContext.Patients
+                .Include(p => p.AppUser)
+                .Where(p => p.AppUserId == userId)
+                .Where(p => !p.IsDeleted).ToList();
 
             return patients.ToList();
         }
 
         [HttpPost]
-        public Patient Post([FromBody] PatientCreate model) 
+        public Patient Post([FromBody] PatientCreate model)
         {
             var patient = _mapper.Map<Patient>(model);
             patient.AppUserId = User.GetUserId();
@@ -81,12 +84,22 @@ namespace MedicPortal.Controllers
                 return NotFound();
             }
 
-            if (patient.AppUserId != User.GetUserId())
+            if (!User.IsPortalAdmin() && User.HasClaim(RessourceClaimTypes.PatientPermission, id))
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
-            _dbContext.Patients.Remove(patient);
+            var appointments = _dbContext.Appointments.Where(a => a.PatientId == id);
+            if (appointments.Any())
+            {
+                foreach (var appointment in appointments)
+                {
+                    appointment.Canceled = true;
+                    appointment.CanceledById = User.GetUserId();
+                }
+            }
+
+            patient.IsDeleted = true;
             _dbContext.SaveChanges();
 
             return Ok();

@@ -208,7 +208,13 @@ namespace MedicPortal.Migrations
 
                     b.Property<DateTime>("Birthdate");
 
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("DeletedById");
+
                     b.Property<string>("FirstName");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LastName");
 
@@ -217,6 +223,8 @@ namespace MedicPortal.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("DeletedById");
 
                     b.ToTable("Patients");
                 });
@@ -406,7 +414,7 @@ namespace MedicPortal.Migrations
 
             modelBuilder.Entity("MedicPortal.Data.Models.Doctor", b =>
                 {
-                    b.HasOne("MedicPortal.Data.Models.AppUser", "AppUser")
+                    b.HasOne("MedicPortal.Data.Models.AppUser")
                         .WithMany("Doctors")
                         .HasForeignKey("AppUserId");
                 });
@@ -462,6 +470,10 @@ namespace MedicPortal.Migrations
                     b.HasOne("MedicPortal.Data.Models.AppUser", "AppUser")
                         .WithMany("Patients")
                         .HasForeignKey("AppUserId");
+
+                    b.HasOne("MedicPortal.Data.Models.AppUser", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.SerialAppointment", b =>

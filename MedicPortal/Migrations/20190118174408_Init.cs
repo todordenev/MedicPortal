@@ -175,9 +175,9 @@ namespace MedicPortal.Migrations
                     Id = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    AppUserId = table.Column<string>(nullable: true),
                     Approved = table.Column<bool>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false)
+                    IsActive = table.Column<bool>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -222,7 +222,10 @@ namespace MedicPortal.Migrations
                     LastName = table.Column<string>(nullable: true),
                     Birthdate = table.Column<DateTime>(nullable: false),
                     Adress = table.Column<string>(nullable: true),
-                    Telefon = table.Column<string>(nullable: true)
+                    Telefon = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Deleted = table.Column<DateTime>(nullable: true),
+                    DeletedById = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -230,6 +233,12 @@ namespace MedicPortal.Migrations
                     table.ForeignKey(
                         name: "FK_Patients_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Patients_AspNetUsers_DeletedById",
+                        column: x => x.DeletedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -475,6 +484,11 @@ namespace MedicPortal.Migrations
                 name: "IX_Patients_AppUserId",
                 table: "Patients",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_DeletedById",
+                table: "Patients",
+                column: "DeletedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SerialAppointments_DoctorId",

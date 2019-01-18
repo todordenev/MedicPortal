@@ -16,8 +16,6 @@ namespace MedicPortal.Data
         {
             _currentUserId = httpContextAccessor.HttpContext?.User?.GetUserId();
         }
-
-
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<DoctorPatient> DoctorPatients { get; set; }
@@ -32,7 +30,7 @@ namespace MedicPortal.Data
         {
             base.OnModelCreating(builder);
             builder.Entity<Patient>().HasOne(p => p.AppUser).WithMany(a => a.Patients);
-            builder.Entity<Doctor>().HasOne(p => p.AppUser).WithMany(a => a.Doctors);
+            builder.Entity<Patient>().HasOne(p => p.DeletedBy);
 
             builder.Entity<DoctorPatient>().HasKey(dp => new {dp.DoctorId, dp.PatientId});
             builder.Entity<DoctorPatient>().HasOne(dp => dp.Doctor).WithMany(d => d.DoctorPatients);

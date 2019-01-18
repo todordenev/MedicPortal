@@ -26,29 +26,24 @@ export class PatientService {
 
     setPatients(serverResult) {
         if (serverResult instanceof Array) {
-            serverResult.forEach(element => {
-                const doc = this.mapServerPatient(element);
-                this.patients.push(doc);
+            serverResult.forEach(patient => {
+                this.patients.push(patient);
             });
         }
         return this.patients;
-    }
-    mapServerPatient(serverObject): Patient {
-        const patient = serverObject as Patient;
-        return patient;
     }
 
     update(id: string, value): Observable<Patient> {
         return this.http.patch(this.endpointUrl + '/' + id, value)
             .pipe(
-                map(serverResult => this.mapServerPatient(serverResult)),
+                map(serverResult => serverResult as Patient ),
                 catchError(this.handleError)
             );
     }
     create(patient: Patient): any {
         return this.http.post(this.endpointUrl, patient)
             .pipe(
-                map(serverResult => this.mapServerPatient(serverResult)),
+                map(serverResult =>  serverResult as Patient),
                 catchError(this.handleError)
             );
     }
@@ -56,7 +51,7 @@ export class PatientService {
         if (patient.id) {
             return this.http.delete(this.endpointUrl + '/' + patient.id)
                 .pipe(
-                    map(serverResult => this.removeFromPatients(patient)),
+                    map(() => this.removeFromPatients(patient)),
                     catchError(this.handleError)
                 );
         } else {

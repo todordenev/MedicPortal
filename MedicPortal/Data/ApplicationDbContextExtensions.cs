@@ -18,8 +18,26 @@ namespace MedicPortal.Data
             };
             dbContext.Patients.Add(patient);
             dbContext.SaveChanges();
+        }
+
+        public static void AddPermissionClaims(this ApplicationDbContext dbContext, AppUser user, Doctor doctor)
+        {
             dbContext.UserClaims.Add(new IdentityUserClaim<string>
-                {ClaimType = "permission", ClaimValue = patient.Id, UserId = user.Id});
+            {
+                UserId = user.Id,
+                ClaimType = RessourceClaimTypes.DoctorPermission,
+                ClaimValue = doctor.Id
+            });
+            dbContext.SaveChanges();
+        }
+        public static void AddPermissionClaims(this ApplicationDbContext dbContext, AppUser user, Patient patient)
+        {
+            dbContext.UserClaims.Add(new IdentityUserClaim<string>
+            {
+                UserId = user.Id,
+                ClaimType = RessourceClaimTypes.PatientPermission,
+                ClaimValue = patient.Id
+            });
             dbContext.SaveChanges();
         }
     }

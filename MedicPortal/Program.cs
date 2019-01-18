@@ -18,8 +18,8 @@ namespace MedicPortal
 
                 try
                 {
-                    var initDb = new InitDb(services);
-                    initDb.CeedDummyData();
+                    var initDb = new InitialisationDb(services);
+                    initDb.Ceed();
                 }
                 catch (Exception ex)
                 {

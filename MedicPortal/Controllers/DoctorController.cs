@@ -48,7 +48,6 @@ namespace MedicPortal.Controllers
         {
             var userId = User.GetUserId();
             var doctors = _dbContext.Doctors
-                .Where(d => d.AppUserId == userId)
                 .Select(d => _mapper.Map<DoctorView>(d))
                 .ToList();
             return doctors;
@@ -81,7 +80,7 @@ namespace MedicPortal.Controllers
         public Doctor Post([FromBody] DoctorCreate model)
         {
             var doc = _mapper.Map<Doctor>(model);
-            doc.AppUserId = User.GetUserId();
+             
 
             _dbContext.Doctors.Add(doc);
             _dbContext.SaveChanges();
@@ -96,11 +95,6 @@ namespace MedicPortal.Controllers
             if (doctor == null)
             {
                 return NotFound();
-            }
-
-            if (doctor.AppUserId != User.GetUserId())
-            {
-                return Unauthorized();
             }
 
             if (doctorPatch.Operations.Any())
@@ -122,10 +116,7 @@ namespace MedicPortal.Controllers
                 return NotFound();
             }
 
-            if (doctor.AppUserId != User.GetUserId())
-            {
-                return BadRequest();
-            }
+          
 
             doctor.IsActive = false;
             _dbContext.SaveChanges();
