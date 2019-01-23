@@ -46,11 +46,19 @@ namespace MedicPortal.Controllers
         [Authorize(Roles = "Admin,Doctor")]
         public List<DoctorView> GetMyDoctors()
         {
-            var userId = User.GetUserId();
-            var doctors = _dbContext.Doctors
-                .Select(d => _mapper.Map<DoctorView>(d))
-                .ToList();
-            return doctors;
+            var myDoctorIds = User.Claims.Where(c => c.Type == RessourceClaimTypes.DoctorPermission)
+                .Select(cl => cl.Value).ToList();
+            if (myDoctorIds.Any())
+            {
+                var doctors = _dbContext.Doctors
+                    .Where(d => d.IsActive && d.Approved)
+                    .Include(d => d.Worktimes)
+                    .Where(d => myDoctorIds.Contains(d.Id));
+                var doctorsTo = doctors.Select(d => _mapper.Map<DoctorView>(d)).ToList();
+                return doctorsTo;
+            }
+
+            return new List<DoctorView>();
         }
 
         // GET api/doctors/5
@@ -80,7 +88,7 @@ namespace MedicPortal.Controllers
         public Doctor Post([FromBody] DoctorCreate model)
         {
             var doc = _mapper.Map<Doctor>(model);
-             
+
 
             _dbContext.Doctors.Add(doc);
             _dbContext.SaveChanges();
@@ -116,7 +124,6 @@ namespace MedicPortal.Controllers
                 return NotFound();
             }
 
-          
 
             doctor.IsActive = false;
             _dbContext.SaveChanges();

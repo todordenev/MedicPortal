@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -84,12 +85,21 @@ namespace MedicPortal.Controllers
             var today0Hours = date.Date;
             var today24Hours = today0Hours.AddDays(1);
             var tempAppointments = await _dbContext.Appointments
-                .Include(a => a.Patient).Include(a => a.Doctor)
+                .Include(a => a.Patient)
                 .Where(a => a.DoctorId == doctorId)
                 .Where(a => today0Hours < a.Start && a.Start < today24Hours)
-                .Where(a => !a.Canceled)
-                .ToListAsync();
-            var appointments = tempAppointments.Select(MaskIfNotAutorized).ToList();
+                .Where(a => !a.Canceled).ToListAsync();
+                
+            List<AppointmentView> appointments;
+
+            if (User.HasClaim(RessourceClaimTypes.DoctorPermission, doctorId))
+            {
+                appointments =  tempAppointments.Select(a=>_mapper.Map<AppointmentView>(a)).ToList();
+            }
+            else
+            {
+                appointments = tempAppointments.Select(MaskIfNotAutorized).ToList();
+            }
 
             var dayofWeek = ((int) date.DayOfWeek - 1) % 7;
 
@@ -100,23 +110,6 @@ namespace MedicPortal.Controllers
                 .Select(a => ToAppointmentView(a, today0Hours));
             appointments.AddRange(serialAppointments);
             return Ok(appointments);
-        }
-
-        [HttpGet("fordoctor/{doctorId}/{date}")]
-        [Authorize(Roles = "Doctor,Admin")]
-        public async Task<IActionResult> GetForDoctor(string doctorId, DateTime date)
-        {
-            if (User.IsPortalAdmin() || User.HasClaim(RessourceClaimTypes.PatientPermission, doctorId))
-            {
-                var from = date.Date;
-                var till = from.AddDays(1);
-                var appointments = await _dbContext.Appointments.Include(a => a.Patient)
-                    .Where(a => a.DoctorId == doctorId && from < a.Start && a.Start < till)
-                    .ToListAsync();
-                return Ok(appointments);
-            }
-
-            return Unauthorized();
         }
 
         [HttpGet("foraccount")]
@@ -143,11 +136,6 @@ namespace MedicPortal.Controllers
 
         private AppointmentView MaskIfNotAutorized(Appointment app)
         {
-            if (User.HasClaim(RessourceClaimTypes.DoctorPermission, app.DoctorId))
-            {
-                return _mapper.Map<AppointmentView>(app);
-            }
-
             if (IsCurrentUserPatient(app))
             {
                 return _mapper.Map<AppointmentView>(app);

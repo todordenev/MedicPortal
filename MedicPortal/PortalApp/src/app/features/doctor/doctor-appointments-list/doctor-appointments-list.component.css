@@ -1,0 +1,98 @@
+.doctor-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mat-card {
+    width: 100%;
+    flex-grow: 0;
+    margin: 5px;
+}
+
+.doctor-header-image {
+    background-size: cover;
+    margin: 10px;
+}
+
+.mat-card-content {
+    margin-bottom: 0;
+}
+
+.image-container {
+    height: 150px;
+}
+
+.mat-card-image {
+    width: auto;
+    height: 100%;
+    display: block;
+    margin: auto !important;
+}
+
+.mat-card-subtitle span {
+    margin-right: 5px;
+}
+
+.mat-card-content {
+    padding-top: 10px;
+}
+
+.worktime-header {
+    font-weight: 500;
+    width: 25px;
+}
+
+.workday-header.main {
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.workday-container {
+    display: flex;
+}
+
+.worktime-container {
+    display: flex;
+}
+
+.worktime-hours {
+    margin-left: 5px;
+}
+
+.appointments {
+    flex-grow: 1;
+    min-width: 300px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: white;
+    margin: 5px;
+}
+
+
+
+.dayview-tools {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 15px;
+}
+
+.dayview-tools>button.mat-button {
+    min-width: 36px;
+    width: 36px;
+    padding: 0;
+}
+
+.viewdate-label {
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 105px;
+}
+.date-input{
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    text-align: center;
+    color: black;
+}

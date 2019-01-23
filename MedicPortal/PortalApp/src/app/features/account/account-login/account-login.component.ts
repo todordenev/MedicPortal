@@ -12,6 +12,14 @@ export class AccountLoginComponent implements OnInit {
     loginForm: FormGroup;
     isLoggedIn: boolean;
     userName: string;
+    logins: string[] = [
+        'todor_denev@yahoo.com',
+        'nelina_p@yahoo.de',
+        'irina.ivanova@gmail.com',
+        'nujka.peeva@gmail.com',
+        'ivan.ivanov@gmail.com',
+        'todor_admin@gmail.com'];
+    currentLogin = 0;
     constructor(private userService: UserService,
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -23,8 +31,17 @@ export class AccountLoginComponent implements OnInit {
     }
     createFormGroup() {
         this.loginForm = this.formBuilder.group({
-            userName: ['todor_denev@yahoo.com', [Validators.required]],
+            userName: ['', [Validators.required]],
             password: ['123456', [Validators.required]]
+        });
+        this.loginForm.patchValue({
+            userName: this.logins[this.currentLogin % 6]
+        });
+    }
+    onDownClick() {
+        this.currentLogin++;
+        this.loginForm.patchValue({
+            userName: this.logins[this.currentLogin % 6]
         });
     }
     onSubmit({ value, valid }) {
