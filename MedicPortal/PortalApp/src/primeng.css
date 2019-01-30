@@ -1,0 +1,11 @@
+body p-toolbar .ui-corner-all{
+    border-radius: 0;
+    border: 0;
+}
+.ui-overlaypanel::before{
+    left:6em !important;
+}
+.ui-overlaypanel::after{
+    left:6em !important;
+
+}

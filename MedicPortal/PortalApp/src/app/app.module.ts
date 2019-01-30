@@ -10,21 +10,21 @@ import { AppRoutingModule } from './app.routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './shared/lower-case-url-serializer';
-import { RoleGuard } from './core/role-guard';
-import { AuthenticationGuard } from './core/authentication-guard';
+import { AuthenticationGuard } from './core/guards/authentication-guard';
 import { SharedModule } from './shared/shared.module';
 import { DateAdapter, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule, MatToolbarModule } from '@angular/material';
 import { CustomDateAdapter } from './shared/CustomDateAdapter';
-import { MaterialModule } from './core/Material.module';
 import { ConfiguredDatepickerModule } from './shared/ConfiguredDatepickerModule';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
 import * as bgLocale from 'date-fns/locale/bg/index.js';
 import { DoctorModule } from './features/doctor';
-import { CalendarModule } from 'primeng/calendar';
 import {SidebarModule} from 'primeng/sidebar';
-
+import {ToolbarModule} from 'primeng/toolbar';
+import {SplitButtonModule} from 'primeng/splitbutton';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+import { RoleGuard } from './core';
 const dnsConfigService = new DateFnsConfigurationService();
 dnsConfigService.setLocale(bgLocale);
 
@@ -48,7 +48,10 @@ dnsConfigService.setLocale(bgLocale);
     MatListModule,
     MatButtonModule,
     MatToolbarModule,
-    SidebarModule
+    SidebarModule,
+    ToolbarModule,
+    SplitButtonModule,
+    OverlayPanelModule
   ],
   providers: [
     AuthenticationGuard,

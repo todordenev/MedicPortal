@@ -7,10 +7,10 @@ import { format, addDays, getDay } from 'date-fns';
 import { AppointmentView } from '@app/core/entities';
 
 @Component({
-    templateUrl: './patient-doctor-appointments.component.html',
-    styleUrls: ['./patient-doctor-appointments.component.css']
+    templateUrl: './appointment-list.component.html',
+    styleUrls: ['./appointment-list.component.css']
 })
-export class PatientDoctorAppointmentsComponent implements OnInit {
+export class AppointmentListComponent implements OnInit {
     doctorId: string;
     _doctor: Doctor;
     calendarEvents: AppointmentView[] = [];
@@ -70,7 +70,7 @@ export class PatientDoctorAppointmentsComponent implements OnInit {
             return;
         }
         const formatedStartTime = format(event, 'YYYY-MM-DDTHH:mm');
-        this.router.navigate(['/new-appointment', { doctorid: this.doctorId, start: formatedStartTime, categoryId: this.categoryId }]);
+        this.router.navigate(['/appointments/new', { doctorid: this.doctorId, start: formatedStartTime, categoryId: this.categoryId }]);
     }
     viewDateChanged(viewDate) {
         this.viewDate = viewDate;

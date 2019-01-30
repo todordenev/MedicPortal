@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '@app/core/services';
+import { User } from '@app/core/entities/user';
 
 @Component({
     selector: 'app-login',
@@ -27,7 +28,7 @@ export class AccountLoginComponent implements OnInit {
     ngOnInit() {
         this.createFormGroup();
         this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
-        this.userService.user.subscribe(user => this.userName = user.displayName);
+        this.userService.user.subscribe(user => this.userName = user.email);
     }
     createFormGroup() {
         this.loginForm = this.formBuilder.group({
@@ -51,10 +52,6 @@ export class AccountLoginComponent implements OnInit {
                 source = '/';
             }
             this.router.navigate([source]);
-        });
-    }
-    logout() {
-        this.userService.logout().subscribe((status) => {
         });
     }
 }

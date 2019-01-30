@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MedicPortal.Data;
@@ -13,8 +14,8 @@ namespace MedicPortal.Controllers
 {
     [Authorize]
     [Route("api/accounts")]
-    [Produces("application/json")]
-    public class AccountsController : Controller
+    [ApiController]
+    public class AccountsController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -100,15 +101,10 @@ namespace MedicPortal.Controllers
         private AppUserView GetUserInfo(AppUser user)
         {
             var userVm = _mapper.Map<AppUserView>(user);
-            foreach (var roleId in _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId))
-            {
-                userVm.Roles.Add(_dbContext.Roles.Find(roleId).Name);
-            }
-
+            userVm.Roles = User.Claims.Where(cl=>cl.Type == ClaimTypes.Role).Select(cl => cl.Value).ToList();
             return userVm;
         }
-
-
+        
         [HttpPost]
         [Route("logout")]
         public async Task<IActionResult> Logout()

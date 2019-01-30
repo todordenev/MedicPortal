@@ -6,8 +6,6 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/core/Material.module';
 import { DateFnsModule } from 'ngx-date-fns';
 import { AccountModule } from './account/account.module';
-import { DoctorSearchModule } from './doctor-search/doctor-search.module';
-import { PatientModule } from './patient';
 
 @NgModule({
   imports: [
@@ -19,8 +17,6 @@ import { PatientModule } from './patient';
     MaterialModule,
     DateFnsModule.forRoot(),
     AccountModule,
-    DoctorSearchModule,
-    PatientModule
   ],
   declarations: [
   ],

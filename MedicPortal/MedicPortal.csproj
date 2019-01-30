@@ -70,6 +70,7 @@
     <Compile Remove="Migrations\20190116134943_Init.cs" />
     <Compile Remove="Migrations\20190118171214_Init.cs" />
     <Compile Remove="Migrations\20190118173848_init2.cs" />
+    <Compile Remove="Migrations\20190118174408_Init.cs" />
   </ItemGroup>
 
   <ItemGroup>

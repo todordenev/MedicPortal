@@ -25,6 +25,7 @@ namespace MedicPortal.Data
         public DbSet<DoctorSpezialisations> DoctorSpezialisations { get; set; }
         public DbSet<SerialAppointment> SerialAppointments { get; set; }
         public DbSet<EntityChange> EntityChanges { get; set; }
+        public DbSet<RegistrationCode> RegistrationCodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -52,6 +53,8 @@ namespace MedicPortal.Data
 
             builder.Entity<SerialAppointment>().HasOne(a => a.Doctor);
             builder.Entity<EntityChange>().HasOne(e => e.ChangedBy);
+
+            
         }
 
         public override int SaveChanges()

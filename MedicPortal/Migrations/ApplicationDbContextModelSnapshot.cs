@@ -229,6 +229,24 @@ namespace MedicPortal.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("MedicPortal.Data.Models.RegistrationCode", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DoctorId");
+
+                    b.Property<bool>("IsUsed");
+
+                    b.Property<DateTime?>("Used");
+
+                    b.Property<string>("UsedById");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RegistrationCodes");
+                });
+
             modelBuilder.Entity("MedicPortal.Data.Models.SerialAppointment", b =>
                 {
                     b.Property<string>("Id")

@@ -1,22 +1,33 @@
 <div>
   <mat-card>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" *ngIf="!isLoggedIn" novalidate>
+    <form [formGroup]="loginForm"
+          (ngSubmit)="onSubmit(loginForm)"
+          *ngIf="!isLoggedIn"
+          novalidate>
       <mat-form-field>
-        <input formControlName="userName" matInput placeholder="Емайл" (click)="onDownClick()"/>
+        <input formControlName="userName"
+               matInput
+               placeholder="Емайл"
+               (click)="onDownClick()" />
       </mat-form-field>
       <mat-form-field>
-        <input formControlName="password" matInput placeholder="Парола" type="password" />
+        <input formControlName="password"
+               matInput
+               placeholder="Парола"
+               type="password" />
       </mat-form-field>
       <div>
-        <button mat-button type="submit" [disabled]="!loginForm.valid">Вход</button>
+        <button mat-button
+                type="submit"
+                [disabled]="!loginForm.valid">Вход</button>
       </div>
     </form>
-    <div *ngIf="isLoggedIn"> 
+    <div *ngIf="isLoggedIn">
       <div>
-        Емайл: {{userName}}
+        Вие сте регистриран като
       </div>
       <div>
-        <button mat-button (click)="logout()">Изход</button>
+        {{userName }}
       </div>
     </div>
   </mat-card>

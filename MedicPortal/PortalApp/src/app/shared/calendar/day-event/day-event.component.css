@@ -4,7 +4,7 @@
 }
 .calendar-event {
     position: absolute;
-    width: 200px;
+    width: 180px;
     min-height: 3px;
     background-color: #e9e7f1;
     

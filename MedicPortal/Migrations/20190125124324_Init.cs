@@ -51,6 +51,21 @@ namespace MedicPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RegistrationCodes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    DoctorId = table.Column<string>(nullable: true),
+                    IsUsed = table.Column<bool>(nullable: false),
+                    UsedById = table.Column<string>(nullable: true),
+                    Used = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegistrationCodes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Spezialisations",
                 columns: table => new
                 {
@@ -532,6 +547,9 @@ namespace MedicPortal.Migrations
 
             migrationBuilder.DropTable(
                 name: "EntityChanges");
+
+            migrationBuilder.DropTable(
+                name: "RegistrationCodes");
 
             migrationBuilder.DropTable(
                 name: "SerialAppointments");

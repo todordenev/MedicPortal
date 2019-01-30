@@ -6,7 +6,4 @@ export class User {
     phoneNumber: string;
     roles: string[] = [];
     avatarImage: string;
-    get displayName() {
-        return this.firstName + ' ' + this.lastName;
-    }
 }

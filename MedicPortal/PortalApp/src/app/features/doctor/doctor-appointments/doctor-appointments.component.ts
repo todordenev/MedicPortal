@@ -10,8 +10,6 @@ import { LocaleService } from '@app/core/services/locale.service';
   styleUrls: ['./doctor-appointments.component.css']
 })
 export class DoctorAppointmentsComponent implements OnInit {
-  locale: LocaleSettings;
-  viewDate = new Date();
   private _myDoctors: Doctor[];
   get myDoctors(): Doctor[] {
     return this._myDoctors;
@@ -21,13 +19,10 @@ export class DoctorAppointmentsComponent implements OnInit {
   }
 
   constructor(
-    private appointmentService: AppointmentService,
-    private doctorService: DoctorService,
-    private localeService: LocaleService) {
+    private doctorService: DoctorService) {
   }
 
   ngOnInit() {
-    this.localeService.current.subscribe(value => this.locale = value);
     this.doctorService.getMyDoctors().subscribe(doctors => this.myDoctors = doctors);
   }
 

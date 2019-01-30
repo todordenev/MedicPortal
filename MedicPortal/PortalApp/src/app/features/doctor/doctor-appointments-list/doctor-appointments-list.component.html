@@ -1,63 +1,38 @@
 <div class="doctor-details">
-  <mat-card >
-      <mat-card-header>
-          <div mat-card-avatar
-               class="doctor-header-image"
-               [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
-          <mat-card-title>{{doctor.firstName}} {{doctor.lastName}}</mat-card-title>
-          <mat-card-subtitle>
-              <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
-          </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-          <div class="appointments">
-              <div fxLayout="row"
-                   fxLayoutAlign="start center">
-                  <mat-form-field>
-                      <mat-select placeholder="Тип час"
-                                  [(ngModel)]="categoryId">
-                          <mat-option value="0">
-                              Преглед
-                          </mat-option>
-                          <mat-option value="1">
-                              За рецепта
-                          </mat-option>
-                          <mat-option value="2">
-                              Консултация
-                          </mat-option>
-                      </mat-select>
-                  </mat-form-field>
-                  <div class="dayview-tools">
-                      <button mat-button
-                              (click)="moveViewDate(-1)">
-                          <mat-icon>navigate_before</mat-icon>
-                      </button>
-                      <div class="viewdate-label">
-                          <div (click)="viewDatePicker.open()">
-                              <input class="date-input"
-                                     disabled
-                                     matInput
-                                     [matDatepicker]="viewDatePicker"
-                                     (click)="viewDatePicker.open()"
-                                     [(ngModel)]="viewDate">
-                              <mat-datepicker #viewDatePicker
-                                              disabled="false"></mat-datepicker>
-                              <div>{{ viewDate | dfnsFormat : '(dddd)' }}</div>
-                          </div>
-                      </div>
-                      <button mat-button
-                              (click)="moveViewDate(1)">
-                          <mat-icon>navigate_next</mat-icon>
-                      </button>
-                  </div>
-              </div>
-              <app-day-view [events]="calendarEvents"
-                            (newEventClicked)="createAppointment($event)"
-                            [viewDate]="viewDate"
-                            [worktimes]="worktimes">
-              </app-day-view>
-          </div>
-      </mat-card-content>
-  </mat-card>
 
+    <div>Заявени часове</div>
+
+    <div class="appointments">
+        <div fxLayout="row"
+             fxLayoutAlign="start center">
+            <div class="dayview-tools">
+                <button mat-button
+                        (click)="moveViewDate(-1)">
+                    <mat-icon>navigate_before</mat-icon>
+                </button>
+                <div class="viewdate-label">
+                    <div (click)="viewDatePicker.open()">
+                        <input class="date-input"
+                               disabled
+                               matInput
+                               [matDatepicker]="viewDatePicker"
+                               (click)="viewDatePicker.open()"
+                               [(ngModel)]="viewDate">
+                        <mat-datepicker #viewDatePicker
+                                        disabled="false"></mat-datepicker>
+                        <div>{{ viewDate | dfnsFormat : '(dddd)' }}</div>
+                    </div>
+                </div>
+                <button mat-button
+                        (click)="moveViewDate(1)">
+                    <mat-icon>navigate_next</mat-icon>
+                </button>
+            </div>
+        </div>
+        <app-day-view [events]="calendarEvents"
+                      (newEventClicked)="createAppointment($event)"
+                      [viewDate]="viewDate"
+                      [worktimes]="worktimes">
+        </app-day-view>
+    </div>
 </div>

@@ -11,6 +11,7 @@ import { AccountPatientsComponent } from './account-patients/account-patients.co
 import { AccountAppointmentsComponent } from './account-appointments/account-appointments.component';
 import { AccountDoctorComponent } from './account-doctor/account-doctor.component';
 import { AccountLoginComponent } from './account-login/account-login.component';
+import { AccountRoutingModule } from './account-routing.module';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { AccountLoginComponent } from './account-login/account-login.component';
         ReactiveFormsModule,
         RouterModule,
         MaterialModule,
-        DateFnsModule
+        DateFnsModule,
+        AccountRoutingModule
     ],
     declarations: [
         AccountPatientsComponent,

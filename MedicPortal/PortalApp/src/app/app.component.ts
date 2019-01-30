@@ -44,4 +44,7 @@ export class AppComponent implements OnInit {
             return false;
         }
     }
+    logout() {
+        this.userService.logout().subscribe((status) => { });
+    }
 }

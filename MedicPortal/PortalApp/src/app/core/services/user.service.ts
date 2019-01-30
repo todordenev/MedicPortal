@@ -2,7 +2,6 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { authTokenNameConst } from '@app/core/constants';
 import { User } from '@app/core/entities/user';
 import { UserCredentials, Registration } from '@app/core/entities/registration';
@@ -36,7 +35,7 @@ export class UserService implements OnInit {
     get isLoggedIn() {
         return this._loggedIn.asObservable();
     }
-    get user() {
+    get user(): Observable<User> {
         return this._user.asObservable();
     }
     get isLoading() {

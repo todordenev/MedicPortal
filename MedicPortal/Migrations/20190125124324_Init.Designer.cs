@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190118174408_Init")]
+    [Migration("20190125124324_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,6 +229,24 @@ namespace MedicPortal.Migrations
                     b.HasIndex("DeletedById");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.RegistrationCode", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DoctorId");
+
+                    b.Property<bool>("IsUsed");
+
+                    b.Property<DateTime?>("Used");
+
+                    b.Property<string>("UsedById");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RegistrationCodes");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.SerialAppointment", b =>
