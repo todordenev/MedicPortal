@@ -11,6 +11,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { DateFnsModule } from 'ngx-date-fns';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DoctorRoutingModule } from './doctor-routing.module';
+import { DoctorRegistrationCodesComponent } from './doctor-registration-codes/doctor-registration-codes.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { DoctorRoutingModule } from './doctor-routing.module';
   declarations: [
     DoctorAppointmentsComponent,
     DoctorPatientsComponent,
-    DoctorAppointmentsListComponent
+    DoctorAppointmentsListComponent,
+    DoctorRegistrationCodesComponent
   ],
   exports: [
     DoctorAppointmentsComponent,

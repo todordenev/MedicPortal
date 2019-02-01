@@ -6,6 +6,7 @@ namespace MedicPortal.Data.Models
     {
         public string Id { get; set; }
         public DateTime Created { get; set; }
+        public string CreatedBy { get; set; }
         public string DoctorId { get; set; }
         public bool IsUsed { get; set; }
         public string UsedById { get; set; }

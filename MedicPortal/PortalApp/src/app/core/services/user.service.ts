@@ -61,14 +61,14 @@ export class UserService implements OnInit {
     register(registration: Registration): Observable<any> {
         return this.http.post(this.authUrl + '/register', registration)
             .pipe(
-                map(result => { this.onUserLoggedIn(result); }),
+                map(() => { this.getUserInfo(); }),
                 catchError(this.handleError)
             );
     }
     login(credentials: UserCredentials): Observable<any> {
         return this.http.post(this.authUrl + '/login', credentials)
             .pipe(
-                map(result => { this.onUserLoggedIn(result); }),
+                map(() => { this.getUserInfo(); }),
                 catchError(this.handleError)
             );
     }

@@ -55,6 +55,8 @@ namespace MedicPortal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     DoctorId = table.Column<string>(nullable: true),
                     IsUsed = table.Column<bool>(nullable: false),
                     UsedById = table.Column<string>(nullable: true),

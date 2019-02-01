@@ -77,10 +77,7 @@ namespace MedicPortal.Controllers
                 ModelState.AddError("login_failure", "Invalid username or password.");
                 return BadRequest(ModelState);
             }
-
-            var user = _dbContext.Users.First(u => u.UserName == userName);
-            var userVm = GetUserInfo(user);
-            return Ok(userVm);
+            return Ok();
         }
 
         [HttpGet]

@@ -234,6 +234,10 @@ namespace MedicPortal.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("CreatedBy");
+
                     b.Property<string>("DoctorId");
 
                     b.Property<bool>("IsUsed");

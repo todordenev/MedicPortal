@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
+using MedicPortal.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,14 +35,13 @@ namespace MedicPortal.Controllers
                     var code = GenerateRandomCode();
                     codes.Add(code);
                     var registrationCode = new RegistrationCode
-                        {Id = code, DoctorId = doctorId, Created = DateTime.Now};
+                        {Id = code, DoctorId = doctorId, Created = DateTime.Now, CreatedBy = User.GetUserId()};
                     _dbContext.RegistrationCodes.Add(registrationCode);
                 }
 
                 _dbContext.SaveChanges();
                 return Ok(codes);
             }
-
             return Unauthorized();
         }
 

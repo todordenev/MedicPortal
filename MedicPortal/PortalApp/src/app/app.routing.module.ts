@@ -6,8 +6,13 @@ import { RoleGuard, AuthenticationGuard } from './core';
 
 const routes: Routes = [
   { path: 'account', loadChildren: './features/account/account.module#AccountModule' },
-  { path: 'doctors', loadChildren: './features/doctors/doctors.module#DoctorsModule'},
-  { path: 'doctor', loadChildren: './features/doctor/doctor.module#DoctorModule' },
+  { path: 'doctors', loadChildren: './features/doctors/doctors.module#DoctorsModule' },
+  {
+    path: 'doctor',
+    loadChildren: './features/doctor/doctor.module#DoctorModule',
+    canActivateChild: [AuthenticationGuard, RoleGuard],
+    data: { roles: ['Doctor', 'Admin'] }
+  },
   {
     path: 'appointments',
     loadChildren: './features/appointments/appointments.module#AppointmentsModule'
