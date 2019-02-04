@@ -30,6 +30,7 @@ namespace MedicPortal.Data
             });
             dbContext.SaveChanges();
         }
+
         public static void AddPermissionClaims(this ApplicationDbContext dbContext, AppUser user, Patient patient)
         {
             dbContext.UserClaims.Add(new IdentityUserClaim<string>
@@ -39,6 +40,19 @@ namespace MedicPortal.Data
                 ClaimValue = patient.Id
             });
             dbContext.SaveChanges();
+        }
+
+        public static void TryLockoutUser(this AppUser user)
+        {
+            if (user.LockoutEnd < DateTime.Now)
+            {
+            }
+        }
+
+
+        public static bool IsLocked(this AppUser user)
+        {
+            return user.LockoutEnd.HasValue && user.LockoutEnd.Value < DateTime.Now;
         }
     }
 }

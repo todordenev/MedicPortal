@@ -1,12 +1,31 @@
-<div>
-  <div>
+<div class="registration-codes">
+  <h3>Генериране на кодове са регистрация</h3>
+  <div class="actions">
+    <div>
       <mat-form-field>
-          <mat-select [(value)]="codesCount">
-            <mat-option value="1">1</mat-option>
-            <mat-option value="10">10</mat-option>
-            <mat-option value="30">30</mat-option>
-            <mat-option value="60">60</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <mat-select [(value)]="selectedDoctor"
+                    placeholder="Лекар">
+          <mat-option *ngFor="let doctor of myDoctors"
+                      [value]="doctor">
+            {{doctor.firstName}} {{doctor.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-select [(value)]="codesCount"
+                    placeholder="Брой кодове">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="10">10</mat-option>
+          <mat-option value="30">30</mat-option>
+          <mat-option value="60">60</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-button [disabled]="!selectedDoctor"
+              (click)="generate(selectedDoctor.id)">Генерирай</button>
+    </div>
   </div>
-</div>>
+</div>

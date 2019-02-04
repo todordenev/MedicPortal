@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
@@ -11,7 +12,7 @@ namespace MedicPortal.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/new-patients")]
+    [Route("api/registration-codes")]
     public class NewPaitentController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
@@ -24,26 +25,48 @@ namespace MedicPortal.Controllers
         }
 
         [HttpPost]
-        [Route("codes")]
-        public IActionResult GetCodes([FromBody] string doctorId, int count)
+        public IActionResult GetCodes( [FromBody] object test)
         {
-            if (User.HasClaim(RessourceClaimTypes.DoctorPermission, doctorId))
-            {
-                var codes = new List<string>();
-                for (var i = 0; i < count; i++)
-                {
-                    var code = GenerateRandomCode();
-                    codes.Add(code);
-                    var registrationCode = new RegistrationCode
-                        {Id = code, DoctorId = doctorId, Created = DateTime.Now, CreatedBy = User.GetUserId()};
-                    _dbContext.RegistrationCodes.Add(registrationCode);
-                }
+            //if (User.HasClaim(RessourceClaimTypes.DoctorPermission, doctorId))
+            //{
+            //    var codes = new List<string>();
+            //    for (var i = 0; i < count; i++)
+            //    {
+            //        var code = GenerateRandomCode();
+            //        codes.Add(code);
+            //        var registrationCode = new RegistrationCode
+            //            {Id = code, DoctorId = doctorId, Created = DateTime.Now, CreatedBy = User.GetUserId()};
+            //        _dbContext.RegistrationCodes.Add(registrationCode);
+            //    }
 
+            //    _dbContext.SaveChanges();
+            //    return Ok(codes);
+            //}
+
+            //return Unauthorized();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("apply")]
+        public async Task<IActionResult> ApplyCode([FromBody] string code)
+        {
+            var user = await _dbContext.Users.FindAsync(User.GetUserId());
+            var userIsLocked = user.IsLocked();
+            var dbCode =await _dbContext.RegistrationCodes.FindAsync(code);
+            if (dbCode == null || dbCode.IsUsed)
+            {
+                user.AccessFailedCount += 1;
                 _dbContext.SaveChanges();
-                return Ok(codes);
+                return BadRequest();
             }
+
+           
+            
+
             return Unauthorized();
         }
+
 
         private string GenerateRandomCode()
         {

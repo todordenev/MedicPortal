@@ -9,7 +9,7 @@ import { handleError, GetWorkdays } from '../entities/helpers';
     providedIn: 'root'
 })
 export class DoctorService {
-    docotrEndpointUrl = '/api/doctors';
+    doctorEndpointUrl = '/api/doctors';
     doctors: Doctor[] = [];
     myDoctors: Doctor[] = [];
     constructor(private http: HttpClient) { }
@@ -17,7 +17,7 @@ export class DoctorService {
         if (this.doctors.length > 0) {
             of(this.doctors);
         }
-        return this.http.get(this.docotrEndpointUrl)
+        return this.http.get(this.doctorEndpointUrl)
             .pipe(
                 map(serverResult => this.mapToDoctors(serverResult)),
                 catchError(handleError)
@@ -28,7 +28,7 @@ export class DoctorService {
         if (this.myDoctors.length > 0) {
             of(this.myDoctors);
         }
-        return this.http.get(this.docotrEndpointUrl + '/mydoctors')
+        return this.http.get(this.doctorEndpointUrl + '/mydoctors')
             .pipe(
                 map(serverResult => this.mapToMyDoctors(serverResult)),
                 catchError(handleError)
@@ -60,7 +60,7 @@ export class DoctorService {
         if (doctor) {
             return of(doctor);
         } else {
-            const url = this.docotrEndpointUrl + '/' + id;
+            const url = this.doctorEndpointUrl + '/' + id;
             return this.http.get(url)
                 .pipe(
                     map(d => this.mapToDoctor(d)),
