@@ -1,18 +1,20 @@
 :host {
     width: 300px;
-    box-sizing: border-box;   
+    box-sizing: border-box;
 }
+
 .mat-card {
     margin: 5px;
     background-color: #ffffff
 }
+
 .doctor-header-image {
     background-size: cover;
     margin: 10px;
 }
 
-.mat-card-content {
-    margin-bottom: 0;
+.mat-card-header {
+   justify-content: center;
 }
 
 .image-container {
@@ -32,8 +34,12 @@
 
 .mat-card-content {
     padding-top: 10px;
+    margin-bottom: 0;
 }
-
+.mat-card-actions{
+    display: flex;
+    justify-content: center;
+}
 .worktime-header {
     font-weight: 500;
     width: 25px;
@@ -42,7 +48,6 @@
 .workday-header.main {
     font-weight: 500;
     text-align: center;
-    
 }
 
 .workday-container {
@@ -54,3 +59,19 @@
     display: flex;
 }
 
+.input-registration-code {
+    display: flex;
+}
+
+.input-registration-code>input{
+    width: 130px;
+}
+.input-registration-code>.mat-button{
+    width: 66px;
+    min-width: 66px;
+}
+::ng-deep .tooltip-gray{
+    background-color: gray;
+    opacity: 1;
+    width: 215px;
+}

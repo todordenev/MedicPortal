@@ -42,7 +42,7 @@ export class UserService implements OnInit {
         return this._loggedIn.asObservable();
     }
 
-    hasRole(roleName: string) {
+    isInRole(roleName: string): boolean {
         try {
             const userRoles = this._user.value.roles;
             if (userRoles && userRoles.length > 0) {
@@ -58,6 +58,25 @@ export class UserService implements OnInit {
             return false;
         }
     }
+    isInOneRole(roles: string[]): boolean {
+        for (let i = 0; i < roles.length; i++) {
+            if (this.isInRole(roles[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    hasClaim(type: string, value: string) {
+        const userClaims = this._user.value.claims;
+        for (let i = 0; i < userClaims.length; i++) {
+            const claim = userClaims[i];
+            if (claim.Type === type && claim.Value === value) {
+                return true;
+            }
+        }
+        return false;
+    }
     register(registration: Registration): Observable<any> {
         return this.http.post(this.authUrl + '/register', registration)
             .pipe(
@@ -72,7 +91,7 @@ export class UserService implements OnInit {
                 catchError(this.handleError)
             );
     }
-    private getUserInfo() {
+    getUserInfo() {
         this.http.get(this.authUrl + '/getuserinfo')
             .subscribe(
                 result => {

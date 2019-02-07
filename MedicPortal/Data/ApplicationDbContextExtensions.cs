@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using MedicPortal.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -20,27 +21,22 @@ namespace MedicPortal.Data
             dbContext.SaveChanges();
         }
 
-        public static void AddPermissionClaims(this ApplicationDbContext dbContext, AppUser user, Doctor doctor)
+        public static void AddUserClaim(this ApplicationDbContext dbContext, AppUser user, Claim claim)
+        {
+            dbContext.AddUserClaim(user.Id, claim);
+        }
+
+        public static void AddUserClaim(this ApplicationDbContext dbContext, string userId, Claim claim)
         {
             dbContext.UserClaims.Add(new IdentityUserClaim<string>
             {
-                UserId = user.Id,
-                ClaimType = RessourceClaimTypes.DoctorPermission,
-                ClaimValue = doctor.Id
+                UserId = userId,
+                ClaimType = claim.Type,
+                ClaimValue = claim.Value
             });
             dbContext.SaveChanges();
         }
 
-        public static void AddPermissionClaims(this ApplicationDbContext dbContext, AppUser user, Patient patient)
-        {
-            dbContext.UserClaims.Add(new IdentityUserClaim<string>
-            {
-                UserId = user.Id,
-                ClaimType = RessourceClaimTypes.PatientPermission,
-                ClaimValue = patient.Id
-            });
-            dbContext.SaveChanges();
-        }
 
         public static void TryLockoutUser(this AppUser user)
         {

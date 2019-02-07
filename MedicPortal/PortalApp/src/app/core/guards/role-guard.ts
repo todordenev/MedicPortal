@@ -10,7 +10,7 @@ export class RoleGuard implements CanActivate, CanActivateChild {
         if (roleNames && roleNames.length > 0) {
             for (let i = 0; i < roleNames.length; i++) {
                 const roleName = roleNames[i];
-                if (this.userService.hasRole(roleName)) {
+                if (this.userService.isInRole(roleName)) {
                     return true;
                 }
             }
@@ -19,10 +19,11 @@ export class RoleGuard implements CanActivate, CanActivateChild {
     }
     canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         const roleNames = route.data.roles;
+
         if (roleNames && roleNames.length > 0) {
             for (let i = 0; i < roleNames.length; i++) {
                 const roleName = roleNames[i];
-                if (this.userService.hasRole(roleName)) {
+                if (this.userService.isInRole(roleName)) {
                     return true;
                 }
             }

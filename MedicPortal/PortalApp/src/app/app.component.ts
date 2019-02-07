@@ -31,18 +31,7 @@ export class AppComponent implements OnInit {
         this.userName = user.firstName + ' ' + user.lastName;
     }
     userInRole(roles: string[]) {
-        if (this.user) {
-            let roleFound = false;
-            roles.forEach(expectedRole => {
-                const indexOfExpectedRole = this.user.roles.indexOf(expectedRole);
-                if (indexOfExpectedRole > -1) {
-                    roleFound = true;
-                }
-            });
-            return roleFound;
-        } else {
-            return false;
-        }
+        return this.userService.isInOneRole(roles);
     }
     logout() {
         this.userService.logout().subscribe((status) => { });

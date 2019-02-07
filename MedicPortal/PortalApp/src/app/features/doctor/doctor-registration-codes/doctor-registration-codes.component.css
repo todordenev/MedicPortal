@@ -1,9 +1,23 @@
-.registration-codes{
+.registration-codes {
     background: white;
     margin: 5px;
-    padding: 5px;
+    padding: 5px 15px;
     height: calc(100% - 10px);
 }
-.action{
-    
+
+.action {}
+
+.generated-codes-list {
+    margin-top: 20px;
+    border-top: solid 1px gray;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.generated-code {
+    padding: 10px 30px;
+    border: solid 1px gray;
+    margin: 10px;
+    min-width: 160px;
+    text-align: center;
 }

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using MedicPortal.Controllers.Parameters;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
 using MedicPortal.Helpers;
@@ -24,53 +27,63 @@ namespace MedicPortal.Controllers
             _random = new Random(DateTime.Now.Millisecond);
         }
 
-        [HttpPost]
-        public IActionResult GetCodes( [FromBody] object test)
+        [HttpPost("{doctorId}/{count}")]
+        public IActionResult GetCodes(string doctorId, int count)
         {
-            //if (User.HasClaim(RessourceClaimTypes.DoctorPermission, doctorId))
-            //{
-            //    var codes = new List<string>();
-            //    for (var i = 0; i < count; i++)
-            //    {
-            //        var code = GenerateRandomCode();
-            //        codes.Add(code);
-            //        var registrationCode = new RegistrationCode
-            //            {Id = code, DoctorId = doctorId, Created = DateTime.Now, CreatedBy = User.GetUserId()};
-            //        _dbContext.RegistrationCodes.Add(registrationCode);
-            //    }
+            if (User.HasClaim(PortalClaimTypes.DoctorManagePermission, doctorId))
+            {
+                var codes = new List<string>();
+                for (var i = 0; i < count; i++)
+                {
+                    var code = GenerateRandomCode();
+                    codes.Add(code);
+                    var registrationCode = new RegistrationCode
+                        {Id = code, DoctorId = doctorId, Created = DateTime.Now, CreatedBy = User.GetUserId()};
+                    _dbContext.RegistrationCodes.Add(registrationCode);
+                }
 
-            //    _dbContext.SaveChanges();
-            //    return Ok(codes);
-            //}
+                _dbContext.SaveChanges();
+                return Ok(codes);
+            }
 
-            //return Unauthorized();
-            return Ok();
+            return Unauthorized();
         }
 
         [HttpPost]
         [Route("apply")]
-        public async Task<IActionResult> ApplyCode([FromBody] string code)
+        public async Task<IActionResult> ApplyCode( [FromBody] RegistrationCodeParameter code)
         {
-            var user = await _dbContext.Users.FindAsync(User.GetUserId());
-            var userIsLocked = user.IsLocked();
-            var dbCode =await _dbContext.RegistrationCodes.FindAsync(code);
-            if (dbCode == null || dbCode.IsUsed)
+            var userId = User.GetUserId();
+            var dbCode = await _dbContext.RegistrationCodes.FindAsync(code.Code);
+            if (dbCode == null)
             {
-                user.AccessFailedCount += 1;
-                _dbContext.SaveChanges();
+                Trace.TraceWarning(
+                    $"NewPaitentController.ApplyCode: User applies a not existing registration code. userId:{userId}");
+                return BadRequest();
+            }
+            if (dbCode.IsUsed)
+            {
+                Trace.TraceWarning(
+                    $"NewPaitentController.ApplyCode: User applies an allreasy used registration code. userId:{userId}");
+                return BadRequest();
+            }
+            if (dbCode.DoctorId != code.DoctorId)
+            {
+                Trace.TraceWarning(
+                    $"NewPaitentController.ApplyCode: User applies a registration code for other doctor. userId:{userId}");
                 return BadRequest();
             }
 
-           
-            
+            var makeAppointmens = new Claim(PortalClaimTypes.MakeAppointments, code.DoctorId);
+            _dbContext.AddUserClaim(userId,makeAppointmens);
 
-            return Unauthorized();
+            return Ok();
         }
 
 
         private string GenerateRandomCode()
         {
-            const string chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "123456789ABCDEFHJKLMNPRSTUVWXYZ123456789";
             var chunkLength = 4;
             var chunk1 = new string(Enumerable.Repeat(chars, chunkLength).Select(s => s[_random.Next(s.Length)])
                 .ToArray());

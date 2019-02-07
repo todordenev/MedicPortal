@@ -24,8 +24,21 @@
       </mat-form-field>
     </div>
     <div>
-      <button mat-button [disabled]="!selectedDoctor"
+      <button mat-button
+              [disabled]="!selectedDoctor"
               (click)="generate(selectedDoctor.id)">Генерирай</button>
+    </div>
+  </div>
+  <div class="generated-codes-list">
+    <div class="generated-code"
+         *ngFor="let code of codes">
+      <div>
+        д-р. {{selectedDoctor.firstName}} {{selectedDoctor.lastName}}
+      </div>
+      <br />
+      <div>
+        {{code}}
+      </div>
     </div>
   </div>
 </div>

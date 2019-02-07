@@ -6,4 +6,5 @@ export class User {
     phoneNumber: string;
     roles: string[] = [];
     avatarImage: string;
+    claims: any[];
 }

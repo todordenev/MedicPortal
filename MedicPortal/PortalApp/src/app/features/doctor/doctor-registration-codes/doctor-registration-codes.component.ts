@@ -8,8 +8,9 @@ import { RegistrationCodesService } from '@app/core/services/registration-codes.
   styleUrls: ['./doctor-registration-codes.component.css']
 })
 export class DoctorRegistrationCodesComponent implements OnInit {
-  selectedDoctor;
+  selectedDoctor: Doctor;
   codesCount = '1';
+  codes: string[];
   private _myDoctors: Doctor[];
   get myDoctors(): Doctor[] {
     return this._myDoctors;
@@ -31,7 +32,7 @@ export class DoctorRegistrationCodesComponent implements OnInit {
   }
 
   generate(doctorId) {
-    this.registrationCodesService.getRegistrationCodes(doctorId, Number(this.codesCount)).subscribe(codes => alert(codes));
+    this.registrationCodesService.getRegistrationCodes(doctorId, Number(this.codesCount)).subscribe(codes => this.codes = codes);
   }
 
 }

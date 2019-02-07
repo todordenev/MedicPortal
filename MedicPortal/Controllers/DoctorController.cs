@@ -46,7 +46,7 @@ namespace MedicPortal.Controllers
         [Authorize(Roles = "Admin,Doctor")]
         public List<DoctorView> GetMyDoctors()
         {
-            var myDoctorIds = User.Claims.Where(c => c.Type == RessourceClaimTypes.DoctorPermission)
+            var myDoctorIds = User.Claims.Where(c => c.Type == PortalClaimTypes.DoctorManagePermission)
                 .Select(cl => cl.Value).ToList();
             if (myDoctorIds.Any())
             {

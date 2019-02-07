@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using MedicPortal.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -156,8 +157,9 @@ namespace MedicPortal.Data
             _dbContext.AddRange(_doctors);
             _dbContext.SaveChanges();
 
-            _dbContext.AddPermissionClaims(_appUsers[2], _doctors[0]);
-            _dbContext.AddPermissionClaims(_appUsers[3], _doctors[0]);
+            var docrotManageClaim = new Claim(PortalClaimTypes.DoctorManagePermission, _doctors[0].Id);
+            _dbContext.AddUserClaim(_appUsers[2], docrotManageClaim);
+            _dbContext.AddUserClaim(_appUsers[3], docrotManageClaim);
         }
 
         private void CeedSpezialisations()

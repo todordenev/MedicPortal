@@ -4,7 +4,6 @@ import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Patient } from '@app/core/entities/patient';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -23,7 +22,6 @@ export class PatientService {
                 catchError(this.handleError)
             );
     }
-
     setPatients(serverResult) {
         if (serverResult instanceof Array) {
             serverResult.forEach(patient => {
@@ -36,14 +34,14 @@ export class PatientService {
     update(id: string, value): Observable<Patient> {
         return this.http.patch(this.endpointUrl + '/' + id, value)
             .pipe(
-                map(serverResult => serverResult as Patient ),
+                map(serverResult => serverResult as Patient),
                 catchError(this.handleError)
             );
     }
     create(patient: Patient): any {
         return this.http.post(this.endpointUrl, patient)
             .pipe(
-                map(serverResult =>  serverResult as Patient),
+                map(serverResult => serverResult as Patient),
                 catchError(this.handleError)
             );
     }

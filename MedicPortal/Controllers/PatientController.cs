@@ -84,7 +84,7 @@ namespace MedicPortal.Controllers
                 return NotFound();
             }
 
-            if (!User.IsPortalAdmin() && User.HasClaim(RessourceClaimTypes.PatientPermission, id))
+            if (!User.IsPortalAdmin() && User.HasClaim(PortalClaimTypes.PatientManagePermission, id))
             {
                 return Unauthorized();
             }

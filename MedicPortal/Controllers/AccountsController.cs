@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -43,6 +44,7 @@ namespace MedicPortal.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Trace.TraceWarning("AccountsController.Register: ModelState is not valid.");
                 return BadRequest(ModelState);
             }
 
@@ -52,13 +54,15 @@ namespace MedicPortal.Controllers
             var createdResult = await _userManager.CreateAsync(appUser, model.Password);
             if (!createdResult.Succeeded)
             {
+                Trace.TraceError(
+                    $"AccountsController.Register: User could not be saved. Login:{userName} Password:{model.Password}");
                 ModelState.AddErrors(createdResult.Errors);
                 return BadRequest(ModelState);
             }
 
             var user = _dbContext.Users.First(u => u.UserName == model.Email);
             _dbContext.CreatePatientOnRegistration(user);
-            return await OnLogin(userName, model.Password);
+            return await Login(userName, model.Password);
         }
 
         [HttpPost]
@@ -66,17 +70,19 @@ namespace MedicPortal.Controllers
         [Route("login")]
         public async Task<IActionResult> OnLogin([FromBody] AppUserCredential credentials)
         {
-            return await OnLogin(credentials.UserName, credentials.Password);
+            return await Login(credentials.UserName, credentials.Password);
         }
 
-        private async Task<IActionResult> OnLogin(string userName, string password)
+        private async Task<IActionResult> Login(string userName, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(userName, password, true, false);
             if (!result.Succeeded)
             {
+                Trace.TraceWarning($"AccountsController.Login: User cannot login. user:{userName}");
                 ModelState.AddError("login_failure", "Invalid username or password.");
                 return BadRequest(ModelState);
             }
+
             return Ok();
         }
 
@@ -98,10 +104,11 @@ namespace MedicPortal.Controllers
         private AppUserView GetUserInfo(AppUser user)
         {
             var userVm = _mapper.Map<AppUserView>(user);
-            userVm.Roles = User.Claims.Where(cl=>cl.Type == ClaimTypes.Role).Select(cl => cl.Value).ToList();
+            userVm.Roles = User.Claims.Where(cl => cl.Type == ClaimTypes.Role).Select(cl => cl.Value).ToList();
+            userVm.Claims = User.Claims.Where(cl => cl.Type == PortalClaimTypes.MakeAppointments).ToList();
             return userVm;
         }
-        
+
         [HttpPost]
         [Route("logout")]
         public async Task<IActionResult> Logout()

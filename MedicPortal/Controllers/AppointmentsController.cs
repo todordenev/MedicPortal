@@ -92,7 +92,7 @@ namespace MedicPortal.Controllers
                 
             List<AppointmentView> appointments;
 
-            if (User.HasClaim(RessourceClaimTypes.DoctorPermission, doctorId))
+            if (User.HasClaim(PortalClaimTypes.DoctorManagePermission, doctorId))
             {
                 appointments =  tempAppointments.Select(a=>_mapper.Map<AppointmentView>(a)).ToList();
             }

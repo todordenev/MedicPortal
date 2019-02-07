@@ -29,7 +29,25 @@
         </div>
     </mat-card-content>
     <mat-card-actions>
+        <div matTooltip="За запазване на часове, моля обърнете се към д-р {{doctor.lastName}}"
+             matTooltipPosition="above"
+             matTooltipClass="tooltip-gray"
+             [matTooltipDisabled]="isUserAuthorised()">
+            <button mat-button
+                    *ngIf=" !this.codeInputIsVisible"
+                    [disabled]="!isUserAuthorised()"
+                    [routerLink]="['/appointments/view/', doctor.id]">Запази час</button>
+        </div>
+
         <button mat-button
-                [routerLink]="['/appointments/view/', doctor.id]">Запази час</button>
+                *ngIf="!isUserAuthorised() && !this.codeInputIsVisible"
+                (click)="showCodeInput()">Въведи код</button>
+        <div *ngIf="codeInputIsVisible"
+             class="input-registration-code">
+            <input placeholder="Регистрационен код"
+                   [(ngModel)]="registrationCode">
+            <button mat-button
+                    (click)="applyRegistrationCode()">Ok</button>
+        </div>
     </mat-card-actions>
 </mat-card>

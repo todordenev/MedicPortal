@@ -46,7 +46,6 @@ namespace MedicPortal
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "PortalApp/dist"; });
-            // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options
                 => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<AppUser, IdentityRole>
@@ -61,7 +60,7 @@ namespace MedicPortal
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            services.TryAddTransient<IHttpContextAccessor,HttpContextAccessor>();
+            services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/logIn";
