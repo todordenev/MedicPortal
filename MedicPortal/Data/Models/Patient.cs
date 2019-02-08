@@ -13,7 +13,6 @@ namespace MedicPortal.Data.Models
         public DateTime Birthdate { get; set; }
         public string Adress { get; set; }
         public string Telefon { get; set; }
-        public IList<DoctorPatient> DoctorPatients { get; set; } = new List<DoctorPatient>();
         public bool IsDeleted { get; set; }
         public DateTime? Deleted { get; set; }
         public AppUser DeletedBy { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -94,12 +95,15 @@ namespace MedicPortal.Controllers
             {
                 foreach (var appointment in appointments)
                 {
-                    appointment.Canceled = true;
+                    appointment.IsCanceled = true;
+                    appointment.Canceled = DateTime.Now;
                     appointment.CanceledById = User.GetUserId();
                 }
             }
 
             patient.IsDeleted = true;
+            patient.Deleted = DateTime.Now;
+            patient.DeletedById = User.GetUserId();
             _dbContext.SaveChanges();
 
             return Ok();

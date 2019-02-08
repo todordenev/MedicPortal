@@ -105,7 +105,8 @@ namespace MedicPortal.Controllers
         {
             var userVm = _mapper.Map<AppUserView>(user);
             userVm.Roles = User.Claims.Where(cl => cl.Type == ClaimTypes.Role).Select(cl => cl.Value).ToList();
-            userVm.Claims = User.Claims.Where(cl => cl.Type == PortalClaimTypes.MakeAppointments).ToList();
+            var userClaims = _dbContext.UserClaims.Where(cl => cl.UserId == user.Id);
+            userVm.Claims = userClaims.Select(cl => new Claim(cl.ClaimType, cl.ClaimValue)).ToList();
             return userVm;
         }
 

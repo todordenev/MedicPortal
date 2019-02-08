@@ -3,7 +3,8 @@
         <div mat-card-avatar
              class="doctor-header-image"
              [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
-        <mat-card-title><a routerLink="/doctors/{{doctor.id}}">{{doctor.firstName}} {{doctor.lastName}}</a></mat-card-title>
+        <mat-card-title><a routerLink="/doctors/{{doctor.id}}">{{doctor.firstName}} {{doctor.lastName}}</a>
+        </mat-card-title>
         <mat-card-subtitle>
             <span *ngFor="let spec of doctor.specialisations">{{spec}}</span>
         </mat-card-subtitle>
@@ -28,7 +29,7 @@
             </div>
         </div>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="isLoggedIn">
         <div matTooltip="За запазване на часове, моля обърнете се към д-р {{doctor.lastName}}"
              matTooltipPosition="above"
              matTooltipClass="tooltip-gray"
@@ -47,6 +48,7 @@
             <input placeholder="Регистрационен код"
                    [(ngModel)]="registrationCode">
             <button mat-button
+                    [disabled]="!registrationCode || registrationCode.length<5"
                     (click)="applyRegistrationCode()">Ok</button>
         </div>
     </mat-card-actions>

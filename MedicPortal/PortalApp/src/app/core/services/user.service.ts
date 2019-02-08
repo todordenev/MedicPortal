@@ -71,7 +71,7 @@ export class UserService implements OnInit {
         const userClaims = this._user.value.claims;
         for (let i = 0; i < userClaims.length; i++) {
             const claim = userClaims[i];
-            if (claim.Type === type && claim.Value === value) {
+            if (claim.type === type && claim.value === value) {
                 return true;
             }
         }

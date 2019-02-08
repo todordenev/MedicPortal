@@ -69,7 +69,7 @@ namespace MedicPortal.Controllers
 
             if (IsCurrentUserPatient(appointment))
             {
-                appointment.Canceled = true;
+                appointment.IsCanceled = true;
                 appointment.CanceledById = CurrentUserId;
                 _dbContext.SaveChanges();
                 return Ok();
@@ -88,7 +88,7 @@ namespace MedicPortal.Controllers
                 .Include(a => a.Patient)
                 .Where(a => a.DoctorId == doctorId)
                 .Where(a => today0Hours < a.Start && a.Start < today24Hours)
-                .Where(a => !a.Canceled).ToListAsync();
+                .Where(a => !a.IsCanceled).ToListAsync();
                 
             List<AppointmentView> appointments;
 

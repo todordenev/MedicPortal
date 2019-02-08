@@ -24,7 +24,7 @@ namespace MedicPortal.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Canceled");
+                    b.Property<DateTime>("Canceled");
 
                     b.Property<string>("CanceledById");
 
@@ -37,6 +37,8 @@ namespace MedicPortal.Migrations
                     b.Property<string>("DoctorId");
 
                     b.Property<int>("DurationInMinutes");
+
+                    b.Property<bool>("IsCanceled");
 
                     b.Property<string>("PatientId");
 
@@ -130,36 +132,6 @@ namespace MedicPortal.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("MedicPortal.Data.Models.DoctorManager", b =>
-                {
-                    b.Property<string>("DoctorId");
-
-                    b.Property<string>("AppUserId");
-
-                    b.HasKey("DoctorId", "AppUserId");
-
-                    b.HasIndex("AppUserId");
-
-                    b.ToTable("DoctorManager");
-                });
-
-            modelBuilder.Entity("MedicPortal.Data.Models.DoctorPatient", b =>
-                {
-                    b.Property<string>("DoctorId");
-
-                    b.Property<string>("PatientId");
-
-                    b.Property<bool>("ConfirmedByDoctor");
-
-                    b.Property<bool>("ConfirmedByUser");
-
-                    b.HasKey("DoctorId", "PatientId");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("DoctorPatients");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.DoctorSpezialisations", b =>
@@ -439,32 +411,6 @@ namespace MedicPortal.Migrations
                     b.HasOne("MedicPortal.Data.Models.AppUser")
                         .WithMany("Doctors")
                         .HasForeignKey("AppUserId");
-                });
-
-            modelBuilder.Entity("MedicPortal.Data.Models.DoctorManager", b =>
-                {
-                    b.HasOne("MedicPortal.Data.Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MedicPortal.Data.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MedicPortal.Data.Models.DoctorPatient", b =>
-                {
-                    b.HasOne("MedicPortal.Data.Models.Doctor", "Doctor")
-                        .WithMany("DoctorPatients")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MedicPortal.Data.Models.Patient", "Patient")
-                        .WithMany("DoctorPatients")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.DoctorSpezialisations", b =>
