@@ -160,6 +160,7 @@ namespace MedicPortal.Data
             var docrotManageClaim = new Claim(PortalClaimTypes.DoctorManagePermission, _doctors[0].Id);
             _dbContext.AddUserClaim(_appUsers[2], docrotManageClaim);
             _dbContext.AddUserClaim(_appUsers[3], docrotManageClaim);
+            _dbContext.SaveChanges();
         }
 
         private void CeedSpezialisations()

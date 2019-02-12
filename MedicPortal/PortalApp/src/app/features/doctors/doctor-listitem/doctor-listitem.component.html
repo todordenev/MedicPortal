@@ -33,20 +33,23 @@
         <div matTooltip="За запазване на часове, моля обърнете се към д-р {{doctor.lastName}}"
              matTooltipPosition="above"
              matTooltipClass="tooltip-gray"
-             [matTooltipDisabled]="isUserAuthorised()">
+             [matTooltipDisabled]="isUserAuthorised">
             <button mat-button
-                    *ngIf=" !this.codeInputIsVisible"
-                    [disabled]="!isUserAuthorised()"
+                    *ngIf=" !codeInputIsVisible"
+                    [disabled]="!isUserAuthorised"
                     [routerLink]="['/appointments/view/', doctor.id]">Запази час</button>
         </div>
 
         <button mat-button
-                *ngIf="!isUserAuthorised() && !this.codeInputIsVisible"
+                *ngIf="!isUserAuthorised && !codeInputIsVisible"
                 (click)="showCodeInput()">Въведи код</button>
         <div *ngIf="codeInputIsVisible"
              class="input-registration-code">
             <input placeholder="Регистрационен код"
-                   [(ngModel)]="registrationCode">
+                   [ngClass]="{'portal-error': hasCodeError }"
+                   [(ngModel)]="registrationCode"
+                   (keyup)="hasCodeError = false"
+                   (keyup.enter)="applyRegistrationCode()">
             <button mat-button
                     [disabled]="!registrationCode || registrationCode.length<5"
                     (click)="applyRegistrationCode()">Ok</button>

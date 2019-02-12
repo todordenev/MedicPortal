@@ -24,7 +24,6 @@ export class UserService implements OnInit {
             const cachedUser = JSON.parse(userJson);
             this._user = new BehaviorSubject<User>(cachedUser as User);
             this._loggedIn.next(true);
-
         } else {
             this._user = new BehaviorSubject<User>(new User());
             this._loadingUserInfo.next(false);

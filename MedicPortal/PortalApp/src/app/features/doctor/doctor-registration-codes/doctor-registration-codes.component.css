@@ -21,3 +21,10 @@
     min-width: 160px;
     text-align: center;
 }
+
+
+@media print {
+   .registration-codes .actions {
+        display: none;
+    }
+}

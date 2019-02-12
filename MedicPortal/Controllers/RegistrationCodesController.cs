@@ -16,12 +16,12 @@ namespace MedicPortal.Controllers
     [Authorize]
     [ApiController]
     [Route("api/registration-codes")]
-    public class NewPaitentController : ControllerBase
+    public class RegistrationCodesController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly Random _random;
 
-        public NewPaitentController(ApplicationDbContext dbContext)
+        public RegistrationCodesController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
             _random = new Random(DateTime.Now.Millisecond);
@@ -58,25 +58,28 @@ namespace MedicPortal.Controllers
             if (dbCode == null)
             {
                 Trace.TraceWarning(
-                    $"NewPaitentController.ApplyCode: User applies a not existing registration code. userId:{userId}");
+                    $"RegistrationCodesController.ApplyCode: User applies a not existing registration code. userId:{userId}");
                 return BadRequest();
             }
             if (dbCode.IsUsed)
             {
                 Trace.TraceWarning(
-                    $"NewPaitentController.ApplyCode: User applies an allreasy used registration code. userId:{userId}");
+                    $"RegistrationCodesController.ApplyCode: User applies an allreasy used registration code. userId:{userId}");
                 return BadRequest();
             }
             if (dbCode.DoctorId != code.DoctorId)
             {
                 Trace.TraceWarning(
-                    $"NewPaitentController.ApplyCode: User applies a registration code for other doctor. userId:{userId}");
+                    $"RegistrationCodesController.ApplyCode: User applies a registration code for other doctor. userId:{userId}");
                 return BadRequest();
             }
 
+            dbCode.IsUsed = true;
+            dbCode.UsedById = User.GetUserId();
+            dbCode.Used = DateTime.Now;
             var makeAppointmens = new Claim(PortalClaimTypes.MakeAppointments, code.DoctorId);
             _dbContext.AddUserClaim(userId,makeAppointmens);
-
+            _dbContext.SaveChanges();
             return Ok();
         }
 

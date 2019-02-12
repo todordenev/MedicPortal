@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Doctor } from '@app/core/entities';
 import { UserService, RegistrationCodesService } from '@app/core';
 import { User } from '@app/core/entities/user';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-doctor-listitem',
@@ -15,11 +16,28 @@ export class DoctorListitemComponent implements OnInit {
     isLoggedIn: boolean;
     codeInputIsVisible: boolean;
     registrationCode: string;
+    isUserAuthorised: boolean;
+    hasCodeError: boolean;
     constructor(private userService: UserService, private registrationCodesService: RegistrationCodesService) { }
 
     ngOnInit(): void {
-        this.userService.user.subscribe(user => this.user = user);
-        this.userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
+        this.userService.user.subscribe(user => this.onUserChanged(user));
+        this.userService.isLoggedIn.subscribe(isLoggedin => this.onLoginChanged(isLoggedin));
+    }
+
+    onUserChanged(user) {
+        this.user = user;
+        this.isUserAuthorised = this.isLoggedIn && this.userService.hasClaim('make-appointments', this.doctor.id);
+        if (this.isUserAuthorised) {
+            this.codeInputIsVisible = false;
+        }
+    }
+    onLoginChanged(isLoggedin) {
+        this.isLoggedIn = isLoggedin;
+        this.isUserAuthorised = this.isLoggedIn && this.userService.hasClaim('make-appointments', this.doctor.id);
+        if (this.isUserAuthorised) {
+            this.codeInputIsVisible = false;
+        }
     }
 
     test() {
@@ -28,15 +46,19 @@ export class DoctorListitemComponent implements OnInit {
     get imageUrl() {
         return './assets/doctor_' + this.doctor.id + '.jpg';
     }
-    isUserAuthorised() {
-        return this.isLoggedIn && this.userService.hasClaim('make-appointments', this.doctor.id);
-    }
     showCodeInput() {
         this.codeInputIsVisible = true;
     }
     applyRegistrationCode() {
-        this.registrationCodesService.applyRegistrationCode(this.doctor.id, this.registrationCode).subscribe(() => this.refreshUserClaims())
+        this.registrationCodesService
+            .applyRegistrationCode(this.doctor.id, this.registrationCode)
+            .subscribe(() => this.refreshUserClaims(), (error) => this.onError(error));
 
+    }
+    onError(error: HttpErrorResponse): void {
+        if (error.statusText === 'OK' && error.status === 400) { // BadRequest
+            this.hasCodeError = true;
+        }
     }
     private refreshUserClaims() {
         this.userService.getUserInfo();

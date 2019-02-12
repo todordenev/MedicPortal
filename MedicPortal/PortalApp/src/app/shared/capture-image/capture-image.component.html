@@ -1,6 +1,7 @@
 <div>
     <div class="image-container">
         <img class="user-img" src="{{imgSrc}}" alt="image" *ngIf="!isCapturing && imgSrc" />
+        
         <video class="iser-video" #video id="video" width="180" height="180" autoplay *ngIf="isCapturing"></video>
         <canvas #canvas id="canvas" hidden></canvas>
     </div>

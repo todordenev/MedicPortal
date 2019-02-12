@@ -34,7 +34,7 @@ namespace MedicPortal.Data
                 ClaimType = claim.Type,
                 ClaimValue = claim.Value
             });
-            dbContext.SaveChanges();
+           
         }
 
 

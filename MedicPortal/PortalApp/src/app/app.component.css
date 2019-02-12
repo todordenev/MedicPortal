@@ -10,7 +10,6 @@
 .mat-sidenav {
     min-width: 240px;
     margin-top: 5px;
-    border-top-right-radius: 3px;
 }
 
 .example-spacer {
@@ -24,4 +23,10 @@
 .mat-sidenav-container {
     height: calc(100% - 64px);
     background-color: transparent;
+}
+
+@media print {
+    mat-toolbar, mat-sidenav {
+        display: none;
+    }
 }
