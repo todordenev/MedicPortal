@@ -7,7 +7,6 @@ namespace MedicPortal.TransportObjects.AppUserDtos
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string AvatarImage { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public List<Claim> Claims { get; set; } = new List<Claim>();

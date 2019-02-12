@@ -20,7 +20,8 @@ export class CreateAppointmentComponent implements OnInit {
     constructor(private route: ActivatedRoute,
         private doctorService: DoctorService,
         private appointmentService: AppointmentService,
-        private location: Location, private patientService: PatientService) {
+        private location: Location,
+        private patientService: PatientService) {
     }
     ngOnInit() {
         this.doctorId = this.route.snapshot.paramMap.get('doctorid');
@@ -36,7 +37,7 @@ export class CreateAppointmentComponent implements OnInit {
         }
     }
     onNoClick(): void {
-
+        this.location.back();
     }
     createAppointment() {
         const appointment = new Appointment();

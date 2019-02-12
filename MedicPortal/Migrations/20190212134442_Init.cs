@@ -296,7 +296,8 @@ namespace MedicPortal.Migrations
                     StartDate = table.Column<DateTime>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true),
                     Title = table.Column<string>(nullable: true),
-                    DoctorId = table.Column<string>(nullable: true)
+                    DoctorId = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

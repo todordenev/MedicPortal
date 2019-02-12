@@ -19,7 +19,7 @@ import { DayEventComponent } from './calendar/day-event/day-event.component';
         FormsModule,
         ConfiguredDatepickerModule,
         ReactiveFormsModule,
-        DateFnsModule.forRoot(),
+        DateFnsModule,
     ],
     exports: [
         CaptureImageComponent,

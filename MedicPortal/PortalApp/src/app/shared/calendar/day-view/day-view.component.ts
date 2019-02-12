@@ -32,6 +32,8 @@ export class DayViewComponent implements OnInit, OnDestroy {
     @Input()
     duration = 10; // calendar-slot = 25px => 1 Hour = 100px;
     @Input()
+    showNewTools = true;
+    @Input()
     set viewDate(value: Date) {
         this._viewDate = value;
         this.createSlots();

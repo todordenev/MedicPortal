@@ -105,8 +105,21 @@ namespace MedicPortal.Controllers
             patient.Deleted = DateTime.Now;
             patient.DeletedById = User.GetUserId();
             _dbContext.SaveChanges();
-
             return Ok();
         }
+
+        
+        [HttpGet("registered/{doctorId}")]
+        public List<Patient> GetRegisteredPatients(string doctorId)
+        {
+            var userId = User.GetUserId();
+            var patients = _dbContext.Patients
+                .Include(p => p.AppUser)
+                .Where(p => p.AppUserId == userId)
+                .Where(p => !p.IsDeleted).ToList();
+
+            return patients.ToList();
+        }
+
     }
 }

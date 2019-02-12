@@ -12,21 +12,7 @@
         <mat-card-content>
             <div class="appointments">
                 <div fxLayout="row"
-                     fxLayoutAlign="start center">
-                    <mat-form-field>
-                        <mat-select placeholder="Тип час"
-                                    [(ngModel)]="categoryId">
-                            <mat-option value="0">
-                                Преглед
-                            </mat-option>
-                            <mat-option value="1">
-                                За рецепта
-                            </mat-option>
-                            <mat-option value="2">
-                                Консултация
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                     fxLayoutAlign="start center">                    
                     <div class="dayview-tools">
                         <button mat-button
                                 (click)="moveViewDate(-1)">
@@ -51,7 +37,7 @@
                         </button>
                     </div>
                 </div>
-                <app-day-view [events]="calendarEvents"
+                <app-day-view [events]="calendarEvents" *ngIf="eventsLoaded"
                               (newEventClicked)="createAppointment($event)"
                               [viewDate]="viewDate"
                               [worktimes]="worktimes">

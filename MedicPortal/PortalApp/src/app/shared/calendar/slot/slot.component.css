@@ -9,12 +9,6 @@
 
 .hour-label {
     position: absolute;
-    z-index: 100;
-}
-
-.event-tools {
-    margin-left: 60px;
-    display: none;
 }
 
 .event-tools mat-icon {
@@ -23,17 +17,24 @@
     height: 16px;
 }
 
-.event-tools button.mat-button {
-    width: 150px;
-    min-width: 16px;
-    height: 26px;
-    line-height: 20px;
-    padding: 0;
-    border-radius: 3px;
+.button-for-check, 
+.button-for-recipe {
+    position: relative;
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 4px;
+    color: grey;
+    padding-left: 8px;
 }
 
-.calendar-slot:hover .event-tools {
-    display: block;
+.button-for-check {
+    left: 40px;
+}
+
+.button-for-recipe {
+    margin-left: calc(50% - 90px);
+    width: 120px;
 }
 
 .slot-hour .hour-label {
@@ -42,5 +43,8 @@
 
 .slot-pause {
     background-color: #fefefe;
-   
+}
+
+.slot-disabled {
+    background: repeating-linear-gradient( -60deg, white, white 6px, #eee 6px, #eee 8px);
 }

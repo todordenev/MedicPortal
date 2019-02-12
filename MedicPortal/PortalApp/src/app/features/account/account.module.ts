@@ -12,6 +12,7 @@ import { AccountAppointmentsComponent } from './account-appointments/account-app
 import { AccountDoctorComponent } from './account-doctor/account-doctor.component';
 import { AccountLoginComponent } from './account-login/account-login.component';
 import { AccountRoutingModule } from './account-routing.module';
+import { AccountManageComponent } from './account-manage/account-manage.component';
 
 @NgModule({
     imports: [
@@ -29,8 +30,8 @@ import { AccountRoutingModule } from './account-routing.module';
         AccountRegistrationComponent,
         AccountAppointmentsComponent,
         AccountDoctorComponent,
-        AccountLoginComponent
-
+        AccountLoginComponent,
+        AccountManageComponent
     ],
     exports: [
         AccountPatientsComponent,

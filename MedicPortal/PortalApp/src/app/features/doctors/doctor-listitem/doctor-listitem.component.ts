@@ -40,9 +40,6 @@ export class DoctorListitemComponent implements OnInit {
         }
     }
 
-    test() {
-        alert(this.doctor.workdays);
-    }
     get imageUrl() {
         return './assets/doctor_' + this.doctor.id + '.jpg';
     }

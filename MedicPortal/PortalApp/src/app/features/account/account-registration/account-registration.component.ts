@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '@app/core/services';
 import { User } from '@app/core/entities/user';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-registration',
@@ -14,7 +15,8 @@ export class AccountRegistrationComponent implements OnInit {
     isLoggedIn: boolean;
     constructor(
         private userService: UserService,
-        private formBuilder: FormBuilder) {
+        private formBuilder: FormBuilder,
+        private router: Router) {
     }
     ngOnInit() {
         this.userService.user.subscribe(user => this.createFormGroup(user));
@@ -32,20 +34,14 @@ export class AccountRegistrationComponent implements OnInit {
             email: [user ? user.email : 'todor_denev@yahoo.com', [Validators.required]],
             password: ['123456', [Validators.required]],
             password2: ['123456', [Validators.required]],
-            telefon: [user ? user.phoneNumber : '01234', [Validators.required]],
+            phoneNumber: [user ? user.phoneNumber : '01234'],
             avatarImageSrc: ['']
         });
         this.userImgSrc = user.avatarImage;
     }
     onSubmit({ value }) {
-        if (this.isLoggedIn) {
-            this.userService.register(value).subscribe((status) => {
-                alert(status);
-            });
-        } else {
-            this.userService.register(value).subscribe((status) => {
-                alert(status);
-            });
-        }
+        this.userService.register(value).subscribe((status) => {
+            this.router.navigate(['/account/patients']);
+        });
     }
 }

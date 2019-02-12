@@ -1,6 +1,9 @@
-<div
-  class="calendar-event"
-  [style.height]="event.durationInMinutes*3-1 + 'px'">
-  <span>{{event.title}}</span>
-
+<div class="calendar-event" [ngClass]="'appointment-category-'+categoryId"
+     [style.height]="event.durationInMinutes*4-1 + 'px'">
+  <div class="event-times">
+    <span>{{start | dfnsFormat : 'HH:mm'}}</span> - <span>{{end | dfnsFormat : 'HH:mm'}}</span>
+  </div>
+  <div>
+    <span>{{event.title}}</span>
+  </div>
 </div>

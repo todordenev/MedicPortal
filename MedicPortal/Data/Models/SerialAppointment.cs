@@ -17,5 +17,6 @@ namespace MedicPortal.Data.Models
         public string Title { get; set; }
         public string DoctorId { get; set; }
         public Doctor Doctor { get; set; }
+        public int CategoryId { get; set; }
     }
 }

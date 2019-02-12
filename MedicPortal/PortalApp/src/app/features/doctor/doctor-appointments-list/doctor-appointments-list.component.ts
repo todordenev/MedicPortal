@@ -16,6 +16,7 @@ export class DoctorAppointmentsListComponent implements OnInit {
   _viewDate = new Date();
   categoryId = '0';
   worktimes: Worktime[] = [];
+  eventsLoaded: boolean;
   constructor(private appointmentService: AppointmentService,
     private route: ActivatedRoute,
     private router: Router) { }
@@ -51,7 +52,11 @@ export class DoctorAppointmentsListComponent implements OnInit {
   }
   fetchEvents() {
     this.appointmentService.getAppointments(this.doctor.id, this.viewDate)
-      .subscribe(events => this.calendarEvents = events);
+      .subscribe(events => this.setEvents(events));
+  }
+  private setEvents(events) {
+    this.calendarEvents = events;
+    this.eventsLoaded = true;
   }
   get imageUrl() {
     return './assets/doctor_' + this.doctor.id + '.jpg';

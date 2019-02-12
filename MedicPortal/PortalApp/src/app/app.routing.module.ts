@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FeaturesModule } from './features/features.module';
 import { DoctorPatientsComponent } from './features/doctor';
 import { RoleGuard, AuthenticationGuard } from './core';
 
@@ -34,7 +33,6 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    FeaturesModule
   ],
   exports: [
     RouterModule

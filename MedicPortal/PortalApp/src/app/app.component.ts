@@ -2,6 +2,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '@app/core/services';
 import { User } from './core/entities/user';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,9 +16,12 @@ export class AppComponent implements OnInit {
     userName: string;
     user: User;
     mobileQuery: MediaQueryList;
+    dateOne = new Date();
     private _mobileQueryListener: () => void;
     constructor(private userService: UserService,
-        changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+        changeDetectorRef: ChangeDetectorRef,
+        media: MediaMatcher,
+        private router: Router) {
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
@@ -34,6 +38,6 @@ export class AppComponent implements OnInit {
         return this.userService.isInOneRole(roles);
     }
     logout() {
-        this.userService.logout().subscribe((status) => { });
+        this.userService.logout().subscribe(() => { this.router.navigate(['/']); });
     }
 }

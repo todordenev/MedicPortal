@@ -228,6 +228,8 @@ namespace MedicPortal.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CategoryId");
+
                     b.Property<int>("DayOfWeek");
 
                     b.Property<string>("DoctorId");

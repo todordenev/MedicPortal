@@ -12,13 +12,7 @@ namespace MedicPortal.TransportObjects.AppUserDtos
                 .ForMember(au => au.AvatarImage,
                     map => map.MapFrom(vm => GetBytes(vm.AvatarImageSrc)))
                 .ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
-            CreateMap<AppUser, AppUserView>()
-                .ForMember(vm => vm.AvatarImage, map => map.MapFrom(u => GetString(u.AvatarImage)));
-        }
-
-        private string GetString(byte[] value)
-        {
-            return Encoding.ASCII.GetString(value);
+            CreateMap<AppUser, AppUserView>();
         }
 
         private byte[] GetBytes(string value)

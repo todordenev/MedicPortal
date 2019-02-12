@@ -4,13 +4,15 @@ import { AccountLoginComponent } from './account-login/account-login.component';
 import { AccountPatientsComponent } from './account-patients/account-patients.component';
 import { AccountRegistrationComponent } from './account-registration/account-registration.component';
 import { AccountAppointmentsComponent } from './account-appointments/account-appointments.component';
+import { AuthenticationGuard } from '@app/core';
+import { AccountManageComponent } from './account-manage/account-manage.component';
 
 const routes: Routes = [
     { path: 'login', component: AccountLoginComponent },
-    { path: 'patients', component: AccountPatientsComponent },
     { path: 'registration', component: AccountRegistrationComponent },
-    { path: 'manage', component: AccountRegistrationComponent },
-    { path: 'appointments', component: AccountAppointmentsComponent }
+    { path: 'patients', component: AccountPatientsComponent, canActivate: [AuthenticationGuard] },
+    { path: 'manage', component: AccountManageComponent, canActivate: [AuthenticationGuard] },
+    { path: 'appointments', component: AccountAppointmentsComponent, canActivate: [AuthenticationGuard] }
 ];
 
 @NgModule({

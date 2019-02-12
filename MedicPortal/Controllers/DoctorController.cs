@@ -52,8 +52,8 @@ namespace MedicPortal.Controllers
             {
                 var doctors = _dbContext.Doctors
                     .Where(d => d.IsActive && d.Approved)
-                    .Include(d => d.Worktimes)
-                    .Where(d => myDoctorIds.Contains(d.Id));
+                    .Where(d => myDoctorIds.Contains(d.Id))
+                    .Include(d => d.Worktimes);
                 var doctorsTo = doctors.Select(d => _mapper.Map<DoctorView>(d)).ToList();
                 return doctorsTo;
             }

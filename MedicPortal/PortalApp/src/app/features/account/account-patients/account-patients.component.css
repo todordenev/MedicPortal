@@ -1,3 +1,6 @@
+.account-patients .actions{
+    margin: 5px;
+}
 .patient-container{
     display: flex;
     flex-wrap: wrap;

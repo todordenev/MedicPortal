@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MedicPortal.Data;
@@ -9,6 +10,7 @@ using MedicPortal.Helpers;
 using MedicPortal.TransportObjects.AppUserDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedicPortal.Controllers
@@ -65,6 +67,28 @@ namespace MedicPortal.Controllers
             return await Login(userName, model.Password);
         }
 
+        [HttpPatch("{id}")]
+        public  IActionResult Patch([FromBody] JsonPatchDocument<AppUser> userPatch)
+        {
+            if (!ModelState.IsValid)
+            {
+                Trace.TraceWarning("AccountsController.Register: ModelState is not valid.");
+                return BadRequest(ModelState);
+            }
+
+            var userId = User.GetUserId();
+            var appUser = _dbContext.Users.Find(userId);
+            
+            if (userPatch.Operations.Any())
+            {
+                userPatch.ApplyTo(appUser);
+                _dbContext.Update(appUser);
+                _dbContext.SaveChanges();
+            }
+
+            return Ok();
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
@@ -99,6 +123,15 @@ namespace MedicPortal.Controllers
 
             var userVm = GetUserInfo(user);
             return Ok(userVm);
+        }
+
+        [HttpGet("avatar-image")]
+        public async Task<IActionResult> GetAvatarImage()
+        {
+            var userId = User.GetUserId();
+            var user = await _dbContext.Users.FindAsync(userId);
+            var imageString = user.AvatarImage != null ? Encoding.ASCII.GetString(user.AvatarImage) : "";
+            return Ok(imageString);
         }
 
         private AppUserView GetUserInfo(AppUser user)

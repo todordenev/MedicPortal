@@ -1,16 +1,15 @@
 <div>
   <div class="dayview-events">
-    <app-slot
-      *ngFor="let slot of slots"
-      [slot]="slot"
-      (newEventClicked)="createNewEvent($event)"
-    >
+    <app-slot *ngFor="let slot of slots"
+              [slot]="slot"
+              (newEventClicked)="createNewEvent($event)"
+              [showNewTools]="showNewTools">
     </app-slot>
 
     <div *ngIf="slots.length == 0">
       Почивен ден
     </div>
-    <div class="now-divider" >
+    <div class="now-divider">
 
     </div>
   </div>

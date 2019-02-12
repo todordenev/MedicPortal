@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190208134659_Init")]
+    [Migration("20190212134442_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,6 +229,8 @@ namespace MedicPortal.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CategoryId");
 
                     b.Property<int>("DayOfWeek");
 

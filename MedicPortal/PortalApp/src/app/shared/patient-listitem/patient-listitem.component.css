@@ -12,6 +12,7 @@
 .mat-card {
     width: 330px;
     margin: 5px;
+    border-radius: 0;
 }
 
 .mat-form-field {

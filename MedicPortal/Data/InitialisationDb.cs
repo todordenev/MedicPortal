@@ -231,7 +231,8 @@ namespace MedicPortal.Data
                     DurationInMinutes = 90,
                     Title = "Работно време без часове",
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.MaxValue
+                    EndDate = DateTime.MaxValue,
+                    CategoryId = AppointmentCategoryType.NoAppointmentsType
                 },
                 new SerialAppointment
                 {
@@ -241,7 +242,8 @@ namespace MedicPortal.Data
                     DurationInMinutes = 90,
                     Title = "Работно време без часове",
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.MaxValue
+                    EndDate = DateTime.MaxValue,
+                    CategoryId = AppointmentCategoryType.NoAppointmentsType
                 },
                 new SerialAppointment
                 {
@@ -251,7 +253,8 @@ namespace MedicPortal.Data
                     DurationInMinutes = 90,
                     Title = "Работно време без часове",
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.MaxValue
+                    EndDate = DateTime.MaxValue,
+                    CategoryId = AppointmentCategoryType.NoAppointmentsType
                 },
                 new SerialAppointment
                 {
@@ -261,7 +264,8 @@ namespace MedicPortal.Data
                     DurationInMinutes = 90,
                     Title = "Работно време без часове",
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.MaxValue
+                    EndDate = DateTime.MaxValue,
+                    CategoryId = AppointmentCategoryType.NoAppointmentsType
                 },
                 new SerialAppointment
                 {
@@ -271,7 +275,8 @@ namespace MedicPortal.Data
                     DurationInMinutes = 90,
                     Title = "Работно време без часове",
                     StartDate = DateTime.Today,
-                    EndDate = DateTime.MaxValue
+                    EndDate = DateTime.MaxValue,
+                    CategoryId = AppointmentCategoryType.NoAppointmentsType
                 }
             };
             _dbContext.SerialAppointments.AddRange(_serialAppointments);

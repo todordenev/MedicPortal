@@ -7,12 +7,6 @@ import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter }
 })
 export class CaptureImageComponent implements OnInit {
 
-    @ViewChild('video')
-    public video: ElementRef;
-
-    @ViewChild('canvas')
-    public canvas: ElementRef;
-    isCapturing = false;
     @Input()
     imgSrc = '';
     @Output()
@@ -22,26 +16,17 @@ export class CaptureImageComponent implements OnInit {
 
     ngOnInit() {
     }
-    startCapture() {
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-                const videoElement = this.video.nativeElement;
-                this.canvas.nativeElement.width = videoElement.videoWidth;
-                this.canvas.nativeElement.height = videoElement.videoHeight;
-                this.video.nativeElement.srcObject = stream;
-                this.video.nativeElement.play();
+
+    fileChangeEvent(fileInput) {
+        if (fileInput.target.files && fileInput.target.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = ((e) => {
+                this.imgSrc = e.target['result'];
+                this.imgChanged.emit(this.imgSrc);
             });
-            this.isCapturing = true;
+
+            reader.readAsDataURL(fileInput.target.files[0]);
         }
-    }
-    captureImage() {
-        const videoElement = this.video.nativeElement;
-        this.canvas.nativeElement.width = videoElement.videoWidth;
-        this.canvas.nativeElement.height = videoElement.videoHeight;
-        const context = this.canvas.nativeElement.getContext('2d');
-        context.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
-        this.imgSrc = this.canvas.nativeElement.toDataURL('image/png');
-        this.isCapturing = false;
-        this.imgChanged.emit(this.imgSrc);
     }
 }

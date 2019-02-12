@@ -1,7 +1,4 @@
 <div class="doctor-details">
-
-    <div>Заявени часове</div>
-
     <div class="appointments">
         <div fxLayout="row"
              fxLayoutAlign="start center">
@@ -30,8 +27,10 @@
             </div>
         </div>
         <app-day-view [events]="calendarEvents"
+                      *ngIf="eventsLoaded"
                       (newEventClicked)="createAppointment($event)"
                       [viewDate]="viewDate"
+                      [showNewTools]="false"
                       [worktimes]="worktimes">
         </app-day-view>
     </div>

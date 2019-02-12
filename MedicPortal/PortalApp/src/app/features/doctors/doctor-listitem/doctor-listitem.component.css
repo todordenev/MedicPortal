@@ -1,12 +1,12 @@
 :host {
-    width: 300px;
-    box-sizing: border-box;
+    
 }
 
 .mat-card {
-    margin: 5px;
+    margin: 5px 0 0 5px;
     background-color: #ffffff;
     border-radius: 0 !important;
+    width: 300px;
 }
 
 .doctor-header-image {

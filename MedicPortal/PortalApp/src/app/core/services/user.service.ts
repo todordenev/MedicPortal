@@ -5,11 +5,13 @@ import { map, catchError } from 'rxjs/operators';
 import { authTokenNameConst } from '@app/core/constants';
 import { User } from '@app/core/entities/user';
 import { UserCredentials, Registration } from '@app/core/entities/registration';
+import { handleError } from '../entities/helpers';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService implements OnInit {
+
     authUrl = '/api/accounts';
     _user: BehaviorSubject<User>;
     _loggedIn = new BehaviorSubject<boolean>(false);
@@ -80,14 +82,14 @@ export class UserService implements OnInit {
         return this.http.post(this.authUrl + '/register', registration)
             .pipe(
                 map(() => { this.getUserInfo(); }),
-                catchError(this.handleError)
+                catchError(handleError)
             );
     }
     login(credentials: UserCredentials): Observable<any> {
         return this.http.post(this.authUrl + '/login', credentials)
             .pipe(
                 map(() => { this.getUserInfo(); }),
-                catchError(this.handleError)
+                catchError(handleError)
             );
     }
     getUserInfo() {
@@ -106,6 +108,7 @@ export class UserService implements OnInit {
             );
     }
 
+
     private onUserLoggedIn(user) {
         const userString = JSON.stringify(user);
         localStorage.setItem(authTokenNameConst, userString);
@@ -120,16 +123,16 @@ export class UserService implements OnInit {
         return this.http.post(this.authUrl + '/logout', {})
             .pipe(
                 map(() => { }),
-                catchError(this.handleError)
+                catchError(handleError)
+            );
+    }
+    getAvatarImage(): any {
+        return this.http.get(this.authUrl + '/avatar-image')
+            .pipe(
+                map((result) => {  }),
+                catchError(handleError)
             );
     }
 
-    private handleError(error: HttpErrorResponse) {
-        console.error('server error:', error);
-        if (error.error instanceof Error) {
-            const errMessage = error.error.message;
-            return Observable.throw(errMessage);
-        }
-        return Observable.throw(error || 'Server error');
-    }
+
 }
