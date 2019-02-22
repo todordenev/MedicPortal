@@ -2,16 +2,15 @@
     <mat-card-header>
         <div mat-card-avatar
              class="doctor-header-image"
-             [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
-        <mat-card-title><a routerLink="/doctors/{{doctor.id}}">{{doctor.firstName}} {{doctor.lastName}}</a>
-        </mat-card-title>
+             [style.background-image]="'url(' + doctor.headerImageSrc + ')'"></div>
+        <mat-card-title>{{doctor.firstName}} {{doctor.lastName}}</mat-card-title>
         <mat-card-subtitle>
             <span *ngFor="let spec of doctor.specialisations">{{spec}}</span>
         </mat-card-subtitle>
     </mat-card-header>
     <div class="image-container">
         <img mat-card-image
-             [src]="imageUrl"
+             [src]="doctor.hauptImageSrc"
              alt="{{doctor.name}}">
     </div>
     <mat-card-content>

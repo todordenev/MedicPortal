@@ -61,7 +61,7 @@
           <mat-icon>group</mat-icon>
           <span>Моите пациенти</span>
         </a>
-        <div *ngIf="userInRole(['Admin','Doctor'])">
+        <div *ngIf="userInRole(['Doctor'])">
           <mat-divider></mat-divider>
           <a [routerLink]="[ '/doctor/patients' ]"
              mat-list-item
@@ -82,6 +82,15 @@
             Кодове Регистрация
           </a>
         </div>
+        <div *ngIf="userInRole(['Admin'])">
+            <mat-divider></mat-divider>
+            <a [routerLink]="[ '/admin/images' ]"
+               mat-list-item
+               *ngIf="isLoggedIn">
+              <mat-icon>group</mat-icon>
+              Файлове
+            </a>          
+          </div>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

@@ -13,7 +13,7 @@ namespace MedicPortal.Data
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Telefon = user.PhoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 AppUserId = user.Id,
                 Birthdate = new DateTime(1980, 1, 1)
             };

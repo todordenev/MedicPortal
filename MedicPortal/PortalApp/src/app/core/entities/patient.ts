@@ -7,7 +7,7 @@ export class Patient {
     birthdate: Date;
     adress: string;
     telefon: string;
-
+    avatarImgSrc: string;
     constructor(serverObject?: any) {
         if (serverObject) {
             this.id = serverObject.id;
@@ -16,6 +16,7 @@ export class Patient {
             this.birthdate = serverObject.birthdate;
             this.adress = serverObject.adress;
             this.telefon = serverObject.telefon;
+            this.avatarImgSrc = serverObject.avatarImgSrc;
         }
     }
 }

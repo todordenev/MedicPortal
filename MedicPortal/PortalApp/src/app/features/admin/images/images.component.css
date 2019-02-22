@@ -1,0 +1,13 @@
+.image-upload {
+    background-color: white;
+    margin: 5px;
+    max-width: 500px;
+}
+
+.image-container {
+    margin: 5px;
+}
+
+.image {
+    height: 300px;
+}

@@ -16,7 +16,7 @@ export class AccountPatientsComponent implements OnInit {
   }
   @Input()
   addPatient() {
-    this.patients.push(new Patient());
+    this.patients.unshift(new Patient());
   }
 
 }

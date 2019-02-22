@@ -1,30 +1,48 @@
 <mat-card>
-    <form class="registration-form" [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)" novalidate>
-        <div class="registration-top">
-            <app-capture-image [imgSrc]="userImgSrc" (imgChanged)="imgChanged($event)"></app-capture-image>
-            <div>
-                <mat-form-field>
-                    <input formControlName="firstName" matInput placeholder="Име">
-                </mat-form-field>
-                <mat-form-field>
-                    <input formControlName="lastName" matInput placeholder="Фамилия">
-                </mat-form-field>
-            </div>
-        </div>
+    <form class="registration-form"
+          [formGroup]="registrationForm"
+          (ngSubmit)="onSubmit(registrationForm)"
+          novalidate>
         <mat-form-field>
-            <input formControlName="email" matInput placeholder="Емайл">
+            <input formControlName="firstName"
+                   name="firstName"
+                   matInput
+                   placeholder="Име">
         </mat-form-field>
         <mat-form-field>
-            <input formControlName="password" matInput placeholder="Парола">
+            <input formControlName="lastName"
+                   name="lastName"
+                   matInput
+                   placeholder="Фамилия">
         </mat-form-field>
         <mat-form-field>
-            <input formControlName="password2" matInput placeholder="Парола (отново)">
+            <input formControlName="email"
+                   name="email"
+                   matInput
+                   placeholder="Емайл">
         </mat-form-field>
         <mat-form-field>
-            <input formControlName="phoneNumber" matInput placeholder="Телефон">
+            <input formControlName="password"
+                   type="password"
+                   matInput
+                   placeholder="Парола">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="confirmPassword"
+                   type="password"
+                   matInput
+                   placeholder="Парола (отново)">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="phoneNumber"
+                   name="phone"
+                   matInput
+                   placeholder="Телефон">
         </mat-form-field>
         <div>
-            <button mat-button type="submit" [disabled]="!registrationForm.valid">Регистрация</button>
+            <button mat-raised-button
+                    type="submit"
+                    [disabled]="!registrationForm.valid">Регистрация</button>
         </div>
     </form>
 </mat-card>

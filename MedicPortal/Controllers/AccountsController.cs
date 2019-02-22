@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MedicPortal.Data;
@@ -68,7 +67,7 @@ namespace MedicPortal.Controllers
         }
 
         [HttpPatch("{id}")]
-        public  IActionResult Patch([FromBody] JsonPatchDocument<AppUser> userPatch)
+        public IActionResult Patch([FromBody] JsonPatchDocument<AppUser> userPatch)
         {
             if (!ModelState.IsValid)
             {
@@ -78,7 +77,7 @@ namespace MedicPortal.Controllers
 
             var userId = User.GetUserId();
             var appUser = _dbContext.Users.Find(userId);
-            
+
             if (userPatch.Operations.Any())
             {
                 userPatch.ApplyTo(appUser);
@@ -107,7 +106,10 @@ namespace MedicPortal.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok();
+
+            var user = _dbContext.Users.First(u => u.UserName == userName);
+            var userVm = await GetUserInfo(user);
+            return Ok(userVm);
         }
 
         [HttpGet]
@@ -121,25 +123,18 @@ namespace MedicPortal.Controllers
                 return Unauthorized();
             }
 
-            var userVm = GetUserInfo(user);
+            var userVm = await GetUserInfo(user);
             return Ok(userVm);
         }
 
-        [HttpGet("avatar-image")]
-        public async Task<IActionResult> GetAvatarImage()
-        {
-            var userId = User.GetUserId();
-            var user = await _dbContext.Users.FindAsync(userId);
-            var imageString = user.AvatarImage != null ? Encoding.ASCII.GetString(user.AvatarImage) : "";
-            return Ok(imageString);
-        }
-
-        private AppUserView GetUserInfo(AppUser user)
+        private async Task<AppUserView> GetUserInfo(AppUser user)
         {
             var userVm = _mapper.Map<AppUserView>(user);
-            userVm.Roles = User.Claims.Where(cl => cl.Type == ClaimTypes.Role).Select(cl => cl.Value).ToList();
-            var userClaims = _dbContext.UserClaims.Where(cl => cl.UserId == user.Id);
-            userVm.Claims = userClaims.Select(cl => new Claim(cl.ClaimType, cl.ClaimValue)).ToList();
+            var claimsPrincipal = await _signInManager.ClaimsFactory.CreateAsync(user);
+            userVm.Roles = claimsPrincipal.Claims
+                .Where(cl => cl.Type == ClaimTypes.Role).Select(cl => cl.Value)
+                .ToList();
+            userVm.Claims = claimsPrincipal.Claims.ToList();
             return userVm;
         }
 

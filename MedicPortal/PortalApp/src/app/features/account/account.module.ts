@@ -4,7 +4,6 @@ import { SharedModule } from '@app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { MaterialModule } from '@app/core/Material.module';
 import { DateFnsModule } from 'ngx-date-fns';
 import { AccountRegistrationComponent } from './account-registration/account-registration.component';
 import { AccountPatientsComponent } from './account-patients/account-patients.component';
@@ -13,6 +12,8 @@ import { AccountDoctorComponent } from './account-doctor/account-doctor.componen
 import { AccountLoginComponent } from './account-login/account-login.component';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountManageComponent } from './account-manage/account-manage.component';
+import { PatientComponent } from './account-patients/patient/patient.component';
+import { MatIconModule, MatFormFieldModule, MatCardModule, MatDatepickerModule, MatInputModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -21,9 +22,13 @@ import { AccountManageComponent } from './account-manage/account-manage.componen
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        MaterialModule,
         DateFnsModule,
-        AccountRoutingModule
+        AccountRoutingModule,
+        MatInputModule,
+        MatCardModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatButtonModule
     ],
     declarations: [
         AccountPatientsComponent,
@@ -31,7 +36,8 @@ import { AccountManageComponent } from './account-manage/account-manage.componen
         AccountAppointmentsComponent,
         AccountDoctorComponent,
         AccountLoginComponent,
-        AccountManageComponent
+        AccountManageComponent,
+        PatientComponent
     ],
     exports: [
         AccountPatientsComponent,

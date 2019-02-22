@@ -129,7 +129,9 @@ namespace MedicPortal.Data
                         new Worktime {DayOfWeek = 3, From = 15.75, Till = 18},
                         new Worktime {DayOfWeek = 4, From = 7.5, Till = 10.5},
                         new Worktime {DayOfWeek = 4, From = 10.75, Till = 13}
-                    }
+                    },
+                    HeaderImageSrc = "./assets/doctor_1.jpg",
+                    HauptImageSrc = "./assets/doctor_1.jpg"
                 },
                 new Doctor
                 {
@@ -150,7 +152,9 @@ namespace MedicPortal.Data
                         new Worktime {DayOfWeek = 3, From = 13, Till = 16},
                         new Worktime {DayOfWeek = 4, From = 8, Till = 12},
                         new Worktime {DayOfWeek = 4, From = 13, Till = 16}
-                    }
+                    },
+                    HeaderImageSrc = "./assets/doctor_2.jpg",
+                    HauptImageSrc = "./assets/doctor_2.jpg"
                 }
             };
 
@@ -193,7 +197,7 @@ namespace MedicPortal.Data
                 new Patient
                 {
                     FirstName = "Thea",
-                    Adress = "Mühlenstraße 4, Hohenlinden",
+                    Address = "Mühlenstraße 4, Hohenlinden",
                     AppUser = _appUsers[0],
                     Birthdate = new DateTime(2016, 2, 20),
                     LastName = "Denev"
@@ -201,7 +205,7 @@ namespace MedicPortal.Data
                 new Patient
                 {
                     FirstName = "Daniel",
-                    Adress = "Mühlenstraße 4, Hohenlinden",
+                    Address = "Mühlenstraße 4, Hohenlinden",
                     AppUser = _appUsers[0],
                     Birthdate = new DateTime(2013, 10, 7),
                     LastName = "Denev"
@@ -209,7 +213,7 @@ namespace MedicPortal.Data
                 new Patient
                 {
                     FirstName = "Peycho",
-                    Adress = "Traitscho Kostov 16, Koprinka",
+                    Address = "Traitscho Kostov 16, Koprinka",
                     AppUser = _appUsers[3],
                     Birthdate = new DateTime(1962, 9, 11),
                     LastName = "Peev"

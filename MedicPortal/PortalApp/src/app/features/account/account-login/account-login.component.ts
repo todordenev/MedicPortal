@@ -19,7 +19,7 @@ export class AccountLoginComponent implements OnInit {
         'irina.ivanova@gmail.com',
         'nujka.peeva@gmail.com',
         'ivan.ivanov@gmail.com',
-        'todor_admin@gmail.com'];
+        'todor.denev@gmail.com'];
     currentLogin = 0;
     constructor(private userService: UserService,
         private formBuilder: FormBuilder,

@@ -1,0 +1,32 @@
+.status_indicator {
+   position: relative;
+}
+
+.status_indicator>.mat-icon {
+    position: absolute;
+    right: -10px;
+    top:-10px;
+}
+
+.patient-card {
+    width: 330px;
+    margin: 5px;
+    background-color: white;
+    padding: 20px;
+}
+.main-controles {
+    display: flex;
+}
+.avatar-control{
+    width: 135px;
+}
+.name-controls{
+    padding-top: 60px;
+    width: 160px;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+.patient-card-actions {}

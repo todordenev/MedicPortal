@@ -23,7 +23,6 @@ export class AccountManageComponent implements OnInit {
     ngOnInit() {
         this.userService.user.subscribe(user => this.createFormGroup(user));
         this.userService.isLoggedIn.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
-        this.userService.getAvatarImage().subscribe(imageSrc => this.setImageSrc(imageSrc));
     }
     private setImageSrc(value) {
         this.registrationForm.patchValue({
@@ -41,8 +40,7 @@ export class AccountManageComponent implements OnInit {
             firstName: [user.firstName, [Validators.required]],
             lastName: [user.lastName, [Validators.required]],
             email: [user.email, [Validators.required]],
-            phoneNumber: [user.phoneNumber],
-            avatarImage: ['']
+            phoneNumber: [user.phoneNumber]
         });
 
         this.user = { ...user };

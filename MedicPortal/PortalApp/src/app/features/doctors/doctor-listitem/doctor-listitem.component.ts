@@ -3,6 +3,7 @@ import { Doctor } from '@app/core/entities';
 import { UserService, RegistrationCodesService } from '@app/core';
 import { User } from '@app/core/entities/user';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ClaimsService } from '@app/core/services/claims.service';
 
 @Component({
     selector: 'app-doctor-listitem',
@@ -18,7 +19,9 @@ export class DoctorListitemComponent implements OnInit {
     registrationCode: string;
     isUserAuthorised: boolean;
     hasCodeError: boolean;
-    constructor(private userService: UserService, private registrationCodesService: RegistrationCodesService) { }
+    constructor(private userService: UserService,
+        private registrationCodesService: RegistrationCodesService,
+        private claimsService: ClaimsService) { }
 
     ngOnInit(): void {
         this.userService.user.subscribe(user => this.onUserChanged(user));
@@ -27,21 +30,17 @@ export class DoctorListitemComponent implements OnInit {
 
     onUserChanged(user) {
         this.user = user;
-        this.isUserAuthorised = this.isLoggedIn && this.userService.hasClaim('make-appointments', this.doctor.id);
+        this.isUserAuthorised = this.isLoggedIn && this.claimsService.hasClaim('make-appointments', this.doctor.id);
         if (this.isUserAuthorised) {
             this.codeInputIsVisible = false;
         }
     }
     onLoginChanged(isLoggedin) {
         this.isLoggedIn = isLoggedin;
-        this.isUserAuthorised = this.isLoggedIn && this.userService.hasClaim('make-appointments', this.doctor.id);
+        this.isUserAuthorised = this.isLoggedIn && this.claimsService.hasClaim('make-appointments', this.doctor.id);
         if (this.isUserAuthorised) {
             this.codeInputIsVisible = false;
         }
-    }
-
-    get imageUrl() {
-        return './assets/doctor_' + this.doctor.id + '.jpg';
     }
     showCodeInput() {
         this.codeInputIsVisible = true;

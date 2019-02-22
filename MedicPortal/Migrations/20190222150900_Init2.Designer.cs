@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190212134442_Init")]
-    partial class Init
+    [Migration("20190222150900_Init2")]
+    partial class Init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,6 +125,10 @@ namespace MedicPortal.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<string>("HauptImageSrc");
+
+                    b.Property<string>("HeaderImageSrc");
+
                     b.Property<bool>("IsActive");
 
                     b.Property<string>("LastName");
@@ -171,14 +175,30 @@ namespace MedicPortal.Migrations
                     b.ToTable("EntityChanges");
                 });
 
+            modelBuilder.Entity("MedicPortal.Data.Models.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ContentType");
+
+                    b.Property<byte[]>("ImageBytes");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("MedicPortal.Data.Models.Patient", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Adress");
+                    b.Property<string>("Address");
 
                     b.Property<string>("AppUserId");
+
+                    b.Property<string>("AvatarImgSrc");
 
                     b.Property<DateTime>("Birthdate");
 
@@ -192,7 +212,7 @@ namespace MedicPortal.Migrations
 
                     b.Property<string>("LastName");
 
-                    b.Property<string>("Telefon");
+                    b.Property<string>("PhoneNumber");
 
                     b.HasKey("Id");
 

@@ -51,6 +51,19 @@ namespace MedicPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ImageBytes = table.Column<byte[]>(nullable: true),
+                    ContentType = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RegistrationCodes",
                 columns: table => new
                 {
@@ -194,6 +207,8 @@ namespace MedicPortal.Migrations
                     LastName = table.Column<string>(nullable: true),
                     Approved = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
+                    HeaderImageSrc = table.Column<string>(nullable: true),
+                    HauptImageSrc = table.Column<string>(nullable: true),
                     AppUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -238,8 +253,8 @@ namespace MedicPortal.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Birthdate = table.Column<DateTime>(nullable: false),
-                    Adress = table.Column<string>(nullable: true),
-                    Telefon = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true),
                     DeletedById = table.Column<string>(nullable: true)
@@ -485,6 +500,9 @@ namespace MedicPortal.Migrations
 
             migrationBuilder.DropTable(
                 name: "EntityChanges");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "RegistrationCodes");

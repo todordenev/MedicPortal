@@ -1,24 +1,37 @@
 <mat-card>
-  <form class="registration-form" [formGroup]="registrationForm" (ngSubmit)="onSubmit()" novalidate>
-      <div class="registration-top">
-          <app-capture-image [imgSrc]="userImgSrc" (imgChanged)="imgChanged($event)"></app-capture-image>
-          <div>
-              <mat-form-field>
-                  <input formControlName="firstName" matInput placeholder="Име">
-              </mat-form-field>
-              <mat-form-field>
-                  <input formControlName="lastName" matInput placeholder="Фамилия">
-              </mat-form-field>
-          </div>
-      </div>
-      <mat-form-field>
-          <input formControlName="email" matInput placeholder="Емайл">
-      </mat-form-field>
-      <mat-form-field>
-          <input formControlName="phoneNumber" matInput placeholder="Телефон">
-      </mat-form-field>
-      <div>
-          <button mat-button type="submit" [disabled]="!registrationForm.valid && registrationForm.pristine">Запамети</button>
-      </div>
-  </form>
+    <form class="registration-form"
+          [formGroup]="registrationForm"
+          (ngSubmit)="onSubmit()"
+          novalidate>
+        <mat-form-field>
+            <input formControlName="firstName"
+                   name="firstName"
+                   matInput
+                   placeholder="Име">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="lastName"
+                   name="lastName"
+                   matInput
+                   placeholder="Фамилия">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="email"
+                   name="email"
+                   disabled
+                   matInput
+                   placeholder="Емайл">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="phoneNumber"
+                   name="phoneNumber"
+                   matInput
+                   placeholder="Телефон">
+        </mat-form-field>
+        <div>
+            <button mat-button
+                    type="submit"
+                    [disabled]="!registrationForm.valid && registrationForm.pristine">Запамети</button>
+        </div>
+    </form>
 </mat-card>

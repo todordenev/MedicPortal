@@ -6,12 +6,12 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { TabViewModule } from 'primeng/tabview';
 import { DoctorAppointmentsListComponent } from './doctor-appointments-list/doctor-appointments-list.component';
-import { MaterialModule } from '@app/core/Material.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { DateFnsModule } from 'ngx-date-fns';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DoctorRoutingModule } from './doctor-routing.module';
 import { DoctorRegistrationCodesComponent } from './doctor-registration-codes/doctor-registration-codes.component';
+import { MatIconModule, MatDatepickerModule, MatSelectModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -19,11 +19,13 @@ import { DoctorRegistrationCodesComponent } from './doctor-registration-codes/do
     FormsModule,
     CalendarModule,
     TabViewModule,
-    MaterialModule,
     DateFnsModule,
     SharedModule,
     FlexLayoutModule,
-    DoctorRoutingModule
+    DoctorRoutingModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatSelectModule
   ],
   declarations: [
     DoctorAppointmentsComponent,

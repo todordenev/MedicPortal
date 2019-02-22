@@ -43,52 +43,17 @@ export class UserService implements OnInit {
         return this._loggedIn.asObservable();
     }
 
-    isInRole(roleName: string): boolean {
-        try {
-            const userRoles = this._user.value.roles;
-            if (userRoles && userRoles.length > 0) {
-                for (let i = 0; i < userRoles.length; i++) {
-                    const role = userRoles[i];
-                    if (role === roleName) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        } catch (error) {
-            return false;
-        }
-    }
-    isInOneRole(roles: string[]): boolean {
-        for (let i = 0; i < roles.length; i++) {
-            if (this.isInRole(roles[i])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    hasClaim(type: string, value: string) {
-        const userClaims = this._user.value.claims;
-        for (let i = 0; i < userClaims.length; i++) {
-            const claim = userClaims[i];
-            if (claim.type === type && claim.value === value) {
-                return true;
-            }
-        }
-        return false;
-    }
     register(registration: Registration): Observable<any> {
         return this.http.post(this.authUrl + '/register', registration)
             .pipe(
-                map(() => { this.getUserInfo(); }),
+                map((result) => { this.onUserLoggedIn(result); }),
                 catchError(handleError)
             );
     }
     login(credentials: UserCredentials): Observable<any> {
         return this.http.post(this.authUrl + '/login', credentials)
             .pipe(
-                map(() => { this.getUserInfo(); }),
+                map((result) => { this.onUserLoggedIn(result); }),
                 catchError(handleError)
             );
     }
@@ -126,13 +91,4 @@ export class UserService implements OnInit {
                 catchError(handleError)
             );
     }
-    getAvatarImage(): any {
-        return this.http.get(this.authUrl + '/avatar-image')
-            .pipe(
-                map((result) => {  }),
-                catchError(handleError)
-            );
-    }
-
-
 }

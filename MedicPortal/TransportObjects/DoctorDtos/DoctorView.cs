@@ -17,5 +17,7 @@ namespace MedicPortal.TransportObjects.DoctorDtos
         public bool Approved { get; set; }
         public bool IsActive { get; set; }
         public IList<string> Specialisations { get; set; } = new List<string>();
+        public string HeaderImageSrc { get; set; }
+        public string HauptImageSrc { get; set; }
     }
 }

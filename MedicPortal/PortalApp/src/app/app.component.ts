@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '@app/core/services';
 import { User } from './core/entities/user';
 import { Router } from '@angular/router';
+import { ClaimsService } from './core/services/claims.service';
 
 
 @Component({
@@ -19,9 +20,9 @@ export class AppComponent implements OnInit {
     dateOne = new Date();
     private _mobileQueryListener: () => void;
     constructor(private userService: UserService,
-        changeDetectorRef: ChangeDetectorRef,
-        media: MediaMatcher,
-        private router: Router) {
+        changeDetectorRef: ChangeDetectorRef, private claimsService: ClaimsService,
+        media: MediaMatcher, private router: Router) {
+
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit {
         this.userName = user.firstName + ' ' + user.lastName;
     }
     userInRole(roles: string[]) {
-        return this.userService.isInOneRole(roles);
+        return this.claimsService.isInOneRole(roles);
     }
     logout() {
         this.userService.logout().subscribe(() => { this.router.navigate(['/']); });

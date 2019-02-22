@@ -17,6 +17,12 @@ const routes: Routes = [
     loadChildren: './features/appointments/appointments.module#AppointmentsModule'
   },
   {
+    path: 'admin',
+    loadChildren: './features/admin/admin.module#AdminModule',
+    canActivateChild: [AuthenticationGuard, RoleGuard],
+    data: { roles: ['Admin'] }
+  },
+  {
     path: '',
     redirectTo: 'doctors',
     pathMatch: 'full'

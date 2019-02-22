@@ -1,0 +1,77 @@
+<div class="patient-card">
+    <div class="status_indicator" *ngIf="!patient.id">
+        <mat-icon>fiber_new</mat-icon>
+    </div>
+
+    <form [formGroup]="patientForm"
+          (ngSubmit)="onSubmit()"
+          novalidate>
+        <div class="main-controles">
+            <div class="avatar-control">
+                <div class="image-container">
+                    <img class="avatar-image"
+                         [src]="imgSrc"
+                         alt="image"
+                         width="100%"
+                         *ngIf="imgSrc" />
+                    <input type='file'
+                           (change)="fileChangeEvent($event)"
+                           [hidden]="true"
+                           #fileInput />
+                </div>
+                <div class="user-image-actions">
+                    <a mat-raised-button
+                       type="button"
+                       (click)="fileInput.click()">Избери снимка</a>
+                </div>
+            </div>
+            <div class="name-controls">
+                <mat-form-field>
+                    <input formControlName="firstName"
+                           name="firstName"
+                           matInput
+                           placeholder="Име">
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="lastName"
+                           name="lastName"
+                           matInput
+                           placeholder="Фамилия">
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field>
+            <input matInput
+                   [matDatepicker]="picker3"
+                   placeholder="Рожденна дата"
+                   formControlName="birthdate">
+            <mat-datepicker-toggle matSuffix
+                                   [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="telefon"
+                   name="phoneNumber"
+                   matInput
+                   placeholder="Телефон">
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="adress"
+                   name="address"
+                   matInput
+                   placeholder="Адрес">
+        </mat-form-field>
+        <div class="patient-card-actions">
+            <button mat-button
+                    type="submit"
+                    [disabled]="!patientForm.valid || patientForm.pristine">Запази</button>
+            <button mat-button
+                    type="button"
+                    (click)="cratePatientForm()"
+                    [disabled]="patientForm.pristine">Откажи</button>
+            <button mat-button
+                    type="button"
+                    (click)="deletePatient()">Изтрий</button>
+        </div>
+    </form>
+</div>
