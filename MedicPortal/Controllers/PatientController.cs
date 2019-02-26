@@ -29,15 +29,17 @@ namespace MedicPortal.Controllers
         }
 
         [HttpGet]
-        public List<Patient> Get()
+        public async Task<IActionResult> Get()
         {
             var userId = User.GetUserId();
             var patients = _dbContext.Patients
                 .Include(p => p.AppUser)
                 .Where(p => p.AppUserId == userId)
-                .Where(p => !p.IsDeleted).ToList();
+                .Where(p => !p.IsDeleted);
+            var patientsDtos = await patients
+                .Select(d => _mapper.Map<PatientView>(d)).ToListAsync();
 
-            return patients.ToList();
+            return Ok(patientsDtos);
         }
 
         [HttpPost]
@@ -108,7 +110,7 @@ namespace MedicPortal.Controllers
             return Ok();
         }
 
-        
+
         [HttpGet("registered/{doctorId}")]
         public List<Patient> GetRegisteredPatients(string doctorId)
         {
@@ -120,6 +122,5 @@ namespace MedicPortal.Controllers
 
             return patients.ToList();
         }
-
     }
 }

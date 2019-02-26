@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MedicPortal.Data;
 using MedicPortal.Data.Models;
+using MedicPortal.Helpers;
 using MedicPortal.TransportObjects.Image;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,24 +49,33 @@ namespace MedicPortal.Controllers
                 var image = new Image
                 {
                     ImageBytes = memoryStream.ToArray(),
-                    ContentType = imageCreate.ImageData.ContentType
+                    ContentType = imageCreate.ImageData.ContentType,
+                    RessourceOwnerId = User.GetUserId()
                 };
                 _dbContext.Images.Add(image);
                 _dbContext.SaveChanges();
-                return Ok(image.Id);
+                return Ok(new {id = image.Id, url = "/api/images/" + image.Id});
             }
-        }
-
-        // PUT: api/Image/5
-        [HttpPut("{id}")]
-        public void Put(int id, ImageCreate imageCreate)
-        {
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            var image = await _dbContext.Images.FindAsync(id);
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+            if (image.RessourceOwnerId == User.GetUserId() || User.IsPortalAdmin())
+            {
+                _dbContext.Images.Remove(image);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+
+            return Unauthorized();
         }
     }
 }

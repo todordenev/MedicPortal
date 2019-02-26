@@ -51,19 +51,6 @@ namespace MedicPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Images",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    ImageBytes = table.Column<byte[]>(nullable: true),
-                    ContentType = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Images", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RegistrationCodes",
                 columns: table => new
                 {
@@ -245,6 +232,26 @@ namespace MedicPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ImageBytes = table.Column<byte[]>(nullable: true),
+                    ContentType = table.Column<string>(nullable: true),
+                    RessourceOwnerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_AspNetUsers_RessourceOwnerId",
+                        column: x => x.RessourceOwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
@@ -257,7 +264,8 @@ namespace MedicPortal.Migrations
                     PhoneNumber = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true),
-                    DeletedById = table.Column<string>(nullable: true)
+                    DeletedById = table.Column<string>(nullable: true),
+                    AvatarImgSrc = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -453,6 +461,11 @@ namespace MedicPortal.Migrations
                 name: "IX_EntityChanges_ChangedById",
                 table: "EntityChanges",
                 column: "ChangedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_RessourceOwnerId",
+                table: "Images",
+                column: "RessourceOwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_AppUserId",

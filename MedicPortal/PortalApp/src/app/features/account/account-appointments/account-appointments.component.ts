@@ -16,7 +16,7 @@ export class AccountAppointmentsComponent implements OnInit {
   ngOnInit() {
     this.appointmentService.getAccountAppointments().subscribe(appointments => this.appointments = appointments);
   }
-  cancel(appointment) {
-    this.appointmentService.cancel(appointment.id).subscribe(() => appointment.canceled = true);
+  cancel(appointment: AppointmentView) {
+    this.appointmentService.cancel(appointment.id).subscribe(() => appointment.isCanceled = true);
   }
 }

@@ -182,7 +182,11 @@ namespace MedicPortal.Migrations
 
                     b.Property<byte[]>("ImageBytes");
 
+                    b.Property<string>("RessourceOwnerId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RessourceOwnerId");
 
                     b.ToTable("Images");
                 });
@@ -453,6 +457,13 @@ namespace MedicPortal.Migrations
                     b.HasOne("MedicPortal.Data.Models.AppUser", "ChangedBy")
                         .WithMany()
                         .HasForeignKey("ChangedById");
+                });
+
+            modelBuilder.Entity("MedicPortal.Data.Models.Image", b =>
+                {
+                    b.HasOne("MedicPortal.Data.Models.AppUser", "RessourceOwner")
+                        .WithMany()
+                        .HasForeignKey("RessourceOwnerId");
                 });
 
             modelBuilder.Entity("MedicPortal.Data.Models.Patient", b =>

@@ -9,7 +9,7 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { SlotComponent } from './calendar/slot/slot.component';
 import { WorktimeComponent } from './worktime/worktime.component';
 import { DayEventComponent } from './calendar/day-event/day-event.component';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatButton, MatButtonModule } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -18,7 +18,8 @@ import { MatIconModule } from '@angular/material';
         ConfiguredDatepickerModule,
         ReactiveFormsModule,
         DateFnsModule,
-        MatIconModule
+        MatIconModule,
+        MatButtonModule
     ],
     exports: [
         CaptureImageComponent,

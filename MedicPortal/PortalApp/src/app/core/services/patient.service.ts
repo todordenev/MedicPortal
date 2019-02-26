@@ -9,26 +9,23 @@ import { Patient } from '@app/core/entities/patient';
 })
 export class PatientService {
     endpointUrl = '/api/patients';
-    patients: Patient[] = [];
     constructor(private http: HttpClient) { }
 
     getPatients(): Observable<Patient[]> {
-        if (this.patients.length > 0) {
-            return of(this.patients);
-        }
         return this.http.get(this.endpointUrl)
             .pipe(
-                map(serverResult => this.setPatients(serverResult)),
+                map(serverResult => this.mapToPatients(serverResult)),
                 catchError(this.handleError)
             );
     }
-    setPatients(serverResult) {
+    mapToPatients(serverResult) {
+        const patients: Patient[] = [];
         if (serverResult instanceof Array) {
             serverResult.forEach(patient => {
-                this.patients.push(patient);
+                patients.push(patient);
             });
         }
-        return this.patients;
+        return patients;
     }
 
     update(id: string, value): Observable<Patient> {
@@ -49,19 +46,13 @@ export class PatientService {
         if (patient.id) {
             return this.http.delete(this.endpointUrl + '/' + patient.id)
                 .pipe(
-                    map(() => this.removeFromPatients(patient)),
                     catchError(this.handleError)
                 );
         } else {
-            of(this.removeFromPatients(patient));
+            of();
         }
     }
-    private removeFromPatients(patient: Patient) {
-        const index = this.patients.indexOf(patient, 0);
-        if (index > -1) {
-            this.patients.splice(index, 1);
-        }
-    }
+
     private handleError(error: HttpErrorResponse) {
         console.error('server error:', error);
         if (error.error instanceof Error) {

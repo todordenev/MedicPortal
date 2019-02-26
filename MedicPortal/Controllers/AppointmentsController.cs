@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -10,6 +11,7 @@ using MedicPortal.TransportObjects.AppointmentDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace MedicPortal.Controllers
 {
@@ -43,6 +45,11 @@ namespace MedicPortal.Controllers
 
                 if (User.IsPortalAdmin() || appointment.ConfirmedByDoctor || appointment.ConfirmedByUser)
                 {
+                    if (IsOverlappingWithAppointments(appointment))
+                    {
+                        return BadRequest();
+                    }
+
                     _dbContext.Appointments.Add(appointment);
                     _dbContext.SaveChanges();
                     return Ok();
@@ -55,6 +62,36 @@ namespace MedicPortal.Controllers
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        private bool IsOverlappingWithAppointments(Appointment appointment)
+        {
+            var day = appointment.Start.Date;
+            var nextDay = day.AddDays(1);
+            var appointmentStart = appointment.Start;
+            var appointmentEnd = appointmentStart
+                .AddMinutes(appointment.DurationInMinutes)
+                .AddMilliseconds(-1);
+            var appointmentsOfTheDay = _dbContext.Appointments
+                .Where(a => a.DoctorId == appointment.DoctorId)
+                .Where(a => day < a.Start && a.Start < nextDay);
+            foreach (var existingAppointment in appointmentsOfTheDay)
+            {
+                var existingAppointmentStart = existingAppointment.Start;
+                var existingAppointmentEnd = existingAppointment.Start
+                    .AddMinutes(existingAppointment.DurationInMinutes).AddMilliseconds(-1);
+
+                if (appointmentStart.IsBetween(existingAppointmentStart, existingAppointmentEnd)
+                    || appointmentEnd.IsBetween(existingAppointmentStart, existingAppointmentEnd))
+                {
+                    Trace.TraceWarning($"The User ({User.GetUserId()})tries to save overlapping appointment.");
+                    Trace.TraceWarning($"Appointment:{JsonConvert.SerializeObject(appointment)}");
+                    Trace.TraceWarning($"Existing appointment:{JsonConvert.SerializeObject(existingAppointment)}");
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         [HttpDelete("{id}")]
@@ -89,12 +126,12 @@ namespace MedicPortal.Controllers
                 .Where(a => a.DoctorId == doctorId)
                 .Where(a => today0Hours < a.Start && a.Start < today24Hours)
                 .Where(a => !a.IsCanceled).ToListAsync();
-                
+
             List<AppointmentView> appointments;
 
             if (User.HasClaim(PortalClaimTypes.DoctorManagePermission, doctorId))
             {
-                appointments =  tempAppointments.Select(a=>_mapper.Map<AppointmentView>(a)).ToList();
+                appointments = tempAppointments.Select(a => _mapper.Map<AppointmentView>(a)).ToList();
             }
             else
             {
@@ -117,15 +154,29 @@ namespace MedicPortal.Controllers
         {
             var currentUserId = User.GetUserId();
             var today = DateTime.Today;
-            var appointmets = await _dbContext.Appointments
+            var appointmets = _dbContext.Appointments
                 .Where(a => a.Patient.AppUserId == currentUserId)
                 .Where(a => a.Start > today)
+                .Where(a => !a.IsCanceled)
                 .Include(a => a.Patient)
-                .Include(a => a.Doctor).ToListAsync();
-            var appointmentView = appointmets.Select(a => _mapper.Map<AppointmentView>(a)).ToList();
-
+                .Include(a => a.Doctor);
+            var appointmentView = await appointmets.Select(a => _mapper.Map<AppointmentView>(a)).ToListAsync();
             return Ok(appointmentView);
         }
+
+        [HttpGet("allforaccount")]
+        public async Task<IActionResult> GetAllForAccount()
+        {
+            var currentUserId = User.GetUserId();
+            var today = DateTime.Today;
+            var appointmets = _dbContext.Appointments
+                .Where(a => a.Patient.AppUserId == currentUserId)
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor);
+            var appointmentView = await appointmets.Select(a => _mapper.Map<AppointmentView>(a)).ToListAsync();
+            return Ok(appointmentView);
+        }
+
 
         private AppointmentView ToAppointmentView(SerialAppointment serialAppointment, DateTime date)
         {

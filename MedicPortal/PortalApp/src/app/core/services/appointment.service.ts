@@ -46,9 +46,19 @@ export class AppointmentService {
                 catchError(handleError)
             );
     }
+    getAllAccountAppointments(): Observable<AppointmentView[]> {
+        return this.http.get(this.serviceEndpoint + '/allforaccount')
+            .pipe(
+                map(serverResult => this.mapAppointments(serverResult)),
+                catchError(handleError)
+            );
+    }
 
     create(appointment): any {
-        return this.http.post(this.serviceEndpoint, appointment);
+        return this.http.post(this.serviceEndpoint, appointment)
+            .pipe(
+                catchError(handleError)
+            );
     }
 
     cancel(id: any): any {
@@ -56,13 +66,12 @@ export class AppointmentService {
     }
 
     private mapAppointments(serverResult): AppointmentView[] {
-        const result: AppointmentView[] = [];
         serverResult.forEach(element => {
             const appointment = element as AppointmentView;
             appointment.start = parse(element.start);
-            result.push(element as AppointmentView);
+
         });
-        return result;
+        return serverResult;
     }
 
 }

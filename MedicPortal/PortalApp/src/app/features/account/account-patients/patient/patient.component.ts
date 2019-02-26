@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { createPatch, applyPatch } from 'rfc6902';
-import { PatientService } from '@app/core/services';
+import { PatientService, ImageService } from '@app/core/services';
 import { Patient } from '@app/core/entities/patient';
 import { format } from 'date-fns';
 
@@ -17,7 +17,13 @@ export class PatientComponent implements OnInit {
     imgSrc: string;
     @ViewChild('fileInput')
     fileInput: ElementRef;
-    constructor(private formBuilder: FormBuilder, private patientService: PatientService) {
+    newAvatarImage: File;
+    isDeleted: boolean;
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private patientService: PatientService,
+        private imageService: ImageService) {
 
     }
     get imageFile(): File {
@@ -30,17 +36,17 @@ export class PatientComponent implements OnInit {
 
     ngOnInit() {
         this.cratePatientForm();
-        this.imgSrc = this.patient.avatarImgSrc ? this.patient.avatarImgSrc : './assets/user-avatar.jpg';
     }
 
     fileChangeEvent() {
-        const file = this.imageFile;
-        if (file) {
+        this.newAvatarImage = this.imageFile;
+        if (this.newAvatarImage) {
             const reader = new FileReader();
             reader.onload = ((e) => {
                 this.imgSrc = e.target['result'];
+                this.applyImageSrc('changed');
             });
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(this.newAvatarImage);
         }
     }
     cratePatientForm() {
@@ -48,13 +54,27 @@ export class PatientComponent implements OnInit {
             id: [this.patient.id],
             firstName: [this.patient.firstName, [Validators.required]],
             lastName: [this.patient.lastName, [Validators.required]],
-            telefon: [this.patient.telefon],
+            phoneNumber: [this.patient.phoneNumber],
             birthdate: [this.patient.birthdate, [Validators.required]],
-            adress: [this.patient.adress]
+            address: [this.patient.address],
+            avatarImgSrc: [this.patient.avatarImgSrc]
         });
+        this.imgSrc = this.patient.avatarImgSrc ? this.patient.avatarImgSrc : './assets/user-avatar.jpg';
     }
 
     onSubmit() {
+        if (this.newAvatarImage) {
+            this.imageService.saveImage(this.newAvatarImage)
+                .subscribe(imageData => { this.applyImageSrc(imageData.url); this.savePatientData(); });
+        } else {
+            this.savePatientData();
+        }
+    }
+    applyImageSrc(url: any): void {
+        this.patientForm.patchValue({ 'avatarImgSrc': url });
+        this.patientForm.markAsDirty();
+    }
+    savePatientData() {
         const changedPatient = this.patientForm.value;
         if (changedPatient.birthdate instanceof Date) {
             // geburtsdatum wurde geändert=> in String umwandeln, da createPatch mit Date nicht gut funktioniert.
@@ -73,8 +93,11 @@ export class PatientComponent implements OnInit {
         }
     }
     deletePatient() {
+        if (this.patient.avatarImgSrc) {
+            this.imageService.deleteImageByUrl(this.patient.avatarImgSrc).subscribe(() => { });
+        }
         this.patientService.delete(this.patient).subscribe(serverResult => {
-
+            this.isDeleted = true;
         });
     }
 }

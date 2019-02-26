@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
 }
+
 .doctor-header-image {
     background-size: cover;
     margin: 10px;
@@ -17,6 +18,19 @@ mat-card {
     margin: 5px;
     width: 300px;
 }
-.mat-card-title{
-    margin:20px 0;
+
+.mat-card-title {
+    margin: 20px 0;
+}
+
+.content-header {
+    display: flex;
+}
+
+.content-header-text {
+    flex-grow: 1;
+}
+
+.content-header-actions {
+    flex-grow: 0;
 }

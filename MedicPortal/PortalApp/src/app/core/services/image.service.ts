@@ -8,28 +8,39 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class ImageService {
+
     endpointUrl = '/api/images';
     constructor(private http: HttpClient) { }
-
-    saveImage(file: File) {
-        const formData = new FormData();
-        formData.append('imageData', file);
-
-        const headers = new HttpHeaders();
-        headers.set('Content-Type', 'multipart/form-data');
-        headers.append('Accept', 'application/json');
-
-        return this.http.post(this.endpointUrl, formData, { 'headers': headers })
-            .pipe(
-                map(serverResult => serverResult),
-                catchError(handleError)
-            );
-    }
 
     getImages(): Observable<string[]> {
         return this.http.get(this.endpointUrl)
             .pipe(
                 map(serverResult => serverResult as string[]),
+                catchError(handleError)
+            );
+    }
+
+    saveImage(file: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('imageData', file);
+        return this.http.post(this.endpointUrl, formData)
+            .pipe(
+                map(serverResult => serverResult),
+                catchError(handleError)
+            );
+    }
+    deleteImage(imageId) {
+        const deleteEndpoint = this.endpointUrl + '/' + imageId;
+        return this.http.delete(deleteEndpoint)
+            .pipe(
+                map(serverResult => serverResult),
+                catchError(handleError)
+            );
+    }
+    deleteImageByUrl(avatarImgSrc: string): any {
+        return this.http.delete(avatarImgSrc)
+            .pipe(
+                map(serverResult => serverResult),
                 catchError(handleError)
             );
     }

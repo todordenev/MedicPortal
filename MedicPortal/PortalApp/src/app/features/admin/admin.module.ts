@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ImagesComponent } from './images/images.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '@app/shared/shared.module';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 import { CoreModule } from '@angular/flex-layout';
 
 @NgModule({
@@ -13,10 +13,12 @@ import { CoreModule } from '@angular/flex-layout';
 
     SharedModule,
     CoreModule,
-    
+    MatIconModule,
     MatButtonModule,
 
   ],
-  declarations: [ImagesComponent]
+  declarations: [
+    ImagesComponent
+  ]
 })
 export class AdminModule { }

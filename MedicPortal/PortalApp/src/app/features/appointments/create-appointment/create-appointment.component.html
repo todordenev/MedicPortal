@@ -10,15 +10,23 @@
     </mat-card-header>
     <mat-card-content>
         <div class="content-info">
-            Запазване час за
-            <span *ngIf="categoryId==0"
-                  class="fetter">преглед</span>
-            <span *ngIf="categoryId==1"
-                  class="fetter">рецепта</span>
-            на
-            <span class="fetter">{{start | dfnsFormat : 'DD.MM.YYYY (dddd)'}}</span> от
-            <span class="fetter">{{start | dfnsFormat : 'HH:mm'}}</span>
+            <div>
+                Запазване час за
+                <span *ngIf="categoryId==0"
+                      class="fetter">преглед</span>
+                <span *ngIf="categoryId==1"
+                      class="fetter">рецепта*</span>
+                на
+                <span class="fetter">{{start | dfnsFormat : 'DD.MM.YYYY (dddd)'}}</span> от
+                <span class="fetter">{{start | dfnsFormat : 'HH:mm'}}</span>
+            </div>
+
+            <div *ngIf="categoryId==1" class="additional-info">
+                * в часовете за рецепта не се влиза в лекаркския кабинет. Документите се предават на вратата на
+                медицинската сестра и се изчаква пред кабинета.
+            </div>
         </div>
+
         <mat-form-field>
             <mat-select placeholder="Пациент"
                         [(ngModel)]="patientId">

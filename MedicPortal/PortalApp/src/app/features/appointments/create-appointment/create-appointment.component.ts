@@ -46,6 +46,10 @@ export class CreateAppointmentComponent implements OnInit {
         appointment.start = this.start;
         appointment.categoryId = this.categoryId;
         appointment.durationInMinutes = 10;
-        this.appointmentService.create(appointment).subscribe(() => this.location.back());
+        this.appointmentService.create(appointment).subscribe(result => this.onAppointmentCreation(result));
+    }
+
+    onAppointmentCreation(serverResult) {
+//this.location.back();
     }
 }

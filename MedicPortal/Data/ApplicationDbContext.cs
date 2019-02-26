@@ -45,6 +45,8 @@ namespace MedicPortal.Data
 
             builder.Entity<SerialAppointment>().HasOne(a => a.Doctor);
             builder.Entity<EntityChange>().HasOne(e => e.ChangedBy);
+
+            builder.Entity<Image>().HasOne(i => i.RessourceOwner);
         }
 
         public override int SaveChanges()

@@ -18,15 +18,23 @@
     display: flex;
 }
 .avatar-control{
-    width: 135px;
+    width: 135px;    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 170px;
+
 }
 .name-controls{
     padding-top: 60px;
-    width: 160px;
+    width: 153px;
 }
 
 .mat-form-field {
     width: 100%;
 }
-
+.avatar-image{
+    max-height: 130px;
+    max-width: 130px;    
+}
 .patient-card-actions {}

@@ -6,8 +6,37 @@
 
 .image-container {
     margin: 5px;
+    display: flex;
+    width: cacc(100% - 10px);
+    flex-wrap: wrap;
+}
+
+.image-outer-div {
+    padding: 3px;
+    margin: 3px;
+    position: relative;
+    background-color: white;
+}
+.image-info{
+    background-color: white;
+}
+
+.delete {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+}
+
+.delete>.mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    background-color: rgba(150, 150, 150, 0.2);
 }
 
 .image {
-    height: 300px;
+    height: 150px;
 }

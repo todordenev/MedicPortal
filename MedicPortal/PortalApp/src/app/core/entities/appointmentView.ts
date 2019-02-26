@@ -9,4 +9,6 @@ export class AppointmentView {
     categoryId: number;
     patient: Patient;
     doctor: Doctor;
+    canceled: Date;
+    isCanceled: boolean;
 }

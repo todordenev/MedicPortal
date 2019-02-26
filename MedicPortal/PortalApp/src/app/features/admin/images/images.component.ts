@@ -11,6 +11,7 @@ export class ImagesComponent implements OnInit {
     fileInput: ElementRef;
     imgSrc = '';
     images: string[];
+    newImage: File;
     constructor(private imageService: ImageService) { }
 
     get imageFile(): File {
@@ -21,24 +22,33 @@ export class ImagesComponent implements OnInit {
         return null;
     }
     ngOnInit() {
+        this.loadImages();
+    }
+
+    loadImages() {
         this.imageService.getImages().subscribe(result => this.images = result);
     }
 
     fileChangeEvent() {
-        const file = this.imageFile;
-        if (file) {
+        this.newImage = this.imageFile;
+        if (this.newImage) {
             const reader = new FileReader();
             reader.onload = ((e) => {
                 this.imgSrc = e.target['result'];
             });
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(this.newImage);
         }
     }
 
     saveImage() {
-        const file = this.imageFile;
-        if (file) {
-            this.imageService.saveImage(file).subscribe(result => alert(result));
+        if (this.newImage) {
+            this.imageService.saveImage(this.newImage).subscribe(() => this.loadImages());
+        }
+    }
+    deleteImage(imageId) {
+        const result = confirm('Delete Image with ID:' + imageId);
+        if (result) {
+            this.imageService.deleteImage(imageId).subscribe(() => this.loadImages());
         }
     }
 }

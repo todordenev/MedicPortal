@@ -30,8 +30,16 @@
     </div>
 </div>
 <div class="image-container">
-    <div *ngFor="let image of images">
+    <div *ngFor="let image of images"
+         class="image-outer-div">
         <img [src]="image.src"
              class="image" />
+        <div class="delete"
+             (click)="deleteImage(image.id)">
+            <mat-icon>clear</mat-icon>
+        </div>
+        <div class="image-info">
+            {{image.id}}
+        </div>
     </div>
 </div>
