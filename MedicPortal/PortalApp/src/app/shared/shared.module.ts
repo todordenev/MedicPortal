@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CaptureImageComponent } from './capture-image/capture-image.component';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +8,8 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { SlotComponent } from './calendar/slot/slot.component';
 import { WorktimeComponent } from './worktime/worktime.component';
 import { DayEventComponent } from './calendar/day-event/day-event.component';
-import { MatIconModule, MatButton, MatButtonModule } from '@angular/material';
+import { MatIconModule, MatButtonModule, MatDialogModule } from '@angular/material';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
     imports: [
@@ -19,19 +19,22 @@ import { MatIconModule, MatButton, MatButtonModule } from '@angular/material';
         ReactiveFormsModule,
         DateFnsModule,
         MatIconModule,
-        MatButtonModule
+        MatButtonModule,
+        MatDialogModule
     ],
     exports: [
-        CaptureImageComponent,
         DayViewComponent,
-        WorktimeComponent
+        WorktimeComponent,
+        ConfirmDialogComponent
+
     ],
+    entryComponents: [ConfirmDialogComponent],
     declarations: [
-        CaptureImageComponent,
         DayViewComponent,
         SlotComponent,
         WorktimeComponent,
-        DayEventComponent
+        DayEventComponent,
+        ConfirmDialogComponent
     ],
     providers: [
     ]

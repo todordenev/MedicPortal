@@ -13,7 +13,14 @@ import { AccountLoginComponent } from './account-login/account-login.component';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountManageComponent } from './account-manage/account-manage.component';
 import { PatientComponent } from './account-patients/patient/patient.component';
-import { MatIconModule, MatFormFieldModule, MatCardModule, MatDatepickerModule, MatInputModule, MatButtonModule } from '@angular/material';
+import {
+    MatIconModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule
+} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -28,7 +35,8 @@ import { MatIconModule, MatFormFieldModule, MatCardModule, MatDatepickerModule, 
         MatCardModule,
         MatIconModule,
         MatDatepickerModule,
-        MatButtonModule
+        MatButtonModule,
+        MatDialogModule
     ],
     declarations: [
         AccountPatientsComponent,

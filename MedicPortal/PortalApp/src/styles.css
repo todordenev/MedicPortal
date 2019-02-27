@@ -19,3 +19,21 @@ span.fetter{
     color: red;
     border-color: red;
 }
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    margin: 5px;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.content-header-text {
+    flex-grow: 1;
+    margin: 10px 0;
+}
+
+.content-header-actions {
+    flex-grow: 0;
+}

@@ -1,8 +1,15 @@
+<div class="content-header">
+  <div class="content-header-text">Мойте пациенти</div>
+  <div class="content-header-actions">
+    <button mat-raised-button
+            (click)="addPatient()">Нов Пациент</button>
+
+  </div>
+</div>
+
 <div class="account-patients">
-    <div class="actions">
-      <button mat-raised-button (click)="addPatient()">Нов Пациент</button>
-    </div>
-    <div class="patient-container">
-      <app-patient [patient]="patient" *ngFor="let patient of patients"></app-patient>
-    </div>
-  </div> 
+  <div class="patient-container">
+    <app-patient [patient]="patient"
+                 *ngFor="let patient of patients"></app-patient>
+  </div>
+</div>

@@ -45,6 +45,10 @@ namespace MedicPortal.Controllers
 
                 if (User.IsPortalAdmin() || appointment.ConfirmedByDoctor || appointment.ConfirmedByUser)
                 {
+                    if (appointment.Start < DateTime.Now)
+                    {
+                        return BadRequest();
+                    }
                     if (IsOverlappingWithAppointments(appointment))
                     {
                         return BadRequest();
@@ -69,6 +73,7 @@ namespace MedicPortal.Controllers
             var day = appointment.Start.Date;
             var nextDay = day.AddDays(1);
             var appointmentStart = appointment.Start;
+            
             var appointmentEnd = appointmentStart
                 .AddMinutes(appointment.DurationInMinutes)
                 .AddMilliseconds(-1);
@@ -159,7 +164,8 @@ namespace MedicPortal.Controllers
                 .Where(a => a.Start > today)
                 .Where(a => !a.IsCanceled)
                 .Include(a => a.Patient)
-                .Include(a => a.Doctor);
+                .Include(a => a.Doctor)
+                .OrderByDescending(a=>a.Start);
             var appointmentView = await appointmets.Select(a => _mapper.Map<AppointmentView>(a)).ToListAsync();
             return Ok(appointmentView);
         }
@@ -168,11 +174,11 @@ namespace MedicPortal.Controllers
         public async Task<IActionResult> GetAllForAccount()
         {
             var currentUserId = User.GetUserId();
-            var today = DateTime.Today;
             var appointmets = _dbContext.Appointments
                 .Where(a => a.Patient.AppUserId == currentUserId)
                 .Include(a => a.Patient)
-                .Include(a => a.Doctor);
+                .Include(a => a.Doctor)
+                .OrderByDescending(a=>a.Start);
             var appointmentView = await appointmets.Select(a => _mapper.Map<AppointmentView>(a)).ToListAsync();
             return Ok(appointmentView);
         }
