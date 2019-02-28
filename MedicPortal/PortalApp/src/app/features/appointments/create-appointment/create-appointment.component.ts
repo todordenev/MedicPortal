@@ -4,6 +4,7 @@ import { ActivatedRoute, } from '@angular/router';
 import { DoctorService, Doctor, AppointmentService, PatientService, } from '@app/core';
 import { Appointment } from '@app/core/entities/appointment';
 import { Patient } from '@app/core/entities/patient';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
     templateUrl: './create-appointment.component.html',
@@ -21,6 +22,7 @@ export class CreateAppointmentComponent implements OnInit {
         private doctorService: DoctorService,
         private appointmentService: AppointmentService,
         private location: Location,
+        private messageService: MessageService,
         private patientService: PatientService) {
     }
     ngOnInit() {
@@ -46,10 +48,17 @@ export class CreateAppointmentComponent implements OnInit {
         appointment.start = this.start;
         appointment.categoryId = this.categoryId;
         appointment.durationInMinutes = 10;
-        this.appointmentService.create(appointment).subscribe(result => this.onAppointmentCreation(result));
+        this.appointmentService.create(appointment)
+            .subscribe(result => this.onAppointmentCreated(), error => this.onAppointmentCreationError(error));
     }
 
-    onAppointmentCreation(serverResult) {
-//this.location.back();
+    onAppointmentCreated() {
+        this.location.back();
+    }
+    onAppointmentCreationError(error) {
+        this.messageService.add({
+            severity: 'error', summary: 'Невалидно време', life: 10000,
+            detail: 'Часът е заед или времето е отминало. Върнете се при работното време за деня и оптитайте отново.'
+        });
     }
 }

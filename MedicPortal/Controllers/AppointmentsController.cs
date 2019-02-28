@@ -47,7 +47,7 @@ namespace MedicPortal.Controllers
                 {
                     if (appointment.Start < DateTime.Now)
                     {
-                        return BadRequest();
+                        return BadRequest("");
                     }
                     if (IsOverlappingWithAppointments(appointment))
                     {

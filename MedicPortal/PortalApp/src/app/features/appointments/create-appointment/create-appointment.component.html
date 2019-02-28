@@ -1,47 +1,51 @@
-<mat-card *ngIf="!!doctor">
-    <mat-card-header>
-        <div mat-card-avatar
-             class="doctor-header-image"
-             [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
-        <mat-card-title><a routerLink="/doctors/{{doctor.id}}">{{doctor.displayName}}</a></mat-card-title>
-        <mat-card-subtitle>
-            <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
-        </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="content-info">
-            <div>
-                Запазване час за
-                <span *ngIf="categoryId==0"
-                      class="fetter">преглед</span>
-                <span *ngIf="categoryId==1"
-                      class="fetter">рецепта*</span>
-                на
-                <span class="fetter">{{start | dfnsFormat : 'DD.MM.YYYY (dddd)'}}</span> от
-                <span class="fetter">{{start | dfnsFormat : 'HH:mm'}}</span>
+<div>
+    <p-toast></p-toast>
+    <mat-card *ngIf="!!doctor">
+        <mat-card-header>
+            <div mat-card-avatar
+                 class="doctor-header-image"
+                 [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
+            <mat-card-title><a routerLink="/doctors/{{doctor.id}}">{{doctor.displayName}}</a></mat-card-title>
+            <mat-card-subtitle>
+                <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="content-info">
+                <div>
+                    Запазване час за
+                    <span *ngIf="categoryId==0"
+                          class="fetter">преглед</span>
+                    <span *ngIf="categoryId==1"
+                          class="fetter">рецепта*</span>
+                    на
+                    <span class="fetter">{{start | dfnsFormat : 'DD.MM.YYYY (dddd)'}}</span> от
+                    <span class="fetter">{{start | dfnsFormat : 'HH:mm'}}</span>
+                </div>
+
+                <div *ngIf="categoryId==1"
+                     class="additional-info">
+                    * в часовете за рецепта не се влиза в лекаркския кабинет. Документите се предават на вратата на
+                    медицинската сестра и се изчаква пред кабинета.
+                </div>
             </div>
 
-            <div *ngIf="categoryId==1" class="additional-info">
-                * в часовете за рецепта не се влиза в лекаркския кабинет. Документите се предават на вратата на
-                медицинската сестра и се изчаква пред кабинета.
-            </div>
-        </div>
-
-        <mat-form-field>
-            <mat-select placeholder="Пациент"
-                        [(ngModel)]="patientId">
-                <mat-option *ngFor="let patient of patients"
-                            [value]="patient.id">
-                    {{patient.firstName}} {{patient.lastName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-button
-                (disabled)="!patientId"
-                (click)="createAppointment()">Запази</button>
-        <button mat-button
-                (click)="onNoClick()">Откажи</button>
-    </mat-card-actions>
-</mat-card>
+            <mat-form-field>
+                <mat-select placeholder="Пациент"
+                            [(ngModel)]="patientId">
+                    <mat-option *ngFor="let patient of patients"
+                                [value]="patient.id">
+                        {{patient.firstName}} {{patient.lastName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button
+                    (disabled)="!patientId"
+                    (click)="createAppointment()">Запази</button>
+            <button mat-button
+                    (click)="onNoClick()">Откажи</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

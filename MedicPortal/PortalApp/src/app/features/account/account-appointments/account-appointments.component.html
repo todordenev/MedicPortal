@@ -8,7 +8,9 @@
 </div>
 <div class="content-main">
     <div class="appointments-container">
-        <mat-card *ngFor="let appointment of appointments" class="appointment" [ngClass]="{'is-expired': isExpired(appointment)}">
+        <mat-card *ngFor="let appointment of appointments"
+                  class="appointment"
+                  [ngClass]="{'is-expired': isExpired(appointment)}">
             <mat-card-header>
                 <div mat-card-avatar
                      class="doctor-header-image"
@@ -40,13 +42,15 @@
                         <span *ngIf="appointment.categoryId==2"
                               class="fetter">консултация</span>
                     </div>
+                    <div>
+                        <span *ngIf="appointment.isCanceled">Часът е отказън!</span>
+                    </div>
                 </div>
             </mat-card-content>
             <mat-card-actions>
                 <button mat-raised-button
                         *ngIf="!appointment.isCanceled && !isExpired(appointment)"
                         (click)="cancel(appointment)">Откажи</button>
-                <span *ngIf="appointment.isCanceled">Часът е отказън!</span>
             </mat-card-actions>
         </mat-card>
     </div>

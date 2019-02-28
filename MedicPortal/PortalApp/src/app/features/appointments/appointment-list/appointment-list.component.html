@@ -3,16 +3,17 @@
         <mat-card-header>
             <div mat-card-avatar
                  class="doctor-header-image"
-                 [style.background-image]="'url(./assets/doctor_' + doctor.id + '.jpg)'"></div>
-            <mat-card-title>{{doctor.firstName}} {{doctor.lastName}}</mat-card-title>
-            <mat-card-subtitle>
-                <span *ngFor="let spec of doctor.spezialisations">{{spec}}</span>
-            </mat-card-subtitle>
+                 [style.background-image]="'url('+doctor.headerImageSrc+')'">
+            </div>
+            <div class="doctor-header-text">
+                <div>д-р {{doctor.firstName}} {{doctor.lastName}}</div>
+            </div>
+
         </mat-card-header>
         <mat-card-content>
             <div class="appointments">
                 <div fxLayout="row"
-                     fxLayoutAlign="start center">                    
+                     fxLayoutAlign="center center">
                     <div class="dayview-tools">
                         <button mat-button
                                 (click)="moveViewDate(-1)">
@@ -37,7 +38,8 @@
                         </button>
                     </div>
                 </div>
-                <app-day-view [events]="calendarEvents" *ngIf="eventsLoaded"
+                <app-day-view [events]="calendarEvents"
+                              *ngIf="eventsLoaded"
                               (newEventClicked)="createAppointment($event)"
                               [viewDate]="viewDate"
                               [worktimes]="worktimes">

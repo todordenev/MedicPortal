@@ -25,6 +25,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { RoleGuard } from './core';
+import { MessageService } from 'primeng/components/common/messageservice';
 const dnsConfigService = new DateFnsConfigurationService();
 dnsConfigService.setLocale(bgLocale);
 
@@ -54,6 +55,7 @@ dnsConfigService.setLocale(bgLocale);
     OverlayPanelModule
   ],
   providers: [
+      MessageService,
     AuthenticationGuard,
     {
       provide: UrlSerializer,

@@ -9,9 +9,18 @@
     margin: 5px;
 }
 
+.mat-card-header{
+    justify-content: center;
+}
+
 .doctor-header-image {
     background-size: cover;
     margin: 10px;
+}
+.doctor-header-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .mat-card-content {

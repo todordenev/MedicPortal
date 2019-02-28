@@ -1,100 +1,102 @@
 <div class="main-application">
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <span [hidden]="!mobileQuery.matches">
-        <button mat-icon-button
-                (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </span>
-      <span [hidden]="mobileQuery.matches">
-        <a mat-button
-           [routerLink]="[ '/' ]">Лекарски портал</a>
-      </span>
-      <span class="example-spacer"></span>
-      <div>
-        <button mat-button
-                *ngIf="!isLoggedIn"
-                [routerLink]="[ '/account/login' ]"
-                routerLinkActive="active">Вход</button>
-        <button mat-button
-                *ngIf="!isLoggedIn"
-                [routerLink]="[ '/account/registration' ]"
-                routerLinkActive="active">Регистрация</button>
-        <button mat-button
-                *ngIf="isLoggedIn"
-                (click)="op1.toggle($event)">{{userName}}</button>
-        <p-overlayPanel #op1>
-          <mat-nav-list>
-            <a mat-list-item
-               (click)="op1.hide()"
-               [routerLink]="[ '/account/manage' ]">
-              Профил
-            </a>
-            <a mat-list-item
-               *ngIf="isLoggedIn"
-               (click)="logout(); op1.hide()">Изход</a>
-          </mat-nav-list>
-        </p-overlayPanel>
-      </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav
-                 [opened]="!mobileQuery.matches"
-                 [mode]="mobileQuery.matches?'over':'side'">
-      <mat-nav-list (click)="mobileQuery.matches && sidenav.toggle()">
-        <a [routerLink]="[ '/' ]"
-           mat-list-item>
-          <mat-icon>face</mat-icon>
-          Лекари
-        </a>
-        <a [routerLink]="[ '/account/appointments']"
-           mat-list-item
-           *ngIf="isLoggedIn">
-          <mat-icon>event</mat-icon>
-          Моите часове
-        </a>
-        <a [routerLink]="[ '/account/patients' ]"
-           mat-list-item
-           *ngIf="isLoggedIn">
-          <mat-icon>group</mat-icon>
-          <span>Моите пациенти</span>
-        </a>
-        <div *ngIf="userInRole(['Doctor'])">
-          <mat-divider></mat-divider>
-          <a [routerLink]="[ '/doctor/patients' ]"
-             mat-list-item
-             *ngIf="isLoggedIn">
-            <mat-icon>group</mat-icon>
-            Регистрирани пациенти
-          </a>
-          <a [routerLink]="[ '/doctor/appointments' ]"
-             mat-list-item
-             *ngIf="isLoggedIn">
-            <mat-icon>group</mat-icon>
-            Заявени часове
-          </a>
-          <a [routerLink]="[ '/doctor/registration-codes' ]"
-             mat-list-item
-             *ngIf="isLoggedIn">
-            <mat-icon>group</mat-icon>
-            Кодове Регистрация
-          </a>
-        </div>
-        <div *ngIf="userInRole(['Admin'])">
-            <mat-divider></mat-divider>
-            <a [routerLink]="[ '/admin/images' ]"
-               mat-list-item
-               *ngIf="isLoggedIn">
-              <mat-icon>group</mat-icon>
-              Файлове
-            </a>          
-          </div>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    <div class="main-application-overlay">
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <span [hidden]="!mobileQuery.matches">
+                    <button mat-icon-button
+                            (click)="sidenav.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                </span>
+                <span [hidden]="mobileQuery.matches">
+                    <a mat-button
+                       [routerLink]="[ '/' ]">Лекарски портал</a>
+                </span>
+                <span class="example-spacer"></span>
+                <div>
+                    <button mat-button
+                            *ngIf="!isLoggedIn"
+                            [routerLink]="[ '/account/login' ]"
+                            routerLinkActive="active">Вход</button>
+                    <button mat-button
+                            *ngIf="!isLoggedIn"
+                            [routerLink]="[ '/account/registration' ]"
+                            routerLinkActive="active">Регистрация</button>
+                    <button mat-button
+                            *ngIf="isLoggedIn"
+                            (click)="op1.toggle($event)">{{userName}}</button>
+                    <p-overlayPanel #op1>
+                        <mat-nav-list>
+                            <a mat-list-item
+                               (click)="op1.hide()"
+                               [routerLink]="[ '/account/manage' ]">
+                                Профил
+                            </a>
+                            <a mat-list-item
+                               *ngIf="isLoggedIn"
+                               (click)="logout(); op1.hide()">Изход</a>
+                        </mat-nav-list>
+                    </p-overlayPanel>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-sidenav-container>
+            <mat-sidenav #sidenav
+                         [opened]="!mobileQuery.matches"
+                         [mode]="mobileQuery.matches?'over':'side'">
+                <mat-nav-list (click)="mobileQuery.matches && sidenav.toggle()">
+                    <a [routerLink]="[ '/' ]"
+                       mat-list-item>
+                        <mat-icon>face</mat-icon>
+                        Лекари
+                    </a>
+                    <a [routerLink]="[ '/account/appointments']"
+                       mat-list-item
+                       *ngIf="isLoggedIn">
+                        <mat-icon>event</mat-icon>
+                        Моите часове
+                    </a>
+                    <a [routerLink]="[ '/account/patients' ]"
+                       mat-list-item
+                       *ngIf="isLoggedIn">
+                        <mat-icon>group</mat-icon>
+                        <span>Моите пациенти</span>
+                    </a>
+                    <div *ngIf="userInRole(['Doctor'])">
+                        <mat-divider></mat-divider>
+                        <a [routerLink]="[ '/doctor/patients' ]"
+                           mat-list-item
+                           *ngIf="isLoggedIn">
+                            <mat-icon>group</mat-icon>
+                            Регистрирани пациенти
+                        </a>
+                        <a [routerLink]="[ '/doctor/appointments' ]"
+                           mat-list-item
+                           *ngIf="isLoggedIn">
+                            <mat-icon>group</mat-icon>
+                            Заявени часове
+                        </a>
+                        <a [routerLink]="[ '/doctor/registration-codes' ]"
+                           mat-list-item
+                           *ngIf="isLoggedIn">
+                            <mat-icon>group</mat-icon>
+                            Кодове Регистрация
+                        </a>
+                    </div>
+                    <div *ngIf="userInRole(['Admin'])">
+                        <mat-divider></mat-divider>
+                        <a [routerLink]="[ '/admin/images' ]"
+                           mat-list-item
+                           *ngIf="isLoggedIn">
+                            <mat-icon>group</mat-icon>
+                            Файлове
+                        </a>
+                    </div>
+                </mat-nav-list>
+            </mat-sidenav>
+            <mat-sidenav-content>
+                <router-outlet></router-outlet>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
 </div>
